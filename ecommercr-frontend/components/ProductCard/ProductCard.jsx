@@ -1,15 +1,17 @@
+import { CartContext } from "@/contaxt/CartContext";
 import Link from "next/link";
+import { useContext } from "react";
 
 const ProductCart = ({product}) => {
+  const {addCartData} = useContext(CartContext);
   const addTOCart = (product)=>{
-    const cartProduct = JSON.parse(window.localStorage.getItem('cart-product'));
     const cartData={
       id:product.id,
-      title: product.title,
+      image:product.image,
+      title:product.title,
       price:product.price,
     }
-    cartProduct.push(cartData);
-    window.localStorage.setItem('cart-product',JSON.stringify(cartProduct));
+    addCartData(cartData);
   }
   return (
     <div className="w-[200px] h-[300px] border border-gray-300 rounded-[5px]">
