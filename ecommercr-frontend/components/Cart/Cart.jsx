@@ -1,6 +1,6 @@
 import { CartContext } from "@/contaxt/CartContext";
 import { useContext, useEffect, useState } from "react";
-
+import Link from "next/link";
 const Cart = () => {
   const { cartData, cartCount, totalPrice, deleteCartData } = useContext(CartContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -108,7 +108,7 @@ const Cart = () => {
             <p className="text-[18px] font-semibold">{totalPrice} BDT</p>
           </div>
           <div className="text-center w-full bg-[#025464] rounded-[5px] py-[10px] mt-6">
-            <button className="text-white font-semibold text-[20px]">Checkout</button>
+            <button className="text-white font-semibold text-[20px]"><Link href="./checkout">Checkout</Link> </button>
           </div>
         </div>
       </div>
