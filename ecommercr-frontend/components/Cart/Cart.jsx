@@ -108,7 +108,7 @@ const Cart = () => {
             <p className="text-[18px] font-semibold">{totalPrice} BDT</p>
           </div>
           <div className="text-center w-full bg-[#025464] rounded-[5px] py-[10px] mt-6">
-            <button className="text-white font-semibold text-[20px]"><Link href="./checkout">Checkout</Link> </button>
+            <button className="text-white font-semibold text-[20px]" ><Link href="/checkout">Checkout</Link> </button>
           </div>
         </div>
       </div>

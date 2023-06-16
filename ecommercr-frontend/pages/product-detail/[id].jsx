@@ -1,3 +1,4 @@
+import ImageSlider from "@/components/ProductDetail/ImageSlider";
 import { CartContext } from "@/contaxt/CartContext";
 import MainLayout from "@/layout/MainLayout";
 import axios from "axios";
@@ -6,11 +7,17 @@ import { useContext, useEffect, useState } from "react";
 const Detail = () => {
   const router = useRouter();
   const [details,setDetails]=useState([]);
+  const [productImage,setProductImage] = useState([]);
   const {addCartData} = useContext(CartContext);
   const detailData = () => {
     const URL = `https://dummyjson.com/products/${router.query.id}`;
     axios.get(URL).then((response) => {
       setDetails(response.data);
+      if(response.data.images.length>0){
+        const images = response.data.images;
+        images.push(response.data.thumbnail);
+        setProductImage(images);
+      }
     });
   };
   const addToCart = (product)=>{
@@ -28,10 +35,9 @@ const Detail = () => {
   return (
     <MainLayout>
       <div className="lg:container mx-auto">
-        <div className="flex gap-8 h-full">
-          <div className="image flex gap-4 w-[40%] h-[400px]">
-            <div className="w-[15%] h-full bg-[red]">List</div>
-            <div className="w-[85%] h-full bg-[orange]">Full Image</div>
+        <div className="flex gap-8 h-full mt-[30px]">
+          <div className="image flex gap-4 w-[40%] h-[800px]">
+            <ImageSlider productImage={productImage}/>
           </div>
           <div className="w-[60%] h-full">
             <h1 className="font-bold text-[20px] text-[#025464]">{details.title}</h1>
