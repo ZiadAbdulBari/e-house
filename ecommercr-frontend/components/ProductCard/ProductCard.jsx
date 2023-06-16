@@ -7,14 +7,15 @@ const ProductCart = ({product}) => {
   const addTOCart = (product)=>{
     const cartData={
       id:product.id,
-      image:product.image,
+      image:product.thumbnail,
       title:product.title,
       price:product.price,
     }
     addCartData(cartData);
   }
+ 
   return (
-    <div className="w-[200px] h-[300px] border border-gray-300 rounded-[5px]">
+    <div className="w-[230px] h-[300px] border border-gray-300 rounded-[5px]">
       <div className="h-[150px] w-full bg-white overflow-hidden">
         <img
           src={product.thumbnail}

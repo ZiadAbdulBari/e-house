@@ -2,7 +2,7 @@ import { CartContext } from "@/contaxt/CartContext";
 import { useContext, useEffect, useState } from "react";
 
 const Cart = () => {
-  const { cartData, cartCount } = useContext(CartContext);
+  const { cartData, cartCount, totalPrice, deleteCartData } = useContext(CartContext);
   const [isOpen, setIsOpen] = useState(false);
   const [windowSize, setWindowSize] = useState("");
   const cartControl = () => {
@@ -17,7 +17,9 @@ const Cart = () => {
       setIsOpen(false);
     }
   };
-
+  const deleteFromCart = (product)=>{
+    deleteCartData(product);
+  }
   useEffect(() => {
     const size = window.screen.height;
     setWindowSize(size);
@@ -25,10 +27,11 @@ const Cart = () => {
   return (
     <div className={windowSize + " w-full"}>
       <div
-        className="absolute right-0 top-[50%] bg-orange-700 p-[10px]"
+        className="fixed right-0 top-[50%] bg-orange-700 p-[10px]"
         onClick={cartControl}
       >
         <div className="p-2">
+          <div className="absolute font-semibold text-[20px] top-[-8px] left-[35px] p-[10px] rounded-[80px]">{cartCount}</div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -43,10 +46,10 @@ const Cart = () => {
         </div>
       </div>
       <div
-        className="hidden absolute right-0 top-0 w-[300px] h-full bg-gray-100"
+        className="hidden fixed right-0 top-0 w-[300px] h-full bg-gray-100 p-[10px]"
         id="cart"
       >
-        <div className="flex justify-between items-center px-[10px] h-[10%]">
+        <div className="flex justify-between items-center h-[10%]">
           <h1 className="text-[30px] font-semibold">Cart</h1>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -61,15 +64,15 @@ const Cart = () => {
             ></path>
           </svg>
         </div>
-        <div className="h-[75%] bg-[red]">
+        <div className="h-[75%] overflow-y-scroll">
           {cartData.length > 0
             ? cartData.map((product, index) => {
                 return (
                   <div
-                    className="flex justify-between items-center p-6 gap-2"
+                    className="flex justify-between items-center gap-2 py-[20px]"
                     key={index}
                   >
-                    <div className="w-[15%]">
+                    <div className="w-[15%] border">
                       <img
                         src={product.image}
                         alt=""
@@ -86,6 +89,7 @@ const Cart = () => {
                         viewBox="0 0 24 24"
                         width="24"
                         height="24"
+                        onClick={()=>deleteFromCart(product)}
                       >
                         <path
                           d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"
@@ -98,8 +102,14 @@ const Cart = () => {
               })
             : "Cart is Empty"}
         </div>
-        <div className="h-[15%] bg-[orange]">
-              
+        <div className="h-[15%]">
+          <div className="flex w-full justify-between">
+            <p className="text-[18px] font-semibold">Total Price:</p>
+            <p className="text-[18px] font-semibold">{totalPrice} BDT</p>
+          </div>
+          <div className="text-center w-full bg-[#025464] rounded-[5px] py-[10px] mt-6">
+            <button className="text-white font-semibold text-[20px]">Checkout</button>
+          </div>
         </div>
       </div>
     </div>
