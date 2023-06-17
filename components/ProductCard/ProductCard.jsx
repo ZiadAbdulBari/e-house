@@ -1,17 +1,26 @@
 import { CartContext } from "@/contaxt/CartContext";
+import {AuthContext} from '@/contaxt/AuthContext';
 import Link from "next/link";
 import { useContext } from "react";
+import toastMessage from "@/plugings/toastify";
 
 const ProductCart = ({product}) => {
   const {addCartData} = useContext(CartContext);
+  const {isLoggedIn} = useContext(AuthContext)
   const addTOCart = (product)=>{
-    const cartData={
-      id:product.id,
-      image:product.thumbnail,
-      title:product.title,
-      price:product.price,
+    if(!isLoggedIn){
+      toastMessage('Please login','w');
     }
-    addCartData(cartData);
+    else{
+      const cartData={
+        id:product.id,
+        image:product.thumbnail,
+        title:product.title,
+        price:product.price,
+      }
+      addCartData(cartData);
+      toastMessage('Successfully added to cart','s');
+    }
   }
  
   return (

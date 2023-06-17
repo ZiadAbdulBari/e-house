@@ -1,11 +1,14 @@
 import ImageSlider from "@/components/ProductDetail/ImageSlider";
+import { AuthContext } from "@/contaxt/AuthContext";
 import { CartContext } from "@/contaxt/CartContext";
 import MainLayout from "@/layout/MainLayout";
+import toastMessage from "@/plugings/toastify";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 const Detail = () => {
   const router = useRouter();
+  const {isLoggedIn} = useContext(AuthContext);
   const [details,setDetails]=useState([]);
   const [productImage,setProductImage] = useState([]);
   const {addCartData} = useContext(CartContext);
@@ -21,13 +24,19 @@ const Detail = () => {
     });
   };
   const addToCart = (product)=>{
-    const cartData={
-      id:product.id,
-      image:product.thumbnail,
-      title:product.title,
-      price:product.price,
+    if(!isLoggedIn){
+      toastMessage('Please login','w');
+      
+    }else{
+      const cartData={
+        id:product.id,
+        image:product.thumbnail,
+        title:product.title,
+        price:product.price,
+      }
+      addCartData(cartData);
+      toastMessage('Successfully added to cart','s');
     }
-    addCartData(cartData);
   }
   useEffect(() => {
     detailData();

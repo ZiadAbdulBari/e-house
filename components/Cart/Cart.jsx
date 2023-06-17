@@ -1,11 +1,19 @@
 import { CartContext } from "@/contaxt/CartContext";
 import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
+import { AuthContext } from "@/contaxt/AuthContext";
+import toastMessage from "@/plugings/toastify";
+
 const Cart = () => {
+  const {isLoggedIn} = useContext(AuthContext);
   const { cartData, cartCount, totalPrice, deleteCartData } = useContext(CartContext);
   const [isOpen, setIsOpen] = useState(false);
   const [windowSize, setWindowSize] = useState("");
   const cartControl = () => {
+    if(!isLoggedIn){
+      toastMessage('Please login','w')
+      return;
+    }
     const selectCart = document.getElementById("cart");
     if (!isOpen) {
       selectCart.classList.remove("hidden");
@@ -18,7 +26,10 @@ const Cart = () => {
     }
   };
   const deleteFromCart = (product)=>{
-    deleteCartData(product);
+    if(isLoggedIn){
+      deleteCartData(product);
+      toastMessage('Successfully removed from cart','s')
+    }
   }
   useEffect(() => {
     const size = window.screen.height;

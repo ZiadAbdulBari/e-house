@@ -15,7 +15,7 @@ body {
   @apply w-full h-[35px] px-[20px] py-[20px] rounded-[5px] outline-none border mt-4
 }
 .button{
-  @apply px-6 py-2 text-white bg-black rounded-[5px]
+  @apply px-6 py-2 text-white bg-orange-700 rounded-[5px]
 }
 .open-cart{
   @apply block
