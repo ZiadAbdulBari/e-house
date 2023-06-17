@@ -5,21 +5,28 @@ import { useContext } from "react";
 import toastMessage from "@/plugings/toastify";
 
 const ProductCart = ({product}) => {
-  const {addCartData} = useContext(CartContext);
+  const {addCartData,cartData} = useContext(CartContext);
   const {isLoggedIn} = useContext(AuthContext)
+
   const addTOCart = (product)=>{
     if(!isLoggedIn){
       toastMessage('Please login','w');
     }
     else{
-      const cartData={
+      const cartProduct={
         id:product.id,
         image:product.thumbnail,
         title:product.title,
         price:product.price,
       }
-      addCartData(cartData);
-      toastMessage('Successfully added to cart','s');
+      const index = cartData.filter(data=>data.id==cartProduct.id);
+      if(index.length>0){
+        toastMessage('Already exist','i');
+      }
+      else{
+        addCartData(cartProduct);
+        toastMessage('Successfully added to cart','s');
+      }
     }
   }
  

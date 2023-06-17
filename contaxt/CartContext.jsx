@@ -1,5 +1,4 @@
 const { createContext, useState, useEffect } = require("react");
-
 const CartContext = createContext();
 const CartProvider = ({ children }) => {
   const [cartData, setCartData] = useState([]);

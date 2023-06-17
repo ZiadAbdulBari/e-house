@@ -9,9 +9,9 @@ import { useContext, useEffect, useState } from "react";
 const Detail = () => {
   const router = useRouter();
   const {isLoggedIn} = useContext(AuthContext);
+  const {addCartData,cartData} = useContext(CartContext);
   const [details,setDetails]=useState([]);
   const [productImage,setProductImage] = useState([]);
-  const {addCartData} = useContext(CartContext);
   const detailData = () => {
     const URL = `https://dummyjson.com/products/${router.query.id}`;
     axios.get(URL).then((response) => {
@@ -21,6 +21,9 @@ const Detail = () => {
         images.push(response.data.thumbnail);
         setProductImage(images);
       }
+    })
+    .catch(error=>{
+      console.log(error);
     });
   };
   const addToCart = (product)=>{
@@ -28,14 +31,20 @@ const Detail = () => {
       toastMessage('Please login','w');
       
     }else{
-      const cartData={
+      const cartProduct={
         id:product.id,
         image:product.thumbnail,
         title:product.title,
         price:product.price,
       }
-      addCartData(cartData);
-      toastMessage('Successfully added to cart','s');
+      const alreadyExist = cartData.filter(data=>data.id==cartProduct.id);
+      if(alreadyExist.length>0){
+        toastMessage('Already exist','i');
+      }
+      else{
+        addCartData(cartProduct);
+        toastMessage('Successfully added to cart','s');
+      }
     }
   }
   useEffect(() => {
