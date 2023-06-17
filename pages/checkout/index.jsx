@@ -1,8 +1,10 @@
 import { CartContext } from "@/contaxt/CartContext";
+import MainLayout from "@/layout/MainLayout";
 import { useContext } from "react";
 const Checkout = () => {
   const { cartData, totalPrice } = useContext(CartContext);
   return (
+    <MainLayout>
     <div className="lg:container mx-auto">
       <div className="flex gap-4 w-full h-screen">
         <div className="w-[50%] px-[30px]">
@@ -70,7 +72,7 @@ const Checkout = () => {
         </div>
         <div className="w-[50%] bg-gray-100 px-[30px]">
           <p className="my-4 font-samibold text-[30px]">Products</p>
-          <div className="h-[60%] overflow-y-scroll">
+          <div className="h-[55%] overflow-y-scroll">
             {cartData.length > 0 &&
               cartData.map((product, index) => {
                 return (
@@ -123,10 +125,14 @@ const Checkout = () => {
               <p className="text-[20px] font-semibold">Total:</p>
               <p className="text-[20px] font-semibold">{totalPrice} BDT</p>
             </div>
+            <div className="flex justify-end mt-8">
+              <button className="bg-orange-700 text-white text-[20px] px-[50px] py-[5px] rounded-[5px]">Place Order</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    </MainLayout>
   );
 };
 export default Checkout;

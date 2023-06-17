@@ -20,3 +20,11 @@ body {
 .open-cart{
   @apply block
 }
+.slick-dots li{
+  width: 40px!important;
+  height: 40px!important;
+  bottom: -20px!important;
+}
+.slick-dots li.slick-active button:before {
+  color: rgb(255, 148, 26)!important;
+}

@@ -6,7 +6,7 @@ const MainLayout = ({children}) => {
     return (
         <div>
         <Header/>
-        <div className="lg:container mx-auto">
+        <div>
             <div>
             {children}
             </div>
