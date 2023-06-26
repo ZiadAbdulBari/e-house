@@ -5,9 +5,9 @@ import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
 const CommonSlider = ({ images }) => {
   let settings = {
-    dots: true,
+    dots: false,
     infinite: true,
-    arrows:false,
+    arrows:true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,

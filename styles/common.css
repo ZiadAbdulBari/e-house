@@ -1,0 +1,24 @@
+/* generic */
+.header-category {
+  @apply relative z-50 py-[30px] cursor-pointer;
+}
+.header-category-name {
+  @apply flex gap-x-2 text-gray-500;
+}
+.header-sub-category {
+  @apply absolute right-0 top-[80px] hidden bg-gray-100 px-[80px] text-gray-700;
+}
+.header-sub-category-parent {
+  @apply max-w-[150px] w-[50px];
+}
+.header-sub-category-parent ul li {
+  @apply py-[10px] cursor-pointer;
+}
+
+/* auth */
+.login{
+    @apply px-4 py-[2px] bg-secondary text-white
+}
+.reg{
+    @apply px-4 py-[2px] bg-primary text-white
+}

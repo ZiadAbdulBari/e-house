@@ -1,4 +1,6 @@
 import ImageSlider from "@/components/ProductDetail/ImageSlider";
+import Section from "@/components/Section/Section";
+import UiTab from "@/components/UiTab/UiTab";
 import { AuthContext } from "@/contaxt/AuthContext";
 import { CartContext } from "@/contaxt/CartContext";
 import MainLayout from "@/layout/MainLayout";
@@ -8,64 +10,122 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 const Detail = () => {
   const router = useRouter();
-  const {isLoggedIn} = useContext(AuthContext);
-  const {addCartData,cartData} = useContext(CartContext);
-  const [details,setDetails]=useState([]);
-  const [productImage,setProductImage] = useState([]);
+  const { isLoggedIn } = useContext(AuthContext);
+  const { addCartData, cartData } = useContext(CartContext);
+  const [details, setDetails] = useState([]);
+  const [productImage, setProductImage] = useState([]);
   const detailData = () => {
     const URL = `https://dummyjson.com/products/${router.query.id}`;
-    axios.get(URL).then((response) => {
-      setDetails(response.data);
-      if(response.data.images.length>0){
-        const images = response.data.images;
-        images.push(response.data.thumbnail);
-        setProductImage(images);
-      }
-    })
-    .catch(error=>{
-      console.log(error);
-    });
+    axios
+      .get(URL)
+      .then((response) => {
+        setDetails(response.data);
+        if (response.data.images.length > 0) {
+          const images = response.data.images;
+          images.push(response.data.thumbnail);
+          setProductImage(images);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-  const addToCart = (product)=>{
-    if(!isLoggedIn){
-      toastMessage('Please login','w');
-      
-    }else{
-      const cartProduct={
-        id:product.id,
-        image:product.thumbnail,
-        title:product.title,
-        price:product.price,
-      }
-      const alreadyExist = cartData.filter(data=>data.id==cartProduct.id);
-      if(alreadyExist.length>0){
-        toastMessage('Already exist','i');
-      }
-      else{
+  const addToCart = (product) => {
+    if (!isLoggedIn) {
+      toastMessage("Please login", "w");
+    } else {
+      const cartProduct = {
+        id: product.id,
+        image: product.thumbnail,
+        title: product.title,
+        price: product.price,
+      };
+      const alreadyExist = cartData.filter((data) => data.id == cartProduct.id);
+      if (alreadyExist.length > 0) {
+        toastMessage("Already exist", "i");
+      } else {
         addCartData(cartProduct);
-        toastMessage('Successfully added to cart','s');
+        toastMessage("Successfully added to cart", "s");
       }
     }
-  }
+  };
   useEffect(() => {
     detailData();
   }, []);
   return (
     <MainLayout>
-      <div className="lg:container mx-auto">
+      <div className="px-[300px]">
         <div className="flex gap-8 h-full mt-[30px]">
-          <div className="image flex gap-4 w-[40%] h-[800px]">
-            <ImageSlider productImage={productImage}/>
+          <div className="image w-[50%] h-[500px]">
+            <ImageSlider productImage={productImage} className="w-full" />
           </div>
-          <div className="w-[60%] h-full">
-            <h1 className="font-bold text-[20px] text-[#025464]">{details.title}</h1>
-            <p className="mt-4 text-yellow-500">{details.rating} (Customer review)</p>
-            <div className="border border-gry-300p my-4"></div>
-            <div>
+          <div className="w-[50%] h-full">
+            <div className="grid grid-flow-row gap-y-4">
               <div className="flex justify-between">
-                <div className="icon w-[10%]">
-                  {
-                    details.stock>0?
+                <h1 className="font-semibold text-[30px] text-gray-700">{details.title}</h1>
+                <div className="wishlist bg-gray-100 p-2 rounded">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="30"
+                    height="30"
+                  >
+                    <path
+                      d="M12.001 4.52853C14.35 2.42 17.98 2.49 20.2426 4.75736C22.5053 7.02472 22.583 10.637 20.4786 12.993L11.9999 21.485L3.52138 12.993C1.41705 10.637 1.49571 7.01901 3.75736 4.75736C6.02157 2.49315 9.64519 2.41687 12.001 4.52853ZM18.827 6.1701C17.3279 4.66794 14.9076 4.60701 13.337 6.01687L12.0019 7.21524L10.6661 6.01781C9.09098 4.60597 6.67506 4.66808 5.17157 6.17157C3.68183 7.66131 3.60704 10.0473 4.97993 11.6232L11.9999 18.6543L19.0201 11.6232C20.3935 10.0467 20.319 7.66525 18.827 6.1701Z"
+                      fill="rgba(245,0,0,1)"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <div className="flex">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                >
+                  <path
+                    d="M12.0008 17L6.12295 20.5902L7.72105 13.8906L2.49023 9.40983L9.35577 8.85942L12.0008 2.5L14.6458 8.85942L21.5114 9.40983L16.2806 13.8906L17.8787 20.5902L12.0008 17ZM12.0008 14.6564L14.8175 16.3769L14.0517 13.1664L16.5583 11.0192L13.2683 10.7554L12.0008 7.70792L10.7333 10.7554L7.44326 11.0192L9.94991 13.1664L9.18408 16.3769L12.0008 14.6564Z"
+                    fill="rgba(240,187,64,1)"
+                  ></path>
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                >
+                  <path
+                    d="M12.0008 17L6.12295 20.5902L7.72105 13.8906L2.49023 9.40983L9.35577 8.85942L12.0008 2.5L14.6458 8.85942L21.5114 9.40983L16.2806 13.8906L17.8787 20.5902L12.0008 17ZM12.0008 14.6564L14.8175 16.3769L14.0517 13.1664L16.5583 11.0192L13.2683 10.7554L12.0008 7.70792L10.7333 10.7554L7.44326 11.0192L9.94991 13.1664L9.18408 16.3769L12.0008 14.6564Z"
+                    fill="rgba(240,187,64,1)"
+                  ></path>
+                </svg>
+                <p className="ml-4 text-gray-700"> {details.rating} (Customer review) </p>
+              </div>
+              <p className="font-semibold text-[20px] text-gray-700">
+                ${details.price}
+              </p>
+
+            </div>
+            <div className="border border-gry-300 mt-8"></div>
+            <div className="short-des py-12">
+              <p className="text-gray-400">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry standard dummy text
+                ever since the 1500s, when an unknown printer took a galley of
+                type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged.
+              </p>
+            </div>
+            <div className="border border-gry-300 mb-8"></div>
+            <div className="flex gap-8">
+              <div className="flex">
+                <div className="quantity px-[30px] py-[10px] border border-gray-400">
+                  <p className="text-[20px]">1</p>
+                </div>
+                <div className="quantity-controller">
+                  <div className="border border-gray-400">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -73,136 +133,46 @@ const Detail = () => {
                       height="24"
                     >
                       <path
-                        d="M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z"
-                        fill="rgba(3,144,77,1)"
+                        d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"
+                        fill="rgba(90,90,90,1)"
                       ></path>
                     </svg>
-                    :<svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                  >
-                    <path
-                      d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"
-                      fill="rgba(194,0,0,1)"
-                    ></path>
-                  </svg>
-                  }
-                </div>
-                <div className="w-[90%]">
-                  <p className="font-semibold text-[#E57C23]">In stock</p>
-                </div>
-              </div>
-              <div className="flex justify-between">
-                <div className="icon w-[10%]">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                  >
-                    <path
-                      d="M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z"
-                      fill="rgba(3,144,77,1)"
-                    ></path>
-                  </svg>
-                </div>
-                <div className="w-[90%]">
-                  <p className="font-semibold text-[#E57C23]">
-                    Discount available
-                  </p>
+                  </div>
+                  <div className="border border-gray-400">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                    >
+                      <path
+                        d="M5 11V13H19V11H5Z"
+                        fill="rgba(90,90,90,1)"
+                      ></path>
+                    </svg>
+                  </div>
                 </div>
               </div>
-              <div className="flex justify-between">
-                <div className="icon w-[10%]">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                  >
-                    <path
-                      d="M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z"
-                      fill="rgba(3,144,77,1)"
-                    ></path>
-                  </svg>
-                </div>
-                <div className="w-[90%]">
-                  <p className="font-semibold text-[#E57C23]">
-                    Free delivery available
-                  </p>
-                </div>
+              <div onClick={() => addToCart(details)}>
+                <button className="bg-orange-700 text-white px-[40px] py-[15px] flex justify-center">
+                  <span className="text-[15px]"> ADD TO CART</span>
+                </button>
+              </div>
+              <div onClick={() => addToCart(details)}>
+                <button className="bg-orange-700 text-white px-[40px] py-[15px] flex justify-center">
+                  <span className="text-[15px]">BUY IT NOW</span>
+                </button>
               </div>
             </div>
-              <p className="my-8 font-semibold text-[20px]">Price: {details.price} BDT</p>    
-            <div className="mt-8 short-des">
-              <p className="text-gray-400">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry standard dummy text
-                ever since the 1500s, when an unknown printer took a galley of
-                type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
-              </p>
-            </div>
-            <div className="my-12" onClick={()=>addToCart(details)}>
-              <button className="bg-orange-700 text-white px-[80px] py-[10px] rounded-[5px] flex justify-center gap-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="28"
-                  height="28"
-                >
-                  <path
-                    d="M4.00436 6.41662L0.761719 3.17398L2.17593 1.75977L5.41857 5.00241H20.6603C21.2126 5.00241 21.6603 5.45012 21.6603 6.00241C21.6603 6.09973 21.6461 6.19653 21.6182 6.28975L19.2182 14.2898C19.0913 14.7127 18.7019 15.0024 18.2603 15.0024H6.00436V17.0024H17.0044V19.0024H5.00436C4.45207 19.0024 4.00436 18.5547 4.00436 18.0024V6.41662ZM6.00436 7.00241V13.0024H17.5163L19.3163 7.00241H6.00436ZM5.50436 23.0024C4.67593 23.0024 4.00436 22.3308 4.00436 21.5024C4.00436 20.674 4.67593 20.0024 5.50436 20.0024C6.33279 20.0024 7.00436 20.674 7.00436 21.5024C7.00436 22.3308 6.33279 23.0024 5.50436 23.0024ZM17.5044 23.0024C16.6759 23.0024 16.0044 22.3308 16.0044 21.5024C16.0044 20.674 16.6759 20.0024 17.5044 20.0024C18.3328 20.0024 19.0044 20.674 19.0044 21.5024C19.0044 22.3308 18.3328 23.0024 17.5044 23.0024Z"
-                    fill="rgba(255,255,255,1)"
-                  ></path>
-                </svg>
-                <span className="text-[20px]"> Add to cart</span>
-              </button>
-            </div>
-            <div className="mt-8">
-              <h1 className="font-bold text-[30px] text-[#025464]">
-                Description
-              </h1>
-              <div className="mt-8">
-                <h1 className="font-semibold text-[20px] text-[#E57C23]">
-                  Specifications:
-                </h1>
-                <p className="mt-2 text-gray-600">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting
-                  industry. Lorem Ipsum has been the industry standard dummy text
-                  ever since the 1500s, when an unknown printer took a galley of
-                  type and scrambled it to make a type specimen book. It has
-                  survived not only five centuries, but also the leap into
-                  electronic typesetting, remaining essentially unchanged. It was
-                  popularised in the 1960s with the release of Letraset sheets
-                  containing Lorem Ipsum passages, and more recently with desktop
-                  publishing software like Aldus PageMaker including versions of
-                  Lorem Ipsum.
-                </p>
-              </div>
-              <div className="mt-6">
-                <h1 className="font-semibold text-[20px] text-[#E57C23]">
-                  Care & Maintenance:
-                </h1>
-                <p className="mt-2 text-gray-600">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting
-                  industry. Lorem Ipsum has been the industry standard dummy text
-                  ever since the 1500s, when an unknown printer took a galley of
-                  type and scrambled it to make a type specimen book. It has
-                  survived not only five centuries, but also the leap into
-                  electronic typesetting, remaining essentially unchanged.
-                </p>
-              </div>
+            <div className="border border-gry-300 mt-8"></div>
+            <div className="tab mt-8">
+              <UiTab/>
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        {/* <Section/> */}
       </div>
     </MainLayout>
   );
