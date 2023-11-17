@@ -1,12 +1,23 @@
-import { CartProvider } from '@/contaxt/CartContext'
-import { AuthProvider } from '@/contaxt/AuthContext'
-import '@/styles/globals.css'
+import store from "@/store/store";
+import "@/styles/globals.css";
+import { ToastContainer, toast } from "react-toastify";
+import { Provider } from "react-redux";
 export default function App({ Component, pageProps }) {
   return (
-    <AuthProvider>
-    <CartProvider>
+    <Provider store={store}>
       <Component {...pageProps} />
-    </CartProvider>
-    </AuthProvider>
-  )
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+    </Provider>
+  );
 }

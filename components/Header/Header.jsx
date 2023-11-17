@@ -1,12 +1,46 @@
-import { AuthContext } from "@/contaxt/AuthContext";
+import { getLoggedinStatus, getToken } from "../../store/authSlice";
 import Link from "next/link";
-import React, { useContext } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Category from "../Category/Category";
+import Subcategory from "../Subcategory/Subcategory";
+import axios from "axios";
 
 const Header = () => {
-  const { setAuthData, isLoggedIn } = useContext(AuthContext);
+  const isLoggedin = useSelector((state) => state.auth.isLoggedin);
+  const dispatch = useDispatch();
+  const [categories, setCategories] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
   const logout = () => {
-    setAuthData(false);
+    window.localStorage.removeItem("isLoggedin");
+    window.localStorage.removeItem("token");
+    dispatch(getLoggedinStatus());
+    dispatch(getToken());
   };
+  const getCategory = () => {
+    axios.get("http://localhost:4000/get-category").then((response) => {
+      if (response?.data?.status == 200) {
+        setCategories(response?.data?.categories);
+        
+      }
+    });
+  };
+  const getSubCategory = () => {
+    axios.get("http://localhost:4000/get-subcategory").then((response) => {
+      if (response?.data?.status == 200) {
+        setSubcategories(response?.data?.subcategories);
+      }
+    });
+  };
+  useEffect(()=>{
+    dispatch(getLoggedinStatus());
+    dispatch(getToken());
+  },[])
+  useEffect(() => {
+    getCategory();
+    getSubCategory();
+  }, []);
+
   return (
     <div className="bg-gray-50">
       <div className="lg:container mx-auto">
@@ -16,103 +50,41 @@ const Header = () => {
               <Link href="/">E-House</Link>
             </p>
           </div>
+          {/* Header Category */}
           <div className="flex gap-12">
-            <div className="header-category group">
-              <p className="header-category-name transition-all duration-700 group-hover:font-semibold">
-                Men{" "}
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
+            {
+              categories.length>0 && 
+              (
+                categories.map((cat) =>(
+                  <Category
+                    category_name={cat.category_name}
+                    key={cat.id}
                   >
-                    <path
-                      className="fill-secondary"
-                      d="M11.9997 13.1714L16.9495 8.22168L18.3637 9.63589L11.9997 15.9999L5.63574 9.63589L7.04996 8.22168L11.9997 13.1714Z"
-                    ></path>
-                  </svg>
-                </span>
-              </p>
-              <div className="header-sub-category group-hover:block">
-                <div className="header-sub-category-parent">
-                  <ul>
-                    <li>Pant</li>
-                    <li>Shirt</li>
-                    <li>T-shirt</li>
-                    <li>Shorts</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div className="header-category group">
-              <p className="header-category-name transition-all duration-700 group-hover:font-semibold">
-                Women{" "}
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                  >
-                    <path
-                      d="M11.9997 13.1714L16.9495 8.22168L18.3637 9.63589L11.9997 15.9999L5.63574 9.63589L7.04996 8.22168L11.9997 13.1714Z"
-                      className="fill-secondary"
-                    ></path>
-                  </svg>
-                </span>
-              </p>
-              <div className="header-sub-category group-hover:block">
-                <div className="header-sub-category-parent">
-                  <ul>
-                    <li>Pant</li>
-                    <li>Shirt</li>
-                    <li>T-shirt</li>
-                    <li>Shorts</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div className="header-category group">
-              <p className="header-category-name transition-all duration-700 group-hover:font-semibold">
-                Accessorise{" "}
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                  >
-                    <path
-                      d="M11.9997 13.1714L16.9495 8.22168L18.3637 9.63589L11.9997 15.9999L5.63574 9.63589L7.04996 8.22168L11.9997 13.1714Z"
-                      className="fill-secondary"
-                    ></path>
-                  </svg>
-                </span>
-              </p>
-              <div className="header-sub-category group-hover:block">
-                <div className="header-sub-category-parent">
-                  <ul>
-                    <li>Sunglass</li>
-                    <li>Wallet</li>
-                    <li>Balt</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+                    {
+                      subcategories.map((subcat)=>(
+                        subcat.categoryId==cat.id && (
+                          <Subcategory subcategory_name={subcat.subcategory_name} key={subcat.id} />
+                        )
+                      ))
+                    }
+                  </Category>
+
+                ))
+              )
+            }
           </div>
           <div className="flex gap-4">
-            {!isLoggedIn && (
+            {!isLoggedin && (
               <button className="login">
                 <Link href="/signup">Login</Link>
               </button>
             )}
-            {!isLoggedIn && (
+            {!isLoggedin && (
               <button className="reg">
                 <Link href="/signin">Registration</Link>
               </button>
             )}
-            {isLoggedIn && (
+            {isLoggedin && (
               <button className="reg" onClick={logout}>
                 Logout
               </button>

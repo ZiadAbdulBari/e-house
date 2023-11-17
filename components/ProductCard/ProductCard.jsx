@@ -1,38 +1,41 @@
-import { CartContext } from "@/contaxt/CartContext";
-import { AuthContext } from "@/contaxt/AuthContext";
 import Link from "next/link";
-import { useContext } from "react";
 import toastMessage from "@/plugings/toastify";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const ProductCart = ({ product }) => {
-  const { addCartData, cartData } = useContext(CartContext);
-  const { isLoggedIn } = useContext(AuthContext);
-
-  const addTOCart = (product) => {
-    if (!isLoggedIn) {
+  const loggedinStatus = useSelector((state)=>state.auth.isLoggedin)
+  const token = useSelector((state)=>state.auth.token);
+  const addTOCart = (id) => {
+    if (!loggedinStatus) {
       toastMessage("Please login", "w");
     } else {
       const cartProduct = {
-        id: product.id,
-        image: product.thumbnail,
-        title: product.title,
-        price: product.price,
+        product_id:id,
+        quantity:1
       };
-      const index = cartData.filter((data) => data.id == cartProduct.id);
-      if (index.length > 0) {
-        toastMessage("Already exist", "i");
-      } else {
-        addCartData(cartProduct);
-        toastMessage("Successfully added to cart", "s");
-      }
+      axios.post('http://localhost:4000/add-to-cart',cartProduct,{headers: { Authorization: token }})
+      .then((response)=>{
+        if(response.data.status==200){
+          toastMessage(response.data.message, "s");
+        }
+      })
+      .catch((error)=>{
+        if(error?.response?.data){
+          toastMessage(error?.response?.data?.message, "i");
+        }
+        else{
+          console.log(error)
+        }
+      })
     }
   };
 
   return (
-    <div className="h-[550px] border bg-gray-50 rounded relative">
+    <div className="h-[550px] border bg-gray-50 relative">
       <div className="h-[400px] w-full bg-white overflow-hidden">
         <img
-          src={product.thumbnail}
+          src={product.image_url}
           className="h-full w-full object-cover hover:scale-125 transition-all duration-700"
         />
       </div>
@@ -117,7 +120,7 @@ const ProductCart = ({ product }) => {
           <div className="group">
             <div
               className="w-[35px] h-[35px] flex justify-center items-center border border-secondary rounded-[50%] cursor-pointer transition-all duration-500 group-hover:bg-secondary"
-              onClick={() => addTOCart(product)}
+              onClick={() => addTOCart(product.id)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

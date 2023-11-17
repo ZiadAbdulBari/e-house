@@ -1,16 +1,22 @@
-import { CartContext } from "@/contaxt/CartContext";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AuthContext } from "@/contaxt/AuthContext";
 import toastMessage from "@/plugings/toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartProduct } from "@/store/cartSlice";
+import axios from "axios";
 
 const Cart = () => {
-  const {isLoggedIn} = useContext(AuthContext);
-  const { cartData, cartCount, totalPrice, deleteCartData } = useContext(CartContext);
+  const loggedinStatus = useSelector((state)=>state.auth.isLoggedin);
+  const token = useSelector((state)=>state.auth.token);
+  const cartCount = useSelector((state)=>state.cart.cartCount);
+  const cartData = useSelector((state)=>state.cart.cartProduct);
+  const loading = useSelector((state)=>state.cart.isLoading)
+  const total_price = useSelector((state)=>state.cart.total_price)
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [windowSize, setWindowSize] = useState("");
   const cartControl = () => {
-    if(!isLoggedIn){
+    if(!loggedinStatus){
       toastMessage('Please login','w')
       return;
     }
@@ -25,16 +31,29 @@ const Cart = () => {
       setIsOpen(false);
     }
   };
-  const deleteFromCart = (product)=>{
-    if(isLoggedIn){
-      deleteCartData(product);
-      toastMessage('Successfully removed from cart','s')
+  const deleteFromCart = (id)=>{
+    const data = {
+      cartItemId:id,
     }
+    axios.post('http://localhost:4000/delete-from-cart',data,{headers:{Authorization:token}})
+    .then((response)=>{
+      if(response.data.status==200){
+        dispatch(getCartProduct())
+        toastMessage(response?.data?.message,'s')
+      }
+    })
+    .catch((error)=>{
+      console(error?.response?.data?.message);
+    })
   }
+  
   useEffect(() => {
     const size = window.screen.height;
     setWindowSize(size);
   }, []);
+  useEffect(()=> {
+    dispatch(getCartProduct());
+  },[]);
   return (
     <div className={windowSize + " w-full"}>
       <div
@@ -63,6 +82,7 @@ const Cart = () => {
         <div className="flex justify-between items-center h-[10%]">
           <h1 className="text-[30px] font-semibold">Cart</h1>
           <svg
+            className="cursor-pointer"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             width="24"
@@ -76,7 +96,7 @@ const Cart = () => {
           </svg>
         </div>
         <div className="h-[75%] overflow-y-scroll">
-          {cartData.length > 0
+          {cartData?.length > 0
             ? cartData.map((product, index) => {
                 return (
                   <div
@@ -85,7 +105,7 @@ const Cart = () => {
                   >
                     <div className="w-[15%] border">
                       <img
-                        src={product.image}
+                        src={product.image_url}
                         alt=""
                         className="h-[50px] w-[60px] object-contain"
                       />
@@ -96,11 +116,12 @@ const Cart = () => {
                     </div>
                     <div className="w-[10%]">
                       <svg
+                        className="cursor-pointer"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         width="24"
                         height="24"
-                        onClick={()=>deleteFromCart(product)}
+                        onClick={()=>deleteFromCart(product.cartItemId)}
                       >
                         <path
                           d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"
@@ -116,7 +137,7 @@ const Cart = () => {
         <div className="h-[15%]">
           <div className="flex w-full justify-between">
             <p className="text-[18px] font-semibold">Total Price:</p>
-            <p className="text-[18px] font-semibold">{totalPrice} BDT</p>
+            <p className="text-[18px] font-semibold">{total_price} BDT</p>
           </div>
           <div className="text-center w-full bg-[#025464] rounded-[5px] py-[10px] mt-6">
             <button className="text-white font-semibold text-[20px]" ><Link href="/checkout">Checkout</Link> </button>

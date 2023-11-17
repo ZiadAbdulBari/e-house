@@ -1,54 +1,74 @@
 import ImageSlider from "@/components/ProductDetail/ImageSlider";
 import Section from "@/components/Section/Section";
 import UiTab from "@/components/UiTab/UiTab";
-import { AuthContext } from "@/contaxt/AuthContext";
-import { CartContext } from "@/contaxt/CartContext";
 import MainLayout from "@/layout/MainLayout";
 import toastMessage from "@/plugings/toastify";
+import { getCartProduct } from "@/store/cartSlice";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 const Detail = () => {
   const router = useRouter();
-  const { isLoggedIn } = useContext(AuthContext);
-  const { addCartData, cartData } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const loggedinStatus = useSelector((state)=>state.auth.isLoggedin)
+  const token = useSelector((state)=>state.auth.token);
   const [details, setDetails] = useState([]);
   const [productImage, setProductImage] = useState([]);
+  const [quantity, setQuantity] = useState(1)
   const detailData = () => {
-    const URL = `https://dummyjson.com/products/${router.query.id}`;
+    const URL = `http://localhost:4000/product-detail/${router.query.id}`;
     axios
       .get(URL)
       .then((response) => {
-        setDetails(response.data);
-        if (response.data.images.length > 0) {
-          const images = response.data.images;
-          images.push(response.data.thumbnail);
-          setProductImage(images);
+        if(response.data.status==200){
+          setDetails(response?.data?.products);
+          // if (response.data.images.length > 0) {
+          //   const images = response.data.images;
+          //   images.push(response.data.thumbnail);
+          //   setProductImage(images);
+          // }
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error?.response?.message);
       });
   };
-  const addToCart = (product) => {
-    if (!isLoggedIn) {
+  const addToCart = (id) => {
+    if (!loggedinStatus) {
       toastMessage("Please login", "w");
-    } else {
+    } 
+    else {
       const cartProduct = {
-        id: product.id,
-        image: product.thumbnail,
-        title: product.title,
-        price: product.price,
+        product_id:id,
+        quantity:quantity
       };
-      const alreadyExist = cartData.filter((data) => data.id == cartProduct.id);
-      if (alreadyExist.length > 0) {
-        toastMessage("Already exist", "i");
-      } else {
-        addCartData(cartProduct);
-        toastMessage("Successfully added to cart", "s");
-      }
+      axios.post('http://localhost:4000/add-to-cart',cartProduct,{headers: { Authorization: token }})
+      .then((response)=>{
+        if(response.data.status==200){
+          dispatch(getCartProduct());
+          toastMessage(response.data.message, "s");
+        }
+      })
+      .catch((error)=>{
+        if(error?.response?.data){
+          console.log(error?.response?.data?.message)
+          toastMessage(error?.response?.data?.message, "i");
+        }
+        else{
+          console.log(error)
+        }
+      })
     }
   };
+  const manageQuantity = (type)=>{
+    if(type=='increment'){
+      setQuantity(quantity+1);
+    }
+    else{
+      setQuantity(quantity-1);
+    }
+  }
   useEffect(() => {
     detailData();
   }, []);
@@ -58,6 +78,7 @@ const Detail = () => {
         <div className="flex gap-8 h-full mt-[30px]">
           <div className="image w-[50%] h-[500px]">
             <ImageSlider productImage={productImage} className="w-full" />
+            <img src={details.image_url} alt="" />
           </div>
           <div className="w-[50%] h-full">
             <div className="grid grid-flow-row gap-y-4">
@@ -110,22 +131,17 @@ const Detail = () => {
             <div className="border border-gry-300 mt-8"></div>
             <div className="short-des py-12">
               <p className="text-gray-400">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry standard dummy text
-                ever since the 1500s, when an unknown printer took a galley of
-                type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged.
+                {details.short_description}
               </p>
             </div>
             <div className="border border-gry-300 mb-8"></div>
             <div className="flex gap-8">
               <div className="flex">
                 <div className="quantity px-[30px] py-[10px] border border-gray-400">
-                  <p className="text-[20px]">1</p>
+                  <p className="text-[20px]">{quantity}</p>
                 </div>
                 <div className="quantity-controller">
-                  <div className="border border-gray-400">
+                  <div className="border border-gray-400" onClick={()=>manageQuantity('increment')}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -138,7 +154,7 @@ const Detail = () => {
                       ></path>
                     </svg>
                   </div>
-                  <div className="border border-gray-400">
+                  <div className="border border-gray-400" onClick={()=>manageQuantity('decrement')}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -153,13 +169,13 @@ const Detail = () => {
                   </div>
                 </div>
               </div>
-              <div onClick={() => addToCart(details)}>
+              <div onClick={() => addToCart(details.id)}>
                 <button className="bg-orange-700 text-white px-[40px] py-[15px] flex justify-center">
                   <span className="text-[15px]"> ADD TO CART</span>
                 </button>
               </div>
-              <div onClick={() => addToCart(details)}>
-                <button className="bg-orange-700 text-white px-[40px] py-[15px] flex justify-center">
+              <div>
+                <button className="bg-gray-500 text-white px-[40px] py-[15px] flex justify-center">
                   <span className="text-[15px]">BUY IT NOW</span>
                 </button>
               </div>

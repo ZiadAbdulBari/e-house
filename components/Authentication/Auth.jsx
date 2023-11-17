@@ -1,12 +1,16 @@
-import { AuthContext } from "@/contaxt/AuthContext";
+// import { AuthContext } from "@/contaxt/AuthContext";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getLoggedinStatus, getToken } from "../../store/authSlice";
 
 const Auth = ({ pageName, text, link }) => {
+  const loggedinStatus = useSelector(state=>state.auth.isLoggedin)
+  const dispatch = useDispatch();
   const router = useRouter();
-  const {setAuthData} = useContext(AuthContext)
-  const [state, setState] = useState({ phone: "", password: "" });
+  const [state, setState] = useState({ email: "", password: "" });
   const handleChangeField = (e) => {
     setState({
       ...state,
@@ -14,17 +18,25 @@ const Auth = ({ pageName, text, link }) => {
     });
   };
   const login = ()=>{
-    const apiResponse = 200;
-    if(apiResponse==200){
-      setAuthData(true);
-      router.push('/');
-    }
+    axios.post('http://localhost:4000/login',state)
+    .then((response)=>{
+      if(response?.data?.status==200){
+        const token = response?.data?.access_token;
+        window.localStorage.setItem('token',JSON.stringify(token));
+        window.localStorage.setItem('isLoggedin',JSON.stringify(true));
+        dispatch(getLoggedinStatus());
+        dispatch(getToken());
+        router.push('/');
+      }
+    })
   }
   const registration = ()=>{
-    const apiResponse = 201;
-    if(apiResponse==201){
-      router.push('/signup');
-    }
+    axios.post('http://localhost:4000/registration',state)
+    .then(response=>{
+      if(response?.data?.status==200){
+        router.push('/signup');
+      }
+    })
   }
   const authCnotroller = (e)=>{
     e.preventDefault();
@@ -40,15 +52,15 @@ const Auth = ({ pageName, text, link }) => {
       <div className="grid grid-flow-row gap-4 w-[400px] bg-white p-[40px] rounded-[5px] shadow-1">
         <div>
           <div>
-            <label htmlFor="phone">Phone Number</label>
+            <label htmlFor="email">Email address</label>
           </div>
           <input
-            type="text"
-            id="phone"
+            type="email"
+            id="email"
             className="input"
-            name="phone"
-            placeholder="Enter your phone number"
-            value={state.phone}
+            name="email"
+            placeholder="Enter your email address"
+            value={state.email}
             onChange={handleChangeField}
           />
         </div>

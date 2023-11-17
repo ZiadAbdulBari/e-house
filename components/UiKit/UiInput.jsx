@@ -6,7 +6,7 @@ const UiInput = ({type,id,label,colorCode,specialClass}) => {
             {
                 type!=='checkbox' && <label htmlFor={id}>{label}</label>
             }
-            <input type={type} id={id} className={`accent-orange-400  bg-[${colorCode}] ${specialClass}`}/>
+            <input type={type} id={id} className={`accent-orange-400 bg-red-500 ${specialClass}`}/>
             {
                 type=='checkbox' && <label htmlFor={id} className='ml-4 '> {label}</label>
             }
