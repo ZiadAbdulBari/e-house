@@ -1,8 +1,10 @@
-import { CartContext } from "@/contaxt/CartContext";
+// import { CartContext } from "@/contaxt/CartContext";
 import MainLayout from "@/layout/MainLayout";
 import { useContext } from "react";
 const Checkout = () => {
-  const { cartData, totalPrice } = useContext(CartContext);
+  // const { cartData, totalPrice } = useContext(CartContext);
+  const cartData=[];
+  const totalPrice=0
   return (
     <MainLayout>
     <div className="lg:container mx-auto">

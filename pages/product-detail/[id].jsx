@@ -1,6 +1,6 @@
 import ImageSlider from "@/components/ProductDetail/ImageSlider";
 import Section from "@/components/Section/Section";
-import UiTab from "@/components/UiTab/UiTab";
+import UiTab from "@/components/UiKit/UiTab";
 import MainLayout from "@/layout/MainLayout";
 import toastMessage from "@/plugings/toastify";
 import { getCartProduct } from "@/store/cartSlice";

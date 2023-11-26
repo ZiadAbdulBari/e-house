@@ -9,7 +9,6 @@ import Promotion from "@/components/Home/Promotion";
 import { useDispatch } from "react-redux";
 import { getLoggedinStatus, getToken } from "@/store/authSlice";
 import { getCartProduct } from "@/store/cartSlice";
-
 export default function Home() {
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
@@ -23,12 +22,8 @@ export default function Home() {
     });
   };
   const getSliderImage = () => {
-    const URL =
-      "https://gist.githubusercontent.com/ZiadAbdulBari/4c3ed9b5a0f6d1c133b776504ed90d42/raw/30964284222d77757ab43d5c3491fab8bfb89b14/gistfile1.txt";
-    axios.get(URL).then((response) => {
-      // console.log(response);
-      setImages(response.data.images);
-    });
+    const img=['../image/banner-1.jpg','../image/banner-2.jpg','../image/banner-3.jpg'];
+    setImages(img);
   };
   const homepageCategory = () => {
     axios.get("http://localhost:4000/get-category").then((response) => {
@@ -46,7 +41,6 @@ export default function Home() {
     getSliderImage();
     getProduct();
   }, []);
-
   return (
     <MainLayout>
       <CommonSlider images={images} />

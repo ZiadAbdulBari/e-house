@@ -1,17 +1,12 @@
-import React from 'react';
+import React from "react";
 
-const UiInput = ({type,id,label,colorCode,specialClass}) => {
-    return (
-        <div>
-            {
-                type!=='checkbox' && <label htmlFor={id}>{label}</label>
-            }
-            <input type={type} id={id} className={`accent-orange-400 bg-red-500 ${specialClass}`}/>
-            {
-                type=='checkbox' && <label htmlFor={id} className='ml-4 '> {label}</label>
-            }
-        </div>
-    );
+const UiInput = ({label,type,value,name,placeholder,onChange}) => {
+  return (
+    <div className="w-full">
+      <label className="text-[20px] font-medium">{label}</label>
+      <input className="text-[20px] font-medium w-full mt-1 h-[50px] px-[20px] rounded" type={type} value={value} name={name} placeholder={placeholder} onChange={onChange} />
+    </div>
+  );
 };
 
 export default UiInput;

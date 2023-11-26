@@ -21,8 +21,8 @@ const CommonSlider = ({ images }) => {
         images.length > 0 && 
         images.map((image,i)=>{
             return (
-            <div className="w-full h-[85vh]" key={i}>
-              <img className="w-full h-full object-cover" src={image.link} />
+            <div className="w-full h-[90vh]" key={i}>
+              <img className="w-full h-full object-cover" src={image} />
             </div>
             )
         })

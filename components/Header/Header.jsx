@@ -2,13 +2,16 @@ import { getLoggedinStatus, getToken } from "../../store/authSlice";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Category from "../Category/Category";
-import Subcategory from "../Subcategory/Subcategory";
+import Option from "./Option";
 import axios from "axios";
+import Dropdown from "./Dropdown";
+import UiButton from "../UiKit/UiButton";
+import { useRouter } from "next/router";
 
 const Header = () => {
-  const isLoggedin = useSelector((state) => state.auth.isLoggedin);
   const dispatch = useDispatch();
+  const router = useRouter();
+  const isLoggedin = useSelector((state) => state.auth.isLoggedin);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const logout = () => {
@@ -16,6 +19,7 @@ const Header = () => {
     window.localStorage.removeItem("token");
     dispatch(getLoggedinStatus());
     dispatch(getToken());
+    router.push('/')
   };
   const getCategory = () => {
     axios.get("http://localhost:4000/get-category").then((response) => {
@@ -50,24 +54,25 @@ const Header = () => {
               <Link href="/">E-House</Link>
             </p>
           </div>
-          {/* Header Category */}
+          {/* HEADER CATEGORY */}
           <div className="flex gap-12">
             {
               categories.length>0 && 
               (
                 categories.map((cat) =>(
-                  <Category
-                    category_name={cat.category_name}
+                  <Dropdown type='category'
+                    name={cat.category_name}
                     key={cat.id}
                   >
                     {
                       subcategories.map((subcat)=>(
                         subcat.categoryId==cat.id && (
-                          <Subcategory subcategory_name={subcat.subcategory_name} key={subcat.id} />
+                          // HEADER SUB-CATEGORY
+                          <Option option_name={subcat.subcategory_name} key={subcat.id} />
                         )
                       ))
                     }
-                  </Category>
+                  </Dropdown>
 
                 ))
               )
@@ -85,9 +90,14 @@ const Header = () => {
               </button>
             )}
             {isLoggedin && (
-              <button className="reg" onClick={logout}>
-                Logout
-              </button>
+              <Dropdown type='profile' name="Ziad">
+                <Option type="link" option_name="Profile" destination="/profile" />
+                <Option type="link" option_name="Order history" destination="/order" />
+                <UiButton buttonName="Logout" type="denger" onClick={logout} />
+              </Dropdown>
+              // <button className="reg" onClick={logout}>
+              //   Logout
+              // </button>
             )}
           </div>
         </div>
