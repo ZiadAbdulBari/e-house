@@ -2,10 +2,10 @@ import UiButton from "@/components/UiKit/UiButton";
 import UiInput from "@/components/UiKit/UiInput";
 import MainLayout from "@/layout/MainLayout";
 import { getLoggedinStatus, getToken } from "@/store/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -44,7 +44,6 @@ const Profile = () => {
     }
   };
   const handleChangeInput = (event) => {
-    // setInputValue(e.target)
     if (event.target.name == "name") {
       setInputValue({ ...inputValue, name: event.target.value });
     } else if (event.target.name == "email") {
