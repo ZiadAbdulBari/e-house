@@ -5,6 +5,7 @@ import { getLoggedinStatus, getToken } from "@/store/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import UiInput from "@/components/UiKit/UiInput";
 import UiButton from "@/components/UiKit/UiButton";
+import { getCartProduct } from "@/store/cartSlice";
 const Checkout = () => {
   const dispatch = useDispatch();
   const loggedin = useSelector((state) => state.auth.isLoggedin);
@@ -117,10 +118,10 @@ const Checkout = () => {
           headers: { Authorization: token },
         })
         .then((response) => {
-          console.log(response);
-          // if (response?.data?.status == 200) {
-          //   getShippingAddress();
-          // }
+          // console.log(response);
+          if (response?.data?.status == 200) {
+            dispatch(getCartProduct())
+          }
         });
     }
   };

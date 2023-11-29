@@ -59,7 +59,7 @@ const Order = () => {
                           Estimated delivery
                         </p>
                         <p className="text-gray-700 text-[16px] font-medium">
-                          02/12/2023
+                          {order.estimated_delivery}
                         </p>
                       </div>
                       <div>
@@ -67,7 +67,7 @@ const Order = () => {
                           Order number
                         </p>
                         <p className="text-gray-700 text-[16px] font-medium">
-                          123456789
+                          {order.order_number}
                         </p>
                       </div>
                       <div>

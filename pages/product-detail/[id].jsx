@@ -11,17 +11,18 @@ import { useDispatch, useSelector } from "react-redux";
 const Detail = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const loggedinStatus = useSelector((state)=>state.auth.isLoggedin)
-  const token = useSelector((state)=>state.auth.token);
+  const loggedinStatus = useSelector((state) => state.auth.isLoggedin);
+  const token = useSelector((state) => state.auth.token);
   const [details, setDetails] = useState([]);
   const [productImage, setProductImage] = useState([]);
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(1);
   const detailData = () => {
+    console.log(router.query.id)
     const URL = `http://localhost:4000/product-detail/${router.query.id}`;
     axios
       .get(URL)
       .then((response) => {
-        if(response.data.status==200){
+        if (response.data.status == 200) {
           setDetails(response?.data?.products);
           // if (response.data.images.length > 0) {
           //   const images = response.data.images;
@@ -37,54 +38,67 @@ const Detail = () => {
   const addToCart = (id) => {
     if (!loggedinStatus) {
       toastMessage("Please login", "w");
-    } 
-    else {
+    } else {
       const cartProduct = {
-        product_id:id,
-        quantity:quantity
+        product_id: id,
+        quantity: quantity,
       };
-      axios.post('http://localhost:4000/add-to-cart',cartProduct,{headers: { Authorization: token }})
-      .then((response)=>{
-        if(response.data.status==200){
-          dispatch(getCartProduct());
-          toastMessage(response.data.message, "s");
-        }
-      })
-      .catch((error)=>{
-        if(error?.response?.data){
-          console.log(error?.response?.data?.message)
-          toastMessage(error?.response?.data?.message, "i");
-        }
-        else{
-          console.log(error)
-        }
-      })
+      axios
+        .post("http://localhost:4000/add-to-cart", cartProduct, {
+          headers: { Authorization: token },
+        })
+        .then((response) => {
+          if (response.data.status == 200) {
+            dispatch(getCartProduct());
+            toastMessage(response.data.message, "s");
+          }
+        })
+        .catch((error) => {
+          if (error?.response?.data) {
+            console.log(error?.response?.data?.message);
+            toastMessage(error?.response?.data?.message, "i");
+          } else {
+            console.log(error);
+          }
+        });
     }
   };
-  const manageQuantity = (type)=>{
-    if(type=='increment'){
-      setQuantity(quantity+1);
+  const manageQuantity = (type) => {
+    if (type == "increment") {
+      if (details.stock_quantity > quantity) {
+        setQuantity(quantity + 1);
+      }
+    } else {
+      if (quantity > 1) {
+        setQuantity(quantity - 1);
+      }
     }
-    else{
-      setQuantity(quantity-1);
-    }
-  }
+  };
   useEffect(() => {
-    detailData();
-  }, []);
+    if(router.query.id){
+      detailData();
+    }
+  }, [router]);
   return (
     <MainLayout>
-      <div className="px-[300px]">
+      <div className="px-[250px]">
         <div className="flex gap-8 h-full mt-[30px]">
-          <div className="image w-[50%] h-[500px]">
-            <ImageSlider productImage={productImage} className="w-full" />
-            <img src={details.image_url} alt="" />
+          <div className="image w-[50%] h-[70vh] overflow-hidden">
+            {/* <ImageSlider productImage={productImage} className="w-full" /> */}
+            <img className="object-cover" src={details.image_url} alt="" />
           </div>
           <div className="w-[50%] h-full">
             <div className="grid grid-flow-row gap-y-4">
               <div className="flex justify-between">
-                <h1 className="font-semibold text-[30px] text-gray-700">{details.title}</h1>
-                <div className="wishlist bg-gray-100 p-2 rounded">
+                <div>
+                  <h1 className="font-semibold text-[30px] text-gray-800">
+                    {details.title}
+                  </h1>
+                  {details.stock_quantity == 0 && (
+                    <p className="text-red-500">Out of stock</p>
+                  )}
+                </div>
+                <div className="wishlist rounded">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -93,7 +107,7 @@ const Detail = () => {
                   >
                     <path
                       d="M12.001 4.52853C14.35 2.42 17.98 2.49 20.2426 4.75736C22.5053 7.02472 22.583 10.637 20.4786 12.993L11.9999 21.485L3.52138 12.993C1.41705 10.637 1.49571 7.01901 3.75736 4.75736C6.02157 2.49315 9.64519 2.41687 12.001 4.52853ZM18.827 6.1701C17.3279 4.66794 14.9076 4.60701 13.337 6.01687L12.0019 7.21524L10.6661 6.01781C9.09098 4.60597 6.67506 4.66808 5.17157 6.17157C3.68183 7.66131 3.60704 10.0473 4.97993 11.6232L11.9999 18.6543L19.0201 11.6232C20.3935 10.0467 20.319 7.66525 18.827 6.1701Z"
-                      fill="rgba(245,0,0,1)"
+                      className="fill-red-500"
                     ></path>
                   </svg>
                 </div>
@@ -121,27 +135,45 @@ const Detail = () => {
                     fill="rgba(240,187,64,1)"
                   ></path>
                 </svg>
-                <p className="ml-4 text-gray-700"> {details.rating} (Customer review) </p>
+                <p className="ml-4 text-gray-800">
+                  {" "}
+                  {details.rating} (Customer review){" "}
+                </p>
               </div>
-              <p className="font-semibold text-[20px] text-gray-700">
-                ${details.price}
-              </p>
-
+              <div className="flex gap-2">
+                <p
+                  className={`${
+                    details.discount_price > 0
+                      ? "text-gray-500 line-through text-[20px]"
+                      : "text-gray-800 font-semibold text-[20px]"
+                  }`}
+                >
+                  {details.price} Tk
+                </p>
+                {details.discount_price > 0 && (
+                  <p className="text-gray-800 font-semibold text-[20px]">
+                    {details.price - details.discount_price} Tk
+                  </p>
+                )}
+              </div>
             </div>
             <div className="border border-gry-300 mt-8"></div>
             <div className="short-des py-12">
-              <p className="text-gray-400">
+              <p className="text-gray-600 font-medium">
                 {details.short_description}
               </p>
             </div>
             <div className="border border-gry-300 mb-8"></div>
-            <div className="flex gap-8">
+            <div className="flex gap-4">
               <div className="flex">
-                <div className="quantity px-[30px] py-[10px] border border-gray-400">
-                  <p className="text-[20px]">{quantity}</p>
+                <div className="quantity px-[30px] py-[10px] border border-gray-800">
+                  <p className="text-[20px] text-gray-800">{quantity}</p>
                 </div>
                 <div className="quantity-controller">
-                  <div className="border border-gray-400" onClick={()=>manageQuantity('increment')}>
+                  <div
+                    className="border border-gray-800 cursor-pointer"
+                    onClick={() => manageQuantity("increment")}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -154,7 +186,10 @@ const Detail = () => {
                       ></path>
                     </svg>
                   </div>
-                  <div className="border border-gray-400" onClick={()=>manageQuantity('decrement')}>
+                  <div
+                    className="border border-gray-800 cursor-pointer"
+                    onClick={() => manageQuantity("decrement")}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -170,26 +205,49 @@ const Detail = () => {
                 </div>
               </div>
               <div onClick={() => addToCart(details.id)}>
-                <button className="bg-orange-700 text-white px-[40px] py-[15px] flex justify-center">
-                  <span className="text-[15px]"> ADD TO CART</span>
+                <button className="bg-gray-800 text-white px-[40px] py-[15px] flex justify-center rounded">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                  >
+                    <path
+                      d="M4.00436 6.41662L0.761719 3.17398L2.17593 1.75977L5.41857 5.00241H20.6603C21.2126 5.00241 21.6603 5.45012 21.6603 6.00241C21.6603 6.09973 21.6461 6.19653 21.6182 6.28975L19.2182 14.2898C19.0913 14.7127 18.7019 15.0024 18.2603 15.0024H6.00436V17.0024H17.0044V19.0024H5.00436C4.45207 19.0024 4.00436 18.5547 4.00436 18.0024V6.41662ZM6.00436 7.00241V13.0024H17.5163L19.3163 7.00241H6.00436ZM5.50436 23.0024C4.67593 23.0024 4.00436 22.3308 4.00436 21.5024C4.00436 20.674 4.67593 20.0024 5.50436 20.0024C6.33279 20.0024 7.00436 20.674 7.00436 21.5024C7.00436 22.3308 6.33279 23.0024 5.50436 23.0024ZM17.5044 23.0024C16.6759 23.0024 16.0044 22.3308 16.0044 21.5024C16.0044 20.674 16.6759 20.0024 17.5044 20.0024C18.3328 20.0024 19.0044 20.674 19.0044 21.5024C19.0044 22.3308 18.3328 23.0024 17.5044 23.0024Z"
+                      fill="rgba(255,255,255,1)"
+                    ></path>
+                  </svg>
+                  <span className="text-[15px] font-medium ml-2">
+                    {" "}
+                    ADD TO CART
+                  </span>
                 </button>
               </div>
               <div>
-                <button className="bg-gray-500 text-white px-[40px] py-[15px] flex justify-center">
-                  <span className="text-[15px]">BUY IT NOW</span>
+                <button className="bg-gray-700 text-white px-[40px] py-[15px] flex justify-center rounded">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                  >
+                    <path
+                      d="M7.00488 7.99951V5.99951C7.00488 3.23809 9.24346 0.999512 12.0049 0.999512C14.7663 0.999512 17.0049 3.23809 17.0049 5.99951V7.99951H20.0049C20.5572 7.99951 21.0049 8.44723 21.0049 8.99951V20.9995C21.0049 21.5518 20.5572 21.9995 20.0049 21.9995H4.00488C3.4526 21.9995 3.00488 21.5518 3.00488 20.9995V8.99951C3.00488 8.44723 3.4526 7.99951 4.00488 7.99951H7.00488ZM7.00488 9.99951H5.00488V19.9995H19.0049V9.99951H17.0049V11.9995H15.0049V9.99951H9.00488V11.9995H7.00488V9.99951ZM9.00488 7.99951H15.0049V5.99951C15.0049 4.34266 13.6617 2.99951 12.0049 2.99951C10.348 2.99951 9.00488 4.34266 9.00488 5.99951V7.99951Z"
+                      fill="rgba(255,251,251,1)"
+                    ></path>
+                  </svg>
+                  <span className="text-[15px] font-medium ml-2">BUY IT NOW</span>
                 </button>
               </div>
             </div>
             <div className="border border-gry-300 mt-8"></div>
             <div className="tab mt-8">
-              <UiTab/>
+              <UiTab />
             </div>
           </div>
         </div>
       </div>
-      <div>
-        {/* <Section/> */}
-      </div>
+      <div>{/* <Section/> */}</div>
     </MainLayout>
   );
 };

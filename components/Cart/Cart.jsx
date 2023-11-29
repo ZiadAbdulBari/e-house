@@ -46,7 +46,7 @@ const Cart = () => {
         }
       })
       .catch((error) => {
-        console(error?.response?.data?.message);
+        console.log(error?.response?.data?.message);
       });
   };
 
@@ -110,18 +110,23 @@ const Cart = () => {
                   className="flex justify-between items-center gap-2 py-[20px]"
                   key={index}
                 >
-                  <div className="w-[15%] border">
+                  <div className="border">
                     <img
                       src={product.image_url}
                       alt=""
                       className="h-[50px] w-[60px] object-contain"
                     />
                   </div>
-                  <div className="w-[75%]">
+                  <div className="">
                     <p>{product.title}</p>
-                    <p>Price: {product.price}</p>
                   </div>
-                  <div className="w-[10%]">
+                  <div className="">
+                    <p>{product.cart_quantity}x</p>
+                  </div>
+                  <div className="">
+                    <p>{product.price} Tk</p>
+                  </div>
+                  <div className="">
                     <svg
                       className="cursor-pointer"
                       xmlns="http://www.w3.org/2000/svg"
@@ -175,7 +180,7 @@ const Cart = () => {
               <p className="text-[18px] font-semibold">{total_price} BDT</p>
             </div>
             <div className="text-center w-full bg-gray-800 rounded py-[10px] mt-6">
-              <button className="text-white font-semibold text-[20px]">
+              <button className="text-white font-semibold text-[18px]">
                 <Link href="/checkout">Checkout</Link>{" "}
               </button>
             </div>
