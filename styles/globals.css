@@ -1,46 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=Expletus+Sans:wght@400;500;600&family=Raleway:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Expletus+Sans:wght@400;500;600&family=Raleway:wght@300;400;500;600;700;800&display=swap'); */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @import "./common.css";
 @layer base {
   html {
-    font-family: Raleway;
+    font-family: Inter;
   }
 }
 
 .input {
-  @apply w-full h-[35px] px-[20px] py-[20px] rounded-[5px] outline-none border mt-4;
+  @apply w-full h-[35px] px-[20px] py-[20px] rounded-[5px] outline-none border;
 }
 .button {
-  @apply px-6 py-2 text-white bg-orange-700;
+  @apply px-6 py-2 text-white bg-gray-800 rounded;
 }
 .open-cart {
   @apply block;
 }
 .slick-dots li {
-  width: 40px !important;
-  height: 40px !important;
-  bottom: -20px !important;
+  bottom: 40px !important;
 }
 .slick-dots li.slick-active button:before {
-  color: rgb(255, 148, 26) !important;
+  color: orangered !important;
 }
- .slick-next {
+.slick-dots li button:before {
+  color: white !important;
+}
+.slick-dots li button:before{
+  font-size: 20px!important;
+  
+}
+ /* .slick-next {
   position: absolute!important;
   z-index:999!important;
   top: 90%!important;
-  right: 50px!important;
+  right: 50%!important;
   transform: translate(0, 0)!important;
 }
 .slick-prev {
   position: absolute!important;
   z-index:999!important;
   top: 90%!important;
-  left: 94%!important;
+  left: 50%!important;
   transform: translate(0, 0)!important;
 }
 .slick-prev:before, .slick-next:before {
   font-size: 30px!important;
   color: #FD624C!important;
+} */
+.slick-dots {
+  position: absolute;
+  bottom: 25px;
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
 }

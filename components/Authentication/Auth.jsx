@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoggedinStatus, getToken } from "../../store/authSlice";
+import toastMessage from "@/plugings/toastify";
 
 const Auth = ({ pageName, text, link }) => {
   const loggedinStatus = useSelector(state=>state.auth.isLoggedin)
@@ -26,16 +27,24 @@ const Auth = ({ pageName, text, link }) => {
         window.localStorage.setItem('isLoggedin',JSON.stringify(true));
         dispatch(getLoggedinStatus());
         dispatch(getToken());
+        toastMessage(response?.data?.message,'s');
         router.push('/');
       }
+    })
+    .catch((error)=>{
+      toastMessage(error?.message,'e');
     })
   }
   const registration = ()=>{
     axios.post('http://localhost:4000/registration',state)
     .then(response=>{
       if(response?.data?.status==200){
+        toastMessage(response?.data?.message,'s');
         router.push('/signup');
       }
+    })
+    .catch((error)=>{
+      toastMessage(error?.message,'e');
     })
   }
   const authCnotroller = (e)=>{
@@ -80,7 +89,7 @@ const Auth = ({ pageName, text, link }) => {
         </div>
         <p className="text-center">
           {text}
-          <Link href={link} className="font-bold text-orange-700">
+          <Link href={link} className="font-bold text-gray-800">
             {pageName == "Registration" ? "Login" : "Registration"}
           </Link>
         </p>

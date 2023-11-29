@@ -1,8 +1,8 @@
 import React from "react";
 
-const CategorySection = ({ height, iURL,name }) => {
+const CategorySection = ({ iURL,name }) => {
   return (
-    <div className={"bg-gray-50 relative overflow-hidden " + height}>
+    <div className={"bg-gray-50 relative overflow-hidden h-full"}>
       <div>
         <img src={iURL} alt="" className="h-full w-full object-cover" />
       </div>
@@ -18,7 +18,7 @@ const CategorySection = ({ height, iURL,name }) => {
             >
               <path
                 d="M12 11V8L16 12L12 16V13H8V11H12ZM12 2C17.52 2 22 6.48 22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2ZM12 20C16.42 20 20 16.42 20 12C20 7.58 16.42 4 12 4C7.58 4 4 7.58 4 12C4 16.42 7.58 20 12 20Z"
-                fill="rgba(255,255,255,1)"
+                className="fill-orange-500"
               ></path>
             </svg>
           </div>

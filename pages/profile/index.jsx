@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -86,16 +87,7 @@ const Profile = () => {
       <div className="w-[70vw] m-auto">
         <h1 className="text-[30px] font-bold mt-4">Profile</h1>
         <div className="flex gap-2 mt-12">
-          <div className="w-[20%] bg-red-500 rounded">
-            <ul>
-              <li>
-                <Link href="/profile">Profile</Link>
-              </li>
-              <li>
-                <Link href="/order">Order</Link>
-              </li>
-            </ul>
-          </div>
+          <Sidebar/>
           {/* SHOW PROFILE DATA */}
           {edit == false && (
             <div className="rounded bg-orange-100 w-[80%]">

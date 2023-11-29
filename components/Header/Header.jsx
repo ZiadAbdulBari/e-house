@@ -50,8 +50,8 @@ const Header = () => {
       <div className="lg:container mx-auto">
         <div className="flex justify-between items-center">
           <div>
-            <p className=" text-[40px] font-semibold !font-['Expletus_Sans'] text-secondary">
-              <Link href="/">E-House</Link>
+            <p className=" text-[40px] font-extrabold text-gray-800">
+              <Link href="/">Essential</Link>
             </p>
           </div>
           {/* HEADER CATEGORY */}
@@ -78,7 +78,7 @@ const Header = () => {
               )
             }
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-2">
             {!isLoggedin && (
               <button className="login">
                 <Link href="/signup">Login</Link>
@@ -95,9 +95,6 @@ const Header = () => {
                 <Option type="link" option_name="Order history" destination="/order" />
                 <UiButton buttonName="Logout" type="denger" onClick={logout} />
               </Dropdown>
-              // <button className="reg" onClick={logout}>
-              //   Logout
-              // </button>
             )}
           </div>
         </div>

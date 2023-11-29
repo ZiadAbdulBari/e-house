@@ -22,7 +22,11 @@ export default function Home() {
     });
   };
   const getSliderImage = () => {
-    const img=['../image/banner-1.jpg','../image/banner-2.jpg','../image/banner-3.jpg'];
+    const img = [
+      "../image/banner-1.jpg",
+      "../image/banner-2.jpg",
+      "../image/banner-3.jpg",
+    ];
     setImages(img);
   };
   const homepageCategory = () => {
@@ -45,42 +49,52 @@ export default function Home() {
     <MainLayout>
       <CommonSlider images={images} />
       {/* CATEGORY */}
-      <div className="px-[250px] grid grid-flow-row grid-cols-2 gap-6 my-[100px] h-[800px] overflow-hidden">
-        {categories.length > 0 &&
-          categories.map(
-            (cat) =>
-              cat.category_name == "Men" && (
-                <div key={cat.id}>
-                  <CategorySection
-                    iURL={cat.image_url}
-                    height="h-[800px]"
-                    name={cat.category_name}
-                  />
-                </div>
-              )
-          )}
-        <div className="grid grid-flow-row gap-6">
-          {categories.length > 0 &&
-            categories.map(
-              (cat) =>
-                cat.category_name != "Men" && (
-                  <CategorySection
-                    iURL={cat.image_url}
-                    height="h-[390px]"
-                    name={cat.category_name}
-                    key={cat.id}
-                  />
-                )
-            )}
+      {categories.length > 0 ? (
+        <div className="px-[250px] grid grid-cols-3 gap-6 my-[100px] max-h-[300px] overflow-hidden">
+          {/* {categories.length > 0 &&
+              categories.map(
+                (cat) =>
+                  cat.category_name == "Men" && (
+                    <div key={cat.id}>
+                      <CategorySection
+                        iURL={cat.image_url}
+                        height="h-[800px]"
+                        name={cat.category_name}
+                      />
+                    </div>
+                  )
+              )} */}
+          {/* className="grid grid-flow-row gap-6" */}
+          {categories.map((cat) => (
+            <CategorySection
+              iURL={cat.image_url}
+              // height="h-[390px]"
+              name={cat.category_name}
+              key={cat.id}
+            />
+          ))}
         </div>
-      </div>
-      <div className="px-[80px] mt-20">
-        <Section sectionName="You Must Have" products={products} />
+      ) : (
+        <div>
+          <p className="text-center font-semibold text-[18px] text-gary-800">
+            Categories are not found
+          </p>
+        </div>
+      )}
+      <div className="px-[250px] mt-20">
+        {products.length > 0 ? (
+          <Section sectionName="New Arrival" products={products} />
+        ) : (
+          <div>
+            <p className="text-center font-semibold text-[18px] text-gary-800">
+              Products are not found
+            </p>
+          </div>
+        )}
       </div>
       <div className="my-[100px]">
         <Promotion pIURL="https://images.unsplash.com/photo-1511511450040-677116ff389e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80" />
       </div>
-      
     </MainLayout>
   );
 }

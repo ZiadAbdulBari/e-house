@@ -20,7 +20,7 @@ const Checkout = () => {
     address: "",
     email: "",
     gift: false,
-    // message: "",
+    message: "",
   });
   const handleInput = (e) => {
     if (e.target.name == "name") {
@@ -33,10 +33,9 @@ const Checkout = () => {
       setInputValue({ ...inputValue, address: e.target.value });
     } else if (e.target.name == "gift") {
       setInputValue({ ...inputValue, gift: e.target.checked });
+    } else if (e.target.name == "message") {
+      setInputValue({ ...inputValue, message: e.target.value });
     }
-    // else if (e.target.name == "message") {
-    //   setInputValue({ ...inputValue, message: e.target.value });
-    // }
   };
   const getProducts = () => {
     const checkoutProduct = JSON.parse(window.localStorage.getItem("cart"));
@@ -53,11 +52,10 @@ const Checkout = () => {
         .then((response) => {
           console.log(response);
           if (response?.data?.status == 200) {
-            if(response?.data?.shipping_address?.length>0){
+            if (response?.data?.shipping_address?.length > 0) {
               setSelectedAddress(response?.data?.shipping_address[0]);
               setAddresses(response?.data?.shipping_address);
-            }
-            else{
+            } else {
               setNewAddress(true);
             }
           }
@@ -79,7 +77,7 @@ const Checkout = () => {
               address: "",
               email: "",
               gift: false,
-              // message: "",
+              message: "",
             });
             setNewAddress(false);
           }
@@ -103,17 +101,17 @@ const Checkout = () => {
         });
     }
   };
-  const placeOrder = ()=>{
+  const placeOrder = () => {
     if (loggedin) {
       const data = {
-            total_price:totalPrice,
-            shippingaddressId:selectedAddress?.id,
-            products:cartData,
-            medium:"cod",
-            paymentHistory:JSON.stringify({
-              "amount":totalPrice
-           })
-        }
+        total_price: totalPrice,
+        shippingaddressId: selectedAddress?.id,
+        products: cartData,
+        medium: "cod",
+        paymentHistory: JSON.stringify({
+          amount: totalPrice,
+        }),
+      };
       axios
         .post("http://localhost:4000/place-order", data, {
           headers: { Authorization: token },
@@ -125,7 +123,7 @@ const Checkout = () => {
           // }
         });
     }
-  }
+  };
   useEffect(() => {
     dispatch(getLoggedinStatus());
     dispatch(getToken());
@@ -211,27 +209,27 @@ const Checkout = () => {
                     placeholder=""
                     onChange={handleInput}
                   />
-                  {/* {inputValue.gift && (
-                      <div className="grid grid-cols-1">
-                        <label
-                          className="text-[18px] font-medium text-gray-800"
-                          htmlFor="message"
-                        >
-                          Message
-                        </label>
-                        <textarea
-                          className="mt-4 text-[20px] font-medium px-[20px] rounded border border-gray-200 outline-gray-300 placeholder:text-gray-300"
-                          name="message"
-                          id="message"
-                          cols="30"
-                          rows="5"
-                          placeholder="Write your message"
-                          onClick={handleInput}
-                        >
-                          {inputValue.message}
-                        </textarea>
-                      </div>
-                    )} */}
+                  {inputValue.gift && (
+                    <div className="grid grid-cols-1">
+                      <label
+                        className="text-[18px] font-medium text-gray-800"
+                        htmlFor="message"
+                      >
+                        Message
+                      </label>
+                      <textarea
+                        className="mt-4 text-[20px] font-medium px-[20px] rounded border border-gray-200 outline-gray-300 placeholder:text-gray-300"
+                        name="message"
+                        id="message"
+                        cols="30"
+                        rows="5"
+                        placeholder="Write your message"
+                        onClick={handleInput}
+                      >
+                        {inputValue.message}
+                      </textarea>
+                    </div>
+                  )}
                 </div>
                 <div className="flex justify-end mt-20 gap-x-2">
                   <UiButton
@@ -355,7 +353,11 @@ const Checkout = () => {
                 {/* <button className="bg-orange-700 text-white text-[20px] px-[50px] py-[5px] rounded-[5px]" >
                   Place Order
                 </button> */}
-                <UiButton buttonName="Place Order" externalClass="bg-green-300" onClick={placeOrder}/>
+                <UiButton
+                  buttonName="Place Order"
+                  externalClass="bg-green-300"
+                  onClick={placeOrder}
+                />
               </div>
             </div>
           </div>
