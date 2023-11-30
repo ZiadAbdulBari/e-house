@@ -64,6 +64,7 @@ const Profile = () => {
         })
         .then((response) => {
           if (response?.data?.status == 200) {
+            getProfileData()
             setEdit(false);
           }
         })
@@ -86,108 +87,111 @@ const Profile = () => {
     <MainLayout>
       <div className="w-[70vw] m-auto">
         <h1 className="text-[30px] font-bold mt-4">Profile</h1>
-        <div className="flex gap-2 mt-12">
+        <div className="flex gap-4 mt-12">
           <Sidebar/>
           {/* SHOW PROFILE DATA */}
-          {edit == false && (
-            <div className="rounded bg-gray-50 w-[80%]">
-              <div className="p-[10px] flex justify-end cursor-pointer">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
-                  onClick={() => setEdit(true)}
-                >
-                  <path
-                    d="M16.7574 2.99666L9.29145 10.4626L9.29886 14.7097L13.537 14.7023L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"
-                    fill="rgba(0,0,0,1)"
-                  ></path>
-                </svg>
-              </div>
-              <div className="w-full py-[50px] px-[30px]">
-                <div className="flex justify-between gap-y-2 w-full">
-                  <div className="flex w-[50%]">
-                    <p className="text-[20px] font-medium w-[20%]">Name</p>
-                    <p className="text-[20px] font-medium">
-                      {profileData?.name}
-                    </p>
+          <div className="w-[80%]">
+            {edit == false && (
+              <div className="rounded bg-gray-50 w-full">
+                <div className="p-[10px] flex justify-end cursor-pointer">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    onClick={() => setEdit(true)}
+                  >
+                    <path
+                      d="M16.7574 2.99666L9.29145 10.4626L9.29886 14.7097L13.537 14.7023L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"
+                      fill="rgba(0,0,0,1)"
+                    ></path>
+                  </svg>
+                </div>
+                <div className="w-full py-[50px] px-[30px]">
+                  <div className="flex justify-between gap-y-2 w-full">
+                    <div className="flex w-[50%]">
+                      <p className="text-[20px] font-medium w-[20%]">Name</p>
+                      <p className="text-[20px] font-medium">
+                        {profileData?.name}
+                      </p>
+                    </div>
+                    <div className="flex w-[50%]">
+                      <p className="text-[20px] font-medium w-[20%]">Email</p>
+                      <p className="text-[20px] font-medium">
+                        {profileData?.email}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex w-[50%]">
-                    <p className="text-[20px] font-medium w-[20%]">Email</p>
-                    <p className="text-[20px] font-medium">
-                      {profileData?.email}
-                    </p>
+                  <div className="flex justify-between gap-y-2 w-full mt-8">
+                    <div className="flex w-[50%]">
+                      <p className="text-[20px] font-medium w-[20%]">Phone</p>
+                      <p className="text-[20px] font-medium">
+                        {profileData?.phone}
+                      </p>
+                    </div>
+                    <div className="flex w-[50%]">
+                      <p className="text-[20px] font-medium w-[20%]">Address</p>
+                      <p className="text-[20px] font-medium">
+                        {profileData?.address}
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex justify-between gap-y-2 w-full">
-                  <div className="flex w-[50%]">
-                    <p className="text-[20px] font-medium w-[20%]">Phone</p>
-                    <p className="text-[20px] font-medium">
-                      {profileData?.phone}
-                    </p>
-                  </div>
-                  <div className="flex w-[50%]">
-                    <p className="text-[20px] font-medium w-[20%]">Address</p>
-                    <p className="text-[20px] font-medium">
-                      {profileData?.address}
-                    </p>
-                  </div>
+              </div>
+            )}
+            {/* UPDATE PROFILE DATA*/}
+            {edit == true && (
+              <div className="rounded bg-gray-50 py-[50px] px-[30px] w-full">
+                <div className="grid grid-cols-2 gap-x-4 gap-y-8">
+                  <UiInput
+                    label="Name"
+                    type="text"
+                    value={inputValue.name}
+                    name="name"
+                    placeholder="Ente your name"
+                    onChange={handleChangeInput}
+                  />
+                  <UiInput
+                    label="Email"
+                    type="email"
+                    value={inputValue.email}
+                    name="email"
+                    placeholder="Ente your email"
+                    onChange={handleChangeInput}
+                  />
+                  <UiInput
+                    label="Phone"
+                    type="text"
+                    value={inputValue.phone}
+                    name="phone"
+                    placeholder="Ente your phone number"
+                    onChange={handleChangeInput}
+                  />
+                  <UiInput
+                    label="Address"
+                    type="text"
+                    value={inputValue.address}
+                    name="address"
+                    placeholder="Ente your address"
+                    onChange={handleChangeInput}
+                  />
+                </div>
+                <div className="flex justify-end mt-[100px] gap-4">
+                  <UiButton
+                    buttonName="Upgrade Profile"
+                    externalClass="bg-green-200"
+                    onClick={upgradeProfile}
+                  />
+                  <UiButton
+                    buttonName="Cancel"
+                    externalClass="bg-red-200"
+                    onClick={cancelUpgrade}
+                  />
                 </div>
               </div>
-            </div>
-          )}
-          {/* UPDATE PROFILE DATA*/}
-          {edit == true && (
-            <div className="rounded bg-orange-100 py-[50px] px-[30px] w-[80%]">
-              <div className="grid grid-cols-2 gap-4">
-                <UiInput
-                  label="Name"
-                  type="text"
-                  value={inputValue.name}
-                  name="name"
-                  placeholder="Ente your name"
-                  onChange={handleChangeInput}
-                />
-                <UiInput
-                  label="Email"
-                  type="email"
-                  value={inputValue.email}
-                  name="email"
-                  placeholder="Ente your email"
-                  onChange={handleChangeInput}
-                />
-                <UiInput
-                  label="Phone"
-                  type="text"
-                  value={inputValue.phone}
-                  name="phone"
-                  placeholder="Ente your phone number"
-                  onChange={handleChangeInput}
-                />
-                <UiInput
-                  label="Address"
-                  type="text"
-                  value={inputValue.address}
-                  name="address"
-                  placeholder="Ente your address"
-                  onChange={handleChangeInput}
-                />
-              </div>
-              <div className="flex justify-end mt-[100px] gap-4">
-                <UiButton
-                  buttonName="Upgrade Profile"
-                  type="success"
-                  onClick={upgradeProfile}
-                />
-                <UiButton
-                  buttonName="Cancel"
-                  type="denger"
-                  onClick={cancelUpgrade}
-                />
-              </div>
-            </div>
-          )}
+            )}
+
+          </div>
         </div>
       </div>
     </MainLayout>
