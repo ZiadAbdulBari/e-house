@@ -90,7 +90,7 @@ const Profile = () => {
           <Sidebar/>
           {/* SHOW PROFILE DATA */}
           {edit == false && (
-            <div className="rounded bg-orange-100 w-[80%]">
+            <div className="rounded bg-gray-50 w-[80%]">
               <div className="p-[10px] flex justify-end cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

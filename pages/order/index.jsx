@@ -43,7 +43,7 @@ const Order = () => {
     <MainLayout>
       <div className="w-[70vw] m-auto">
         <h1 className="text-[30px] font-bold mt-4">Order list</h1>
-        <div className="flex gap-2 mt-12">
+        <div className="flex gap-4 mt-12">
           <Sidebar />
           <div className="w-full">
             <div className="grid grid-flow-row gap-y-2 w-full">
