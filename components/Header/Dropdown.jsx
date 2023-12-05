@@ -1,14 +1,17 @@
+import Link from "next/link";
 import React from "react";
 
-const Dropdown = ({ type, name, children }) => {
+const Dropdown = ({ type, name, id, children }) => {
   return (
     <div className="header-category group">
       <div className="flex gap-2 items-center">
         <div>
           {type == "category" ? (
-            <p className="header-category-name transition-all duration-300 group-hover:font-semibold">
-              {name}
-            </p>
+            <Link href={`/category/${id}`}>
+              <p className="header-category-name transition-all duration-300 group-hover:font-semibold">
+                {name}
+              </p>
+            </Link>
           ) : (
             <div className="h-[30px] w-[30px] rounded-full border-2 border-gray-800">
               <img src="../../image/default-image.jpg" alt="" className="w-[30px]" />

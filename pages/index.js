@@ -17,7 +17,7 @@ export default function Home() {
   const getProduct = () => {
     const URL = "http://localhost:4000/get-product";
     axios.get(URL).then((response) => {
-      // console.log(response);
+      console.log(response);
       setProducts(response.data.products);
     });
   };
@@ -83,7 +83,7 @@ export default function Home() {
       )}
       <div className="px-[250px] mt-20">
         {products.length > 0 ? (
-          <Section sectionName="New Arrival" products={products} />
+          <Section sectionName="New Arrival" count='0' products={products} />
         ) : (
           <div>
             <p className="text-center font-semibold text-[18px] text-gary-800">

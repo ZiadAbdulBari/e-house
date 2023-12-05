@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
 
-const Option = ({type,option_name,destination=""}) => {
+const Option = ({type,option_name,id,destination=""}) => {
     return (
-        <li><Link href={destination} >{option_name}</Link></li>
+        <li><Link href={`/subcategory/${id}`}>{option_name}</Link></li>
     );
 };
 
