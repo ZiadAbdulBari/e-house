@@ -37,10 +37,10 @@ const Filter = () => {
     <MainLayout>
       <div className="px-[250px]">
         <div className="flex w-full gap-2">
-          <div className="w-[20%] h-screen bg-gray-50">
+          {/* <div className="w-[20%] h-screen bg-gray-50">
             <FilterOptions />
-          </div>
-          <div className="w-[80%]">
+          </div> */}
+          <div className="w-[100%]">
             <Section sectionName={title} count={totalProduct} products={products} />
           </div>
         </div>

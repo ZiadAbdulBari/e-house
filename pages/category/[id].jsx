@@ -39,10 +39,10 @@ const Category = () => {
       <div className="px-[250px]">
         {/* <h2>{title}({totalProduct})</h2> */}
         <div className="flex w-full gap-2">
-          <div className="w-[20%] h-screen bg-gray-50">
+          {/* <div className="w-[20%] h-screen bg-gray-50">
             <FilterOptions subcategory={subcategory}/>
-          </div>
-          <div className="w-[80%]">
+          </div> */}
+          <div className="w-[100%]">
             <Section sectionName={title} count={totalProduct} products={products}/>
           </div>
         </div>
