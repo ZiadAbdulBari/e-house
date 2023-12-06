@@ -31,9 +31,10 @@ const Cart = () => {
       setIsOpen(false);
     }
   };
-  const deleteFromCart = (id) => {
+  const deleteFromCart = (product) => {
     const data = {
-      cartItemId: id,
+      cartItemId: product.cartItemId,
+      productId: product.id,
     };
     axios
       .post("http://localhost:4000/delete-from-cart", data, {
@@ -85,7 +86,9 @@ const Cart = () => {
         id="cart"
       >
         <div className="flex justify-between items-center h-[10%]">
-          <h1 className="text-[25px] font-extrabold text-gray-800">Essential</h1>
+          <h1 className="text-[25px] font-extrabold text-gray-800">
+            Essential
+          </h1>
           <div className="w-[25px] h-[25px] rounded-full bg-red-500 flex justify-center items-center">
             <svg
               className="cursor-pointer"
@@ -110,30 +113,45 @@ const Cart = () => {
                   className="flex justify-between items-center gap-2 py-[20px]"
                   key={index}
                 >
-                  <div className="border">
+                  <div className="border w-[15%]">
                     <img
                       src={product.image_url}
                       alt=""
                       className="h-[50px] w-[60px] object-contain"
                     />
                   </div>
-                  <div className="">
+                  <div className="w-[40%]">
                     <p>{product.title}</p>
                   </div>
-                  <div className="">
+                  <div className="w-[10%]">
                     <p>{product.cart_quantity}x</p>
                   </div>
-                  <div className="">
-                    <p>{product.price} Tk</p>
+                  <div className="w-[25%]">
+                    <>
+                      <p
+                        className={`font-semibold ${
+                          product.discount_price > 0
+                            ? "text-gray-500 line-through"
+                            : "text-gray-800"
+                        }`}
+                      >
+                        {product.price} Tk
+                      </p>
+                      {product.discount_price > 0 && (
+                        <p className="text-gray-800 font-semibold">
+                          {product.price - product.discount_price} Tk
+                        </p>
+                      )}
+                    </>
                   </div>
-                  <div className="">
+                  <div className="w-[10%]">
                     <svg
                       className="cursor-pointer"
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       width="24"
                       height="24"
-                      onClick={() => deleteFromCart(product.cartItemId)}
+                      onClick={() => deleteFromCart(product)}
                     >
                       <path
                         d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"

@@ -8,13 +8,15 @@ const ProductCart = ({ product }) => {
   const dispatch = useDispatch();
   const loggedinStatus = useSelector((state) => state.auth.isLoggedin);
   const token = useSelector((state) => state.auth.token);
-  const addTOCart = (id) => {
+  const addTOCart = (product) => {
     if (!loggedinStatus) {
       toastMessage("Please login", "w");
     } else {
+      
       const cartProduct = {
-        product_id: id,
+        product_id: product.id,
         quantity: 1,
+        price:parseInt(product.price)-parseInt(product.discount_price)
       };
       axios
         .post("http://localhost:4000/add-to-cart", cartProduct, {
@@ -140,7 +142,7 @@ const ProductCart = ({ product }) => {
           <div className="group">
             <div
               className="w-[35px] h-[35px] flex justify-center items-center border border-gray-600 rounded-full cursor-pointer transition-all duration-300 group-hover:bg-gray-600"
-              onClick={() => addTOCart(product.id)}
+              onClick={() => addTOCart(product)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

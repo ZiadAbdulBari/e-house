@@ -57,14 +57,14 @@ const Header = () => {
   return (
     <div className="bg-gray-50">
       <div className="lg:container mx-auto">
-        <div className="flex justify-between items-center">
-          <div>
+        <div className="flex justify-between items-center w-full">
+          <div className="w-[33%]">
             <p className=" text-[40px] font-extrabold text-gray-800">
               <Link href="/">Essential</Link>
             </p>
           </div>
           {/* HEADER CATEGORY */}
-          <div className="flex gap-12">
+          <div className="flex gap-12 w-[34%] justify-center">
             {categories.length > 0 &&
               categories.map((cat) => (
                 <Dropdown
@@ -87,7 +87,7 @@ const Header = () => {
                 </Dropdown>
               ))}
           </div>
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center w-[33%] justify-end">
             <form onSubmit={searchProduct}>
               <UiInput
                 label=""
