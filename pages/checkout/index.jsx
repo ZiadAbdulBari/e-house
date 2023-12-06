@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import UiInput from "@/components/UiKit/UiInput";
 import UiButton from "@/components/UiKit/UiButton";
 import { getCartProduct } from "@/store/cartSlice";
+import { useRouter } from "next/router";
 const Checkout = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const loggedin = useSelector((state) => state.auth.isLoggedin);
   const token = useSelector((state) => state.auth.token);
@@ -43,6 +45,7 @@ const Checkout = () => {
     const toptalPrice = JSON.parse(window.localStorage.getItem("totalPrice"));
     setCartData(checkoutProduct);
     setTotalPrice(toptalPrice);
+    router.push('/order')
   };
   const getShippingAddress = () => {
     if (loggedin) {
@@ -120,7 +123,8 @@ const Checkout = () => {
         .then((response) => {
           // console.log(response);
           if (response?.data?.status == 200) {
-            dispatch(getCartProduct())
+            dispatch(getCartProduct());
+            getProducts();
           }
         });
     }
@@ -294,7 +298,7 @@ const Checkout = () => {
           </div>
           <div className="w-[50%] bg-gray-100 px-[30px]">
             <p className="my-4 font-samibold text-[30px]">Products</p>
-            <div className="h-[55%] overflow-y-scroll">
+            <div className="h-[55%] overflow-y-auto">
               {cartData.length > 0 &&
                 cartData.map((product, index) => {
                   return (
@@ -316,13 +320,26 @@ const Checkout = () => {
                         <p className="text-[20px]">{product.cart_quantity} x</p>
                       </div>
                       <div className="w-[20%]">
-                        <p className="text-[20px]">{product.price} BDT</p>
+                        <p
+                          className={`font-semibold ${
+                            product.discount_price > 0
+                              ? "text-gray-500 line-through"
+                              : "text-gray-800"
+                          }`}
+                        >
+                          {product.price} Tk
+                        </p>
+                        {product.discount_price > 0 && (
+                          <p className="text-gray-800 font-semibold">
+                            {product.price - product.discount_price} Tk
+                          </p>
+                        )}
                       </div>
                     </div>
                   );
                 })}
             </div>
-            <div className="my-6 flex gap-2 justify-between">
+            {/* <div className="my-6 flex gap-2 justify-between">
               <input
                 type="text"
                 placeholder="Apply Cupon"
@@ -331,7 +348,7 @@ const Checkout = () => {
               <button className="px-[20px] bg-[#025464] rounded text-white text-[20px]">
                 Apply
               </button>
-            </div>
+            </div> */}
             <div>
               <div className="flex justify-between">
                 <p className="text-[20px]">Subtotal:</p>

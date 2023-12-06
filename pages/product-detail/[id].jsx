@@ -35,13 +35,14 @@ const Detail = () => {
         console.log(error?.response?.message);
       });
   };
-  const addToCart = (id) => {
+  const addToCart = (product) => {
     if (!loggedinStatus) {
       toastMessage("Please login", "w");
     } else {
       const cartProduct = {
-        product_id: id,
+        product_id: product.id,
         quantity: quantity,
+        price:parseInt(product.price)-parseInt(product.discount_price),
       };
       axios
         .post("http://localhost:4000/add-to-cart", cartProduct, {
@@ -204,7 +205,7 @@ const Detail = () => {
                   </div>
                 </div>
               </div>
-              <div onClick={() => addToCart(details.id)}>
+              <div onClick={() => addToCart(details)}>
                 <button className="bg-gray-800 text-white px-[40px] py-[15px] flex justify-center rounded">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
