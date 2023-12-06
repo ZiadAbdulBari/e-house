@@ -13,7 +13,7 @@ const Dropdown = ({ type, name, id, children }) => {
               </p>
             </Link>
           ) : (
-            <div className="h-[30px] w-[30px] rounded-full border-2 border-gray-800">
+            <div className="h-[35px] w-[35px] rounded-full border-2 border-gray-800">
               <img src="../../image/default-image.jpg" alt="" className="w-[30px]" />
             </div>
           )}

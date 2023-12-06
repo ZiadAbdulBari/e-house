@@ -5,8 +5,6 @@ import React, { useEffect, useState } from 'react';
 
 const MainLayout = ({children}) => {
     const router = useRouter();
-    // const [isCheckout,setIsCheckout] = useState(false);
-    
     return (
         <div>
         <Header/>

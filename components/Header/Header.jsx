@@ -137,7 +137,6 @@ const Header = () => {
               )}
               {isLoggedin && (
                 <Dropdown type="profile" name="Ziad">
-                  <ul>
                     <li>
                       <Link href="/profile">Profile</Link>
                     </li>
@@ -147,11 +146,10 @@ const Header = () => {
                     <li>
                       <UiButton
                         buttonName="Logout"
-                        type="denger"
+                        externalClass="bg-red-500 text-white py-[2px]"
                         onClick={logout}
                       />
                     </li>
-                  </ul>
                 </Dropdown>
               )}
             </div>
