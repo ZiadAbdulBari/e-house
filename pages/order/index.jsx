@@ -14,7 +14,6 @@ const Order = () => {
     console.log("dsd");
   };
   const getOrderList = () => {
-    console.log("hitted");
     // return;
     if (loggedin) {
       axios
@@ -22,7 +21,6 @@ const Order = () => {
           headers: { Authorization: token },
         })
         .then((response) => {
-          console.log(response);
           if (response?.data?.status == 200) {
             setOrderlist(response?.data?.order_list);
           }

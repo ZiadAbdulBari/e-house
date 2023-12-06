@@ -12,11 +12,9 @@ const Filter = () => {
   const [title, setTitle] = useState("");
   const [totalProduct, setTotalProduct] = useState(0);
   const getFilterData = () => {
-    console.log(query);
     axios
       .post(`http://localhost:4000/filter/${query}&false&false`)
       .then((response) => {
-        console.log(response);
         setProducts(response.data?.result?.product);
         setTitle(response.data?.result?.title);
         setTotalProduct(response.data?.result?.count);
@@ -24,7 +22,6 @@ const Filter = () => {
   };
   useEffect(() => {
     if (router?.query?.name) {
-      console.log(router);
       setQuery(router.query.name);
     }
   }, [router]);

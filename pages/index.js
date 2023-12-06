@@ -17,8 +17,10 @@ export default function Home() {
   const getProduct = () => {
     const URL = "http://localhost:4000/get-product";
     axios.get(URL).then((response) => {
-      console.log(response);
-      setProducts(response.data.products);
+      if(response?.data?.status==200){
+        setProducts(response?.data?.products);
+      }
+      // console.log(response);
     });
   };
   const getSliderImage = () => {

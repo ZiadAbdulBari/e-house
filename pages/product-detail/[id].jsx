@@ -17,12 +17,11 @@ const Detail = () => {
   const [productImage, setProductImage] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const detailData = () => {
-    console.log(router.query.id)
     const URL = `http://localhost:4000/product-detail/${router.query.id}`;
     axios
       .get(URL)
       .then((response) => {
-        if (response.data.status == 200) {
+        if (response?.data?.status == 200) {
           setDetails(response?.data?.products);
           // if (response.data.images.length > 0) {
           //   const images = response.data.images;

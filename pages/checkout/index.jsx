@@ -45,7 +45,6 @@ const Checkout = () => {
     const toptalPrice = JSON.parse(window.localStorage.getItem("totalPrice"));
     setCartData(checkoutProduct);
     setTotalPrice(toptalPrice);
-    router.push('/order')
   };
   const getShippingAddress = () => {
     if (loggedin) {
@@ -54,7 +53,7 @@ const Checkout = () => {
           headers: { Authorization: token },
         })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           if (response?.data?.status == 200) {
             if (response?.data?.shipping_address?.length > 0) {
               setSelectedAddress(response?.data?.shipping_address[0]);
@@ -98,7 +97,7 @@ const Checkout = () => {
           headers: { Authorization: token },
         })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           if (response?.data?.status == 200) {
             getShippingAddress();
           }
@@ -125,6 +124,7 @@ const Checkout = () => {
           if (response?.data?.status == 200) {
             dispatch(getCartProduct());
             getProducts();
+            router.push('/order')
           }
         });
     }

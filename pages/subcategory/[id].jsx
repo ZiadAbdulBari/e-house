@@ -16,14 +16,12 @@ const Subcategory = () => {
     axios
       .post(`http://localhost:4000/filter/false&false&${query}`)
       .then((response) => {
-        console.log(response);
         setProducts(response.data?.result?.product);
         setTitle(response.data?.result?.title);
         setTotalProduct(response.data?.result?.count);
       });
   };
   useEffect(() => {
-    console.log(router);
     if (router?.query?.id) {
       setQuery(router.query.id);
     }

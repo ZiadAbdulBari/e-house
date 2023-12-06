@@ -13,15 +13,17 @@ const Category = () => {
   const [title,setTitle] = useState('');
   const [totalProduct,setTotalProduct] = useState(0);
   const getFilterData = () => {
-    console.log(query);
     axios
       .post(`http://localhost:4000/filter/false&${query}&false`)
       .then((response) => {
-        setSubcategory(response.data?.result?.subcategory);
-        setProducts(response.data?.result?.product);
-        setTitle(response.data?.result?.title);
-        setTotalProduct(response.data?.result?.count);
-        console.log(response);
+        if(response?.data?.status==200){
+            setSubcategory(response.data?.result?.subcategory);
+            setProducts(response.data?.result?.product);
+            setTitle(response.data?.result?.title);
+            setTotalProduct(response.data?.result?.count);
+
+        }
+        // console.log(response);
       });
   };
   useEffect(() => {

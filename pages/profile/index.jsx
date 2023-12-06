@@ -37,7 +37,6 @@ const Profile = () => {
               address: response?.data?.profile.address,
             });
           }
-          console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -57,7 +56,6 @@ const Profile = () => {
   };
   const upgradeProfile = () => {
     if (loggedin) {
-      console.log(inputValue)
       axios
         .post("http://localhost:4000/update-profile",inputValue, {
           headers: { Authorization: token },
