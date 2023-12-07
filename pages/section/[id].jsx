@@ -1,33 +1,33 @@
-import FilterOptions from "@/components/FilterOptions/FilterOptions";
 import Section from "@/components/Section/Section";
 import MainLayout from "@/layout/MainLayout";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-const Category = () => {
+const SectionFilter = () => {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const [subcategory,setSubcategory] = useState([]);
-  const [products,setProducts] = useState([]);
-  const [title,setTitle] = useState('');
-  const [totalProduct,setTotalProduct] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [title, setTitle] = useState("");
+  const [totalProduct, setTotalProduct] = useState(0);
   const getFilterData = () => {
     axios
-      .post(`http://localhost:4000/filter/false&${query}&false&false`)
+      .post(`http://localhost:4000/filter/false&false&false&${query}`)
       .then((response) => {
-        if(response?.data?.status==200){
-            setSubcategory(response.data?.result?.subcategory);
-            setProducts(response.data?.result?.product);
-            setTitle(response.data?.result?.title);
-            setTotalProduct(response.data?.result?.count);
-
+        if (response?.data?.status == 200) {
+          //   setSubcategory(response.data?.result?.subcategory);
+          setProducts(response.data?.result?.product);
+          setTitle(response.data?.result?.title);
+          setTotalProduct(response.data?.result?.count);
         }
-        // console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
   useEffect(() => {
-    if (router?.query?.id) {
+      if (router?.query?.id) {
+        console.log(router?.query?.id)
       setQuery(router.query.id);
     }
   }, [router]);
@@ -44,7 +44,11 @@ const Category = () => {
             <FilterOptions subcategory={subcategory}/>
           </div> */}
           <div className="w-[100%]">
-            <Section sectionName={title} count={totalProduct} products={products}/>
+            <Section
+              sectionName={title}
+              count={totalProduct}
+              products={products}
+            />
           </div>
         </div>
       </div>
@@ -52,4 +56,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default SectionFilter;

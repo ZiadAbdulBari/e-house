@@ -81,7 +81,7 @@ const Detail = () => {
   }, [router]);
   return (
     <MainLayout>
-      <div className="px-[250px]">
+      <div className="lg:container mx-auto">
         <div className="flex gap-8 h-full mt-[30px]">
           <div className="image w-[50%] h-[70vh] overflow-hidden">
             {/* <ImageSlider productImage={productImage} className="w-full" /> */}

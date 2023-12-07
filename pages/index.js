@@ -11,17 +11,21 @@ import { getLoggedinStatus, getToken } from "@/store/authSlice";
 import { getCartProduct } from "@/store/cartSlice";
 export default function Home() {
   const dispatch = useDispatch();
-  const [products, setProducts] = useState([]);
+  const [sections, setSections] = useState([]);
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
-  const getProduct = () => {
-    const URL = "http://localhost:4000/get-product";
-    axios.get(URL).then((response) => {
-      if(response?.data?.status==200){
-        setProducts(response?.data?.products);
-      }
-      // console.log(response);
-    });
+  const getSection = () => {
+    const URL = "http://localhost:4000/get-section";
+    axios
+      .get(URL)
+      .then((response) => {
+        if (response?.data?.status == 200) {
+          setSections(response?.data?.result);
+        }
+      })
+      .catch((error) => {
+        console.lg(error);
+      });
   };
   const getSliderImage = () => {
     const img = [
@@ -45,28 +49,14 @@ export default function Home() {
   useEffect(() => {
     homepageCategory();
     getSliderImage();
-    getProduct();
+    getSection();
   }, []);
   return (
     <MainLayout>
       <CommonSlider images={images} />
       {/* CATEGORY */}
       {categories.length > 0 ? (
-        <div className="px-[250px] grid grid-cols-3 gap-6 my-[100px] max-h-[300px] overflow-hidden">
-          {/* {categories.length > 0 &&
-              categories.map(
-                (cat) =>
-                  cat.category_name == "Men" && (
-                    <div key={cat.id}>
-                      <CategorySection
-                        iURL={cat.image_url}
-                        height="h-[800px]"
-                        name={cat.category_name}
-                      />
-                    </div>
-                  )
-              )} */}
-          {/* className="grid grid-flow-row gap-6" */}
+        <div className="lg:container mx-auto grid grid-cols-3 gap-6 my-[100px] max-h-[300px] overflow-hidden">
           {categories.map((cat) => (
             <CategorySection
               iURL={cat.image_url}
@@ -83,9 +73,17 @@ export default function Home() {
           </p>
         </div>
       )}
-      <div className="px-[250px] mt-20">
-        {products.length > 0 ? (
-          <Section sectionName="New Arrival" count='0' products={products} />
+      <div className="lg:container mx-auto w-full">
+        {sections.length > 0 ? (
+          sections.map((section, index) => (
+            <Section
+              key={index}
+              id={section.id}
+              sectionName={section.section_name}
+              count="0"
+              products={section.products}
+            />
+          ))
         ) : (
           <div>
             <p className="text-center font-semibold text-[18px] text-gary-800">

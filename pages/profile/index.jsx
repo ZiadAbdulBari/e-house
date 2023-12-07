@@ -57,12 +57,12 @@ const Profile = () => {
   const upgradeProfile = () => {
     if (loggedin) {
       axios
-        .post("http://localhost:4000/update-profile",inputValue, {
+        .post("http://localhost:4000/update-profile", inputValue, {
           headers: { Authorization: token },
         })
         .then((response) => {
           if (response?.data?.status == 200) {
-            getProfileData()
+            getProfileData();
             setEdit(false);
           }
         })
@@ -83,12 +83,12 @@ const Profile = () => {
   }, [loggedin == true]);
   return (
     <MainLayout>
-      <div className="w-[70vw] m-auto">
-        <h1 className="text-[30px] font-bold mt-4">Profile</h1>
+      <div className="lg:container mx-auto">
         <div className="flex gap-4 mt-12">
-          <Sidebar/>
+          <Sidebar />
           {/* SHOW PROFILE DATA */}
-          <div className="w-[80%]">
+          <div className="w-[85%]">
+            <h1 className="text-[30px] font-bold mb-4">Profile</h1>
             {edit == false && (
               <div className="rounded bg-gray-50 w-full">
                 <div className="p-[10px] flex justify-end cursor-pointer">
@@ -188,7 +188,6 @@ const Profile = () => {
                 </div>
               </div>
             )}
-
           </div>
         </div>
       </div>

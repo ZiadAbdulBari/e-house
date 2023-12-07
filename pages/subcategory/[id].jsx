@@ -14,7 +14,7 @@ const Subcategory = () => {
   const getFilterData = () => {
     // console.log(query);
     axios
-      .post(`http://localhost:4000/filter/false&false&${query}`)
+      .post(`http://localhost:4000/filter/false&false&${query}&false`)
       .then((response) => {
         setProducts(response.data?.result?.product);
         setTitle(response.data?.result?.title);
@@ -33,7 +33,7 @@ const Subcategory = () => {
   }, [query]);
   return (
     <MainLayout>
-      <div className="px-[250px]">
+      <div className="lg:container mx-auto">
         <div className="flex w-full gap-2">
           {/* <div className="w-[20%] h-screen bg-gray-50">
             <FilterOptions />

@@ -32,7 +32,7 @@ const Filter = () => {
   }, [query]);
   return (
     <MainLayout>
-      <div className="px-[250px]">
+      <div className="lg:container mx-auto">
         <div className="flex w-full gap-2">
           {/* <div className="w-[20%] h-screen bg-gray-50">
             <FilterOptions />

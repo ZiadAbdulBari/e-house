@@ -39,11 +39,11 @@ const Order = () => {
   }, [loggedin == true]);
   return (
     <MainLayout>
-      <div className="w-[70vw] m-auto">
-        <h1 className="text-[30px] font-bold mt-4">Order list</h1>
-        <div className="flex gap-4 mt-12">
+      <div className="lg:container mx-auto">
+        <div className="flex gap-4 mt-12 w-full">
           <Sidebar />
-          <div className="w-full">
+          <div className="w-[85%] h-[80vh] overflow-y-auto">
+            <h1 className="text-[30px] font-bold mb-4">Order list</h1>
             <div className="grid grid-flow-row gap-y-2 w-full">
               {orderlist.length > 0 &&
                 orderlist.map((order, index) => (
@@ -79,12 +79,15 @@ const Order = () => {
                     </div>
                     <div className="flex justify-between items-center mt-4">
                       <div>
-                        <div className="w-[100px] h-[120px]">
-                          <img
+                        <div className="w-[100px] h-[120px] rounded relative bg-blue-500">
+                          <div className="w-[60%] h-full rounded absolute top-0 left-0 bg-red-500 z-[999]"></div>
+                          <div className="w-[80%] h-full rounded absolute top-0 left-0 bg-orange-500 z-[99]"></div>
+                          <div className="w-full h-full rounded absolute top-0 left-0 bg-black z-[9]"></div>
+                          {/* <img
                             className="w-full h-full object-cover"
                             src="https://plus.unsplash.com/premium_photo-1674688194029-17dda3aaf779?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                             alt=""
-                          />
+                          /> */}
                         </div>
                       </div>
                       <div>
