@@ -3,23 +3,20 @@ import Section from "@/components/Section/Section";
 import MainLayout from "@/layout/MainLayout";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { getFilterData } from "@/store/filterSlice";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Subcategory = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [query, setQuery] = useState("");
-  const [products, setProducts] = useState([]);
-  const [title, setTitle] = useState("");
-  const [totalProduct, setTotalProduct] = useState(0);
-  const getFilterData = () => {
-    // console.log(query);
-    axios
-      .post(`http://localhost:4000/filter/false&false&${query}&false`)
-      .then((response) => {
-        setProducts(response.data?.result?.product);
-        setTitle(response.data?.result?.title);
-        setTotalProduct(response.data?.result?.count);
-      });
+  const products = useSelector((state)=>state.filter.products)
+  const title = useSelector((state)=>state.filter.title)
+  const totalProduct = useSelector((state)=>state.filter.productCount)
+  const getFilterProduct = () => {
+    const url = `false&false&${query}&false`;
+    dispatch(getFilterData(url))
   };
   useEffect(() => {
     if (router?.query?.id) {
@@ -28,7 +25,7 @@ const Subcategory = () => {
   }, [router]);
   useEffect(() => {
     if (query) {
-      getFilterData();
+      getFilterProduct();
     }
   }, [query]);
   return (

@@ -1,39 +1,33 @@
 import Section from "@/components/Section/Section";
 import MainLayout from "@/layout/MainLayout";
+import { getFilterData } from "@/store/filterSlice";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const SectionFilter = () => {
   const router = useRouter();
+  const dispatch = useDispatch()
   const [query, setQuery] = useState("");
-  const [products, setProducts] = useState([]);
-  const [title, setTitle] = useState("");
-  const [totalProduct, setTotalProduct] = useState(0);
-  const getFilterData = () => {
-    axios
-      .post(`http://localhost:4000/filter/false&false&false&${query}`)
-      .then((response) => {
-        if (response?.data?.status == 200) {
-          //   setSubcategory(response.data?.result?.subcategory);
-          setProducts(response.data?.result?.product);
-          setTitle(response.data?.result?.title);
-          setTotalProduct(response.data?.result?.count);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  // const [products, setProducts] = useState([]);
+  // const [title, setTitle] = useState("");
+  // const [totalProduct, setTotalProduct] = useState(0);
+  const products = useSelector((state)=>state.filter.products)
+  const title = useSelector((state)=>state.filter.title)
+  const totalProduct = useSelector((state)=>state.filter.productCount)
+  const getFilterProduct = () => {
+    const url = `false&false&false&${query}`
+    dispatch(getFilterData(url))
   };
   useEffect(() => {
       if (router?.query?.id) {
-        console.log(router?.query?.id)
       setQuery(router.query.id);
     }
   }, [router]);
   useEffect(() => {
     if (query) {
-      getFilterData();
+      getFilterProduct();
     }
   }, [query]);
   return (

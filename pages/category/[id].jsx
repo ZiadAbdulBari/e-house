@@ -4,27 +4,33 @@ import MainLayout from "@/layout/MainLayout";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getFilterData } from "@/store/filterSlice";
 
 const Category = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const [subcategory,setSubcategory] = useState([]);
-  const [products,setProducts] = useState([]);
-  const [title,setTitle] = useState('');
-  const [totalProduct,setTotalProduct] = useState(0);
-  const getFilterData = () => {
-    axios
-      .post(`http://localhost:4000/filter/false&${query}&false&false`)
-      .then((response) => {
-        if(response?.data?.status==200){
-            setSubcategory(response.data?.result?.subcategory);
-            setProducts(response.data?.result?.product);
-            setTitle(response.data?.result?.title);
-            setTotalProduct(response.data?.result?.count);
+  const products = useSelector((state)=>state.filter.products)
+  const title = useSelector((state)=>state.filter.title)
+  const totalProduct = useSelector((state)=>state.filter.productCount)
 
-        }
-        // console.log(response);
-      });
+  const getFilterProduct = () => {
+    const url = `false&${query}&false&false`;
+    dispatch(getFilterData(url))
+    // axios
+    //   .post(`http://localhost:4000/filter/false&${query}&false&false`)
+    //   .then((response) => {
+    //     if(response?.data?.status==200){
+    //         setSubcategory(response.data?.result?.subcategory);
+    //         setProducts(response.data?.result?.product);
+    //         setTitle(response.data?.result?.title);
+    //         setTotalProduct(response.data?.result?.count);
+
+    //     }
+    //     // console.log(response);
+    //   });
   };
   useEffect(() => {
     if (router?.query?.id) {
@@ -33,7 +39,7 @@ const Category = () => {
   }, [router]);
   useEffect(() => {
     if (query) {
-      getFilterData();
+      getFilterProduct();
     }
   }, [query]);
   return (
