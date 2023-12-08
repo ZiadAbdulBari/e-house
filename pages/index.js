@@ -59,6 +59,7 @@ export default function Home() {
         <div className="lg:container mx-auto grid grid-cols-3 gap-6 my-[100px] max-h-[300px] overflow-hidden">
           {categories.map((cat) => (
             <CategorySection
+              id={cat.id}
               iURL={cat.image_url}
               // height="h-[390px]"
               name={cat.category_name}
