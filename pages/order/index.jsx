@@ -42,7 +42,7 @@ const Order = () => {
       <div className="lg:container mx-auto">
         <div className="flex gap-4 mt-12 w-full">
           <Sidebar />
-          <div className="w-[85%] h-[80vh] overflow-y-auto">
+          <div className="w-[85%] h-[75vh] overflow-y-auto">
             <h1 className="text-[30px] font-bold mb-4">Order list</h1>
             <div className="grid grid-flow-row gap-y-2 w-full">
               {orderlist.length > 0 &&
