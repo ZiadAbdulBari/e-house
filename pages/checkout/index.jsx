@@ -315,6 +315,7 @@ const Checkout = () => {
                       </div>
                       <div className="w-[50%]">
                         <p className="text-[20px]">{product.title}</p>
+                        <p className="text-[20px]">Size: {product.variants}</p>
                       </div>
                       <div className="w-[10%]">
                         <p className="text-[20px]">{product.cart_quantity} x</p>

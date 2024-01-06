@@ -16,13 +16,17 @@ const Detail = () => {
   const [details, setDetails] = useState([]);
   const [productImage, setProductImage] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [variant, setVariant] = useState([]);
+  const [selectedVariant,setSelectedVariant] = useState([]);
   const detailData = () => {
     const URL = `http://localhost:4000/product-detail/${router.query.id}`;
     axios
       .get(URL)
       .then((response) => {
         if (response?.data?.status == 200) {
+          // console.log(response);
           setDetails(response?.data?.products);
+          setVariant(response?.data?.variant);
           // if (response.data.images.length > 0) {
           //   const images = response.data.images;
           //   images.push(response.data.thumbnail);
@@ -34,33 +38,51 @@ const Detail = () => {
         console.log(error?.response?.message);
       });
   };
+  const getVariant = (title,value)=>{
+    const newVariant = {
+      title:title,
+      values:value
+    }
+    const filtered = selectedVariant.filter((exist)=>exist.title!=title)
+    filtered.push(newVariant);
+    setSelectedVariant(filtered);
+    // const arr = [...selectedVariant,newVariant];
+    // setSelectedVariant(arr);
+  }
   const addToCart = (product) => {
-    if (!loggedinStatus) {
-      toastMessage("Please login", "w");
-    } else {
-      const cartProduct = {
-        product_id: product.id,
-        quantity: quantity,
-        price:parseInt(product.price)-parseInt(product.discount_price),
-      };
-      axios
-        .post("http://localhost:4000/add-to-cart", cartProduct, {
-          headers: { Authorization: token },
-        })
-        .then((response) => {
-          if (response.data.status == 200) {
-            dispatch(getCartProduct());
-            toastMessage(response.data.message, "s");
-          }
-        })
-        .catch((error) => {
-          if (error?.response?.data) {
-            console.log(error?.response?.data?.message);
-            toastMessage(error?.response?.data?.message, "i");
-          } else {
-            console.log(error);
-          }
-        });
+    if(variant.length==selectedVariant.length){
+      if (!loggedinStatus) {
+        toastMessage("Please login", "w");
+      } else {
+        const cartProduct = {
+          product_id: product.id,
+          quantity: quantity,
+          productVariant_id:selectedVariant[0]?.values?.id,
+          variants:selectedVariant[0]?.values?.variant_value,
+          price: parseInt(product.price) - parseInt(product.discount_price),
+        };
+        axios
+          .post("http://localhost:4000/add-to-cart", cartProduct, {
+            headers: { Authorization: token },
+          })
+          .then((response) => {
+            if (response.data.status == 200) {
+              dispatch(getCartProduct());
+              toastMessage(response.data.message, "s");
+            }
+          })
+          .catch((error) => {
+            if (error?.response?.data) {
+              console.log(error?.response?.data?.message);
+              toastMessage(error?.response?.data?.message, "i");
+            } else {
+              console.log(error);
+            }
+          });
+      }
+    }
+    else{
+      toastMessage("Please select size and color", "w");
     }
   };
   const manageQuantity = (type) => {
@@ -75,7 +97,7 @@ const Detail = () => {
     }
   };
   useEffect(() => {
-    if(router.query.id){
+    if (router.query.id) {
       detailData();
     }
   }, [router]);
@@ -157,6 +179,31 @@ const Detail = () => {
                 )}
               </div>
             </div>
+            <div className="grid gap-y-3 mt-2">
+              {variant.length > 0 &&
+                variant.map((v, index) => (
+                  <div key={index}>
+                    <p>{v.title}</p>
+                    <div className="flex gap-2 mt-2">
+                      {v.values.map((v_value, index) => (
+                        <div
+                          key={index}
+                          className={`${v_value.stock==0 && 'disabled'} h-[30px] w-[30px] border rounded-[5px] flex justify-center items-center cursor-pointer ${
+                            v.title == "Color"
+                              ? "bg-[" + v_value.variant_value + "]"
+                              : "bg-white"
+                          }`}
+                          onClick={()=>getVariant(v.title,v_value)}
+                        >
+                          <p>
+                            {v.title != "Color" && <>{v_value.variant_value}</>}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+            </div>
             <div className="border border-gry-300 mt-8"></div>
             <div className="short-des py-12">
               <p className="text-gray-600 font-medium">
@@ -236,7 +283,9 @@ const Detail = () => {
                       fill="rgba(255,251,251,1)"
                     ></path>
                   </svg>
-                  <span className="text-[15px] font-medium ml-2">BUY IT NOW</span>
+                  <span className="text-[15px] font-medium ml-2">
+                    BUY IT NOW
+                  </span>
                 </button>
               </div>
             </div>

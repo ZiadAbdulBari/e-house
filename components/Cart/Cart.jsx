@@ -122,6 +122,7 @@ const Cart = () => {
                   </div>
                   <div className="w-[40%]">
                     <p>{product.title}</p>
+                    <p>Size: {product.variants}</p>
                   </div>
                   <div className="w-[10%]">
                     <p>{product.cart_quantity}x</p>
