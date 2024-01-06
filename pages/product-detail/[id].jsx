@@ -8,6 +8,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 const Detail = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const Detail = () => {
   const [productImage, setProductImage] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [variant, setVariant] = useState([]);
-  const [selectedVariant,setSelectedVariant] = useState([]);
+  const [selectedVariant, setSelectedVariant] = useState([]);
   const detailData = () => {
     const URL = `http://localhost:4000/product-detail/${router.query.id}`;
     axios
@@ -38,27 +39,27 @@ const Detail = () => {
         console.log(error?.response?.message);
       });
   };
-  const getVariant = (title,value)=>{
+  const getVariant = (title, value) => {
     const newVariant = {
-      title:title,
-      values:value
-    }
-    const filtered = selectedVariant.filter((exist)=>exist.title!=title)
+      title: title,
+      values: value,
+    };
+    const filtered = selectedVariant.filter((exist) => exist.title != title);
     filtered.push(newVariant);
     setSelectedVariant(filtered);
     // const arr = [...selectedVariant,newVariant];
     // setSelectedVariant(arr);
-  }
+  };
   const addToCart = (product) => {
-    if(variant.length==selectedVariant.length){
+    if (variant.length == selectedVariant.length) {
       if (!loggedinStatus) {
         toastMessage("Please login", "w");
       } else {
         const cartProduct = {
           product_id: product.id,
           quantity: quantity,
-          productVariant_id:selectedVariant[0]?.values?.id,
-          variants:selectedVariant[0]?.values?.variant_value,
+          productVariant_id: selectedVariant[0]?.values?.id,
+          variants: selectedVariant[0]?.values?.variant_value,
           price: parseInt(product.price) - parseInt(product.discount_price),
         };
         axios
@@ -80,8 +81,7 @@ const Detail = () => {
             }
           });
       }
-    }
-    else{
+    } else {
       toastMessage("Please select size and color", "w");
     }
   };
@@ -188,12 +188,14 @@ const Detail = () => {
                       {v.values.map((v_value, index) => (
                         <div
                           key={index}
-                          className={`${v_value.stock==0 && 'disabled'} h-[30px] w-[30px] border rounded-[5px] flex justify-center items-center cursor-pointer ${
+                          className={`${
+                            v_value.stock == 0 && "disabled"
+                          } h-[30px] w-[30px] border rounded-[5px] flex justify-center items-center cursor-pointer ${
                             v.title == "Color"
                               ? "bg-[" + v_value.variant_value + "]"
                               : "bg-white"
                           }`}
-                          onClick={()=>getVariant(v.title,v_value)}
+                          onClick={() => getVariant(v.title, v_value)}
                         >
                           <p>
                             {v.title != "Color" && <>{v_value.variant_value}</>}
@@ -206,9 +208,14 @@ const Detail = () => {
             </div>
             <div className="border border-gry-300 mt-8"></div>
             <div className="short-des py-12">
-              <p className="text-gray-600 font-medium">
+              {/* <p className="text-gray-600 font-medium">
                 {details.short_description}
-              </p>
+              </p> */}
+              {
+                <div
+                dangerouslySetInnerHTML={{__html: details.description}}
+                />
+              }
             </div>
             <div className="border border-gry-300 mb-8"></div>
             <div className="flex gap-4">
@@ -290,9 +297,9 @@ const Detail = () => {
               </div>
             </div>
             <div className="border border-gry-300 mt-8"></div>
-            <div className="tab mt-8">
+            {/* <div className="tab mt-8">
               <UiTab />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

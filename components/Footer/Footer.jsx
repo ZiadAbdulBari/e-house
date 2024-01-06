@@ -8,7 +8,7 @@ const Footer = () => {
     setYear(year);
   }, [year]);
   return (
-    <div className="bg-gray-800 w-full py-[10px]">
+    <div className="bg-gray-800 w-full py-[10px] mt-12">
       <p className="text-white text-center text-[18px]">
         Made by Essential © {year}
       </p>

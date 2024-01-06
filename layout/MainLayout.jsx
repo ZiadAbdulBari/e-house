@@ -10,7 +10,7 @@ const MainLayout = ({children}) => {
         <div>
         <Header/>
         <div>
-            <div>
+            <div className='body-height'>
             {children}
             </div>
             {

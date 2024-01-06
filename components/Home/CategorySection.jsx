@@ -4,7 +4,7 @@ import React from "react";
 const CategorySection = ({ iURL,name,id }) => {
   return (
     <Link href={`/category/${id}`}>
-      <div className={"bg-gray-50 relative overflow-hidden h-full"}>
+      <div className={"bg-gray-50 relative overflow-hidden h-[300px]"}>
         <div>
           <img src={iURL} alt="" className="h-full w-full object-cover" />
         </div>

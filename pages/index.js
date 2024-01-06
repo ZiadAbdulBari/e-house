@@ -93,9 +93,9 @@ export default function Home() {
           </div>
         )}
       </div>
-      <div className="my-[100px]">
+      {/* <div className="my-[100px]">
         <Promotion pIURL="https://images.unsplash.com/photo-1511511450040-677116ff389e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80" />
-      </div>
+      </div> */}
     </MainLayout>
   );
 }
