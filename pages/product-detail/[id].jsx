@@ -15,7 +15,6 @@ const Detail = () => {
   const loggedinStatus = useSelector((state) => state.auth.isLoggedin);
   const token = useSelector((state) => state.auth.token);
   const [details, setDetails] = useState([]);
-  const [productImage, setProductImage] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [variant, setVariant] = useState([]);
   const [selectedVariant, setSelectedVariant] = useState([]);
@@ -25,14 +24,8 @@ const Detail = () => {
       .get(URL)
       .then((response) => {
         if (response?.data?.status == 200) {
-          // console.log(response);
           setDetails(response?.data?.products);
           setVariant(response?.data?.variant);
-          // if (response.data.images.length > 0) {
-          //   const images = response.data.images;
-          //   images.push(response.data.thumbnail);
-          //   setProductImage(images);
-          // }
         }
       })
       .catch((error) => {
@@ -47,10 +40,8 @@ const Detail = () => {
     const filtered = selectedVariant.filter((exist) => exist.title != title);
     filtered.push(newVariant);
     setSelectedVariant(filtered);
-    // const arr = [...selectedVariant,newVariant];
-    // setSelectedVariant(arr);
   };
-  const addToCart = (product) => {
+  const addToCart = (type,product) => {
     if (variant.length == selectedVariant.length) {
       if (!loggedinStatus) {
         toastMessage("Please login", "w");
@@ -69,7 +60,12 @@ const Detail = () => {
           .then((response) => {
             if (response.data.status == 200) {
               dispatch(getCartProduct());
-              toastMessage(response.data.message, "s");
+              if(type=='cart'){
+                toastMessage(response.data.message, "s");
+              }
+              else if(type=='buy'){
+                router.push('/checkout');
+              }
             }
           })
           .catch((error) => {
@@ -96,6 +92,9 @@ const Detail = () => {
       }
     }
   };
+  const buyProduct = (product)=>{
+    addToCart('buy',product);
+  }
   useEffect(() => {
     if (router.query.id) {
       detailData();
@@ -113,7 +112,7 @@ const Detail = () => {
             <div className="grid grid-flow-row gap-y-4">
               <div className="flex justify-between">
                 <div>
-                  <h1 className="font-semibold text-[30px] text-gray-800">
+                  <h1 className="font-semibold text-[30px] text-color-1">
                     {details.title}
                   </h1>
                   {details.stock_quantity == 0 && (
@@ -167,19 +166,19 @@ const Detail = () => {
                   className={`${
                     details.discount_price > 0
                       ? "text-gray-500 line-through text-[20px]"
-                      : "text-gray-800 font-semibold text-[20px]"
+                      : "text-color-1 font-semibold text-[20px]"
                   }`}
                 >
                   {details.price} Tk
                 </p>
                 {details.discount_price > 0 && (
-                  <p className="text-gray-800 font-semibold text-[20px]">
+                  <p className="text-color-1 font-semibold text-[20px]">
                     {details.price - details.discount_price} Tk
                   </p>
                 )}
               </div>
             </div>
-            <div className="grid gap-y-3 mt-2">
+            <div className="grid gap-y-3 mt-4">
               {variant.length > 0 &&
                 variant.map((v, index) => (
                   <div key={index}>
@@ -188,44 +187,38 @@ const Detail = () => {
                       {v.values.map((v_value, index) => (
                         <div
                           key={index}
-                          className={`${
-                            v_value.stock == 0 && "disabled"
-                          } h-[30px] w-[30px] border rounded-[5px] flex justify-center items-center cursor-pointer ${
-                            v.title == "Color"
-                              ? "bg-[" + v_value.variant_value + "]"
-                              : "bg-white"
+                          className={`h-[30px] w-[80px] border border-color-1 rounded-[5px] flex justify-center items-center cursor-pointer ${
+                            v_value.variant_value ==
+                            selectedVariant[0]?.values?.variant_value
+                              ? "!bg-color-1 !text-color-3"
+                              : "text-color-1"
                           }`}
                           onClick={() => getVariant(v.title, v_value)}
                         >
-                          <p>
-                            {v.title != "Color" && <>{v_value.variant_value}</>}
-                          </p>
+                          <p>{v_value.variant_value}</p>
                         </div>
                       ))}
                     </div>
                   </div>
                 ))}
             </div>
-            <div className="border border-gry-300 mt-8"></div>
-            <div className="short-des py-12">
-              {/* <p className="text-gray-600 font-medium">
-                {details.short_description}
-              </p> */}
+            <div className="border border-gray-100 mt-8"></div>
+            <div className="short-des py-8 specefication">
               {
                 <div
-                dangerouslySetInnerHTML={{__html: details.description}}
+                  dangerouslySetInnerHTML={{ __html: details.description }}
                 />
               }
             </div>
-            <div className="border border-gry-300 mb-8"></div>
+            <div className="border border-gray-100 mb-8"></div>
             <div className="flex gap-4">
               <div className="flex">
-                <div className="quantity px-[30px] py-[10px] border border-gray-800">
-                  <p className="text-[20px] text-gray-800">{quantity}</p>
+                <div className="quantity px-[30px] py-[10px] border border-color-2">
+                  <p className="text-[20px] text-color-1">{quantity}</p>
                 </div>
                 <div className="quantity-controller">
                   <div
-                    className="border border-gray-800 cursor-pointer"
+                    className="border border-color-2 cursor-pointer"
                     onClick={() => manageQuantity("increment")}
                   >
                     <svg
@@ -236,12 +229,12 @@ const Detail = () => {
                     >
                       <path
                         d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"
-                        fill="rgba(90,90,90,1)"
+                        className="fill-color-1"
                       ></path>
                     </svg>
                   </div>
                   <div
-                    className="border border-gray-800 cursor-pointer"
+                    className="border border-color-2 cursor-pointer"
                     onClick={() => manageQuantity("decrement")}
                   >
                     <svg
@@ -252,14 +245,14 @@ const Detail = () => {
                     >
                       <path
                         d="M5 11V13H19V11H5Z"
-                        fill="rgba(90,90,90,1)"
+                        className="fill-color-1"
                       ></path>
                     </svg>
                   </div>
                 </div>
               </div>
-              <div onClick={() => addToCart(details)}>
-                <button className="bg-gray-800 text-white px-[40px] py-[15px] flex justify-center rounded">
+              <div onClick={() => addToCart('cart',details)} className="group">
+                <button className="bg-color-1 text-color-3 px-[40px] py-[15px] flex justify-center rounded group-hover:bg-color-3 group-hover:text-color-1 transition duration-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -268,7 +261,7 @@ const Detail = () => {
                   >
                     <path
                       d="M4.00436 6.41662L0.761719 3.17398L2.17593 1.75977L5.41857 5.00241H20.6603C21.2126 5.00241 21.6603 5.45012 21.6603 6.00241C21.6603 6.09973 21.6461 6.19653 21.6182 6.28975L19.2182 14.2898C19.0913 14.7127 18.7019 15.0024 18.2603 15.0024H6.00436V17.0024H17.0044V19.0024H5.00436C4.45207 19.0024 4.00436 18.5547 4.00436 18.0024V6.41662ZM6.00436 7.00241V13.0024H17.5163L19.3163 7.00241H6.00436ZM5.50436 23.0024C4.67593 23.0024 4.00436 22.3308 4.00436 21.5024C4.00436 20.674 4.67593 20.0024 5.50436 20.0024C6.33279 20.0024 7.00436 20.674 7.00436 21.5024C7.00436 22.3308 6.33279 23.0024 5.50436 23.0024ZM17.5044 23.0024C16.6759 23.0024 16.0044 22.3308 16.0044 21.5024C16.0044 20.674 16.6759 20.0024 17.5044 20.0024C18.3328 20.0024 19.0044 20.674 19.0044 21.5024C19.0044 22.3308 18.3328 23.0024 17.5044 23.0024Z"
-                      fill="rgba(255,255,255,1)"
+                      className="fill-color-3 group-hover:fill-color-1 transition duration-300"
                     ></path>
                   </svg>
                   <span className="text-[15px] font-medium ml-2">
@@ -277,8 +270,8 @@ const Detail = () => {
                   </span>
                 </button>
               </div>
-              <div>
-                <button className="bg-gray-700 text-white px-[40px] py-[15px] flex justify-center rounded">
+              <div className="group" onClick={()=>buyProduct(details)}>
+                <button className="bg-color-3 text-color-1 px-[40px] py-[15px] flex justify-center rounded group-hover:bg-color-1 group-hover:text-color-3 transition duration-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -287,7 +280,7 @@ const Detail = () => {
                   >
                     <path
                       d="M7.00488 7.99951V5.99951C7.00488 3.23809 9.24346 0.999512 12.0049 0.999512C14.7663 0.999512 17.0049 3.23809 17.0049 5.99951V7.99951H20.0049C20.5572 7.99951 21.0049 8.44723 21.0049 8.99951V20.9995C21.0049 21.5518 20.5572 21.9995 20.0049 21.9995H4.00488C3.4526 21.9995 3.00488 21.5518 3.00488 20.9995V8.99951C3.00488 8.44723 3.4526 7.99951 4.00488 7.99951H7.00488ZM7.00488 9.99951H5.00488V19.9995H19.0049V9.99951H17.0049V11.9995H15.0049V9.99951H9.00488V11.9995H7.00488V9.99951ZM9.00488 7.99951H15.0049V5.99951C15.0049 4.34266 13.6617 2.99951 12.0049 2.99951C10.348 2.99951 9.00488 4.34266 9.00488 5.99951V7.99951Z"
-                      fill="rgba(255,251,251,1)"
+                      className="fill-color-1 group-hover:fill-color-3 transition duration-300"
                     ></path>
                   </svg>
                   <span className="text-[15px] font-medium ml-2">
@@ -296,10 +289,7 @@ const Detail = () => {
                 </button>
               </div>
             </div>
-            <div className="border border-gry-300 mt-8"></div>
-            {/* <div className="tab mt-8">
-              <UiTab />
-            </div> */}
+            <div className="border border-gray-100 mt-8"></div>
           </div>
         </div>
       </div>

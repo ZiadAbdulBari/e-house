@@ -11,7 +11,7 @@
 }
 
 .input {
-  @apply w-full h-[35px] px-[20px] py-[20px] rounded-[5px] outline-none border;
+  @apply w-full h-[45px] px-[20px] py-[20px] rounded-[5px] outline-none border;
 }
 .button {
   @apply px-6 py-2 text-white bg-gray-800 rounded;
@@ -23,33 +23,12 @@
   bottom: 40px !important;
 }
 .slick-dots li.slick-active button:before {
-  color: orangered !important;
+  color: #113946 !important;
 }
 .slick-dots li button:before {
-  color: white !important;
-}
-.slick-dots li button:before{
+  color: #BCA37F !important;
   font-size: 20px!important;
-  
 }
- /* .slick-next {
-  position: absolute!important;
-  z-index:999!important;
-  top: 90%!important;
-  right: 50%!important;
-  transform: translate(0, 0)!important;
-}
-.slick-prev {
-  position: absolute!important;
-  z-index:999!important;
-  top: 90%!important;
-  left: 50%!important;
-  transform: translate(0, 0)!important;
-}
-.slick-prev:before, .slick-next:before {
-  font-size: 30px!important;
-  color: #FD624C!important;
-} */
 .slick-dots {
   position: absolute;
   bottom: 25px;

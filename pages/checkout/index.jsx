@@ -17,6 +17,7 @@ const Checkout = () => {
   const [addresses, setAddresses] = useState([]);
   const [newAddress, setNewAddress] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState({});
+  const [selectedPayment, setSelectedPayment] = useState("");
   const [inputValue, setInputValue] = useState({
     name: "",
     phone: "",
@@ -110,7 +111,7 @@ const Checkout = () => {
         total_price: totalPrice,
         shippingaddressId: selectedAddress?.id,
         products: cartData,
-        medium: "cod",
+        medium: selectedPayment,
         paymentHistory: JSON.stringify({
           amount: totalPrice,
         }),
@@ -124,7 +125,7 @@ const Checkout = () => {
           if (response?.data?.status == 200) {
             dispatch(getCartProduct());
             getProducts();
-            router.push('/order')
+            router.push("/order");
           }
         });
     }
@@ -140,13 +141,15 @@ const Checkout = () => {
   return (
     <MainLayout>
       <div className="lg:container mx-auto">
-        <div className="flex gap-4 w-full h-screen">
-          <div className="w-[50%] px-[30px]">
+        <div className="flex gap-4 w-full h-[100vh]">
+          <div className="w-[30%] px-[30px] h-full">
             <div className="flex justify-between items-center">
-              <p className="my-4 font-medium text-[25px]">Shipping address</p>
+              <p className="my-4 font-medium text-[22px] text-color-1">
+                Shipping address
+              </p>
               {newAddress == false && (
                 <button
-                  className="flex font-semibold text-gray-600 border border-green-300 py-[5px] px-[10px] rounded"
+                  className="flex font-medium text-color-1 bg-color-3 py-[5px] px-[10px] rounded"
                   onClick={() => setNewAddress(true)}
                 >
                   <span>
@@ -158,11 +161,11 @@ const Checkout = () => {
                     >
                       <path
                         d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"
-                        className="fill-gray-600"
+                        className="fill-color-1"
                       ></path>
                     </svg>
                   </span>
-                  <span>Add new shipping address</span>
+                  <span>Add address</span>
                 </button>
               )}
             </div>
@@ -239,12 +242,12 @@ const Checkout = () => {
                 <div className="flex justify-end mt-20 gap-x-2">
                   <UiButton
                     buttonName="Add Shipping Address"
-                    externalClass="bg-green-300"
+                    externalClass="!bg-color-1 !text-color-3 !font-medium"
                     onClick={addShippingAddress}
                   />
                   <UiButton
                     buttonName="Cancel"
-                    externalClass="bg-red-300"
+                    externalClass="bg-red-500 text-white"
                     onClick={() => setNewAddress(false)}
                   />
                 </div>
@@ -252,7 +255,7 @@ const Checkout = () => {
             )}
             <div>
               {newAddress == false && (
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 gap-2">
                   {addresses.map((address) => (
                     <div
                       className="border p-[10px] bg-gray-50"
@@ -296,8 +299,77 @@ const Checkout = () => {
               )}
             </div>
           </div>
-          <div className="w-[50%] bg-gray-100 px-[30px]">
-            <p className="my-4 font-samibold text-[30px]">Products</p>
+          <div className="w-[20%] payment">
+            <p className="my-4 font-medium text-[22px] text-color-1">
+              Payment Method
+            </p>
+            <div className="mt-4">
+              <div
+                className="flex gap-2 items-center cursor-pointer"
+                onClick={() => setSelectedPayment("cod")}
+              >
+                <div
+                  className={`px-[1px] rounded ${
+                    selectedPayment == "cod" ? "bg-color-1" : "bg-color-3"
+                  }`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="20"
+                    height="20"
+                    className={`${
+                      selectedPayment == "cod"
+                        ? "fill-color-3"
+                        : "fill-color-1"
+                    }`}
+                  >
+                    <path d="M12.0004 16C14.2095 16 16.0004 14.2091 16.0004 12 16.0004 9.79086 14.2095 8 12.0004 8 9.79123 8 8.00037 9.79086 8.00037 12 8.00037 14.2091 9.79123 16 12.0004 16ZM21.0049 4.00293H3.00488C2.4526 4.00293 2.00488 4.45064 2.00488 5.00293V19.0029C2.00488 19.5552 2.4526 20.0029 3.00488 20.0029H21.0049C21.5572 20.0029 22.0049 19.5552 22.0049 19.0029V5.00293C22.0049 4.45064 21.5572 4.00293 21.0049 4.00293ZM4.00488 15.6463V8.35371C5.13065 8.017 6.01836 7.12892 6.35455 6.00293H17.6462C17.9833 7.13193 18.8748 8.02175 20.0049 8.3564V15.6436C18.8729 15.9788 17.9802 16.8711 17.6444 18.0029H6.3563C6.02144 16.8742 5.13261 15.9836 4.00488 15.6463Z"></path>
+                  </svg>
+                </div>
+                <label
+                  htmlFor="payment-1"
+                  className="text-[18px] text-gray-800"
+                >
+                  Cash on delivery
+                </label>
+              </div>
+              <div
+                className="flex gap-2 items-center cursor-pointer"
+                onClick={() => setSelectedPayment("stripe")}
+              >
+                <div
+                  className={`px-[1px] rounded ${
+                    selectedPayment == "stripe" ? "bg-color-1" : "bg-color-3"
+                  }`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="20"
+                    height="20"
+                    className={`${
+                      selectedPayment == "stripe"
+                        ? "fill-color-3"
+                        : "fill-color-1"
+                    }`}
+                  >
+                    <path d="M3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979ZM20.0049 10.9998H4.00488V18.9998H20.0049V10.9998ZM20.0049 8.99979V4.99979H4.00488V8.99979H20.0049ZM14.0049 14.9998H18.0049V16.9998H14.0049V14.9998Z"></path>
+                  </svg>
+                </div>
+                <label
+                  htmlFor="payment-2"
+                  className="text-[18px] text-gray-800"
+                >
+                  Master/Visa
+                </label>
+              </div>
+            </div>
+          </div>
+          <div className="w-[50%] px-[30px] h-full">
+            <p className="my-4 font-medium text-[22px] text-color-1">
+              Products
+            </p>
             <div className="h-[55%] overflow-y-auto">
               {cartData.length > 0 &&
                 cartData.map((product, index) => {
@@ -306,19 +378,23 @@ const Checkout = () => {
                       className="w-full flex justify-between items-center gap-4 py-[20px]"
                       key={index}
                     >
-                      <div className="w-[20%] border">
+                      <div className="w-[15%] border">
                         <img
                           src={product.image_url}
                           alt=""
                           className="h-full w-full object-cover"
                         />
                       </div>
-                      <div className="w-[50%]">
-                        <p className="text-[20px]">{product.title}</p>
-                        <p className="text-[20px]">Size: {product.variants}</p>
+                      <div className="w-[55%]">
+                        <p className="text-color-1">{product.title}</p>
+                        <p className="text-gray-800">
+                          Size: {product.variants}
+                        </p>
                       </div>
                       <div className="w-[10%]">
-                        <p className="text-[20px]">{product.cart_quantity} x</p>
+                        <p className="text-gray-800">
+                          {product.cart_quantity} x
+                        </p>
                       </div>
                       <div className="w-[20%]">
                         <p
@@ -369,12 +445,9 @@ const Checkout = () => {
                 <p className="text-[20px] font-semibold">{totalPrice} BDT</p>
               </div>
               <div className="flex justify-end mt-8">
-                {/* <button className="bg-orange-700 text-white text-[20px] px-[50px] py-[5px] rounded-[5px]" >
-                  Place Order
-                </button> */}
                 <UiButton
                   buttonName="Place Order"
-                  externalClass="bg-green-300"
+                  externalClass="!bg-color-1 !text-color-3 !font-medium"
                   onClick={placeOrder}
                 />
               </div>

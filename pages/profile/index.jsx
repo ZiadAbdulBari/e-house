@@ -7,6 +7,7 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar/Sidebar";
+import UserProfile from "@/components/UserProfile/UserProfile";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -88,58 +89,33 @@ const Profile = () => {
           <Sidebar />
           {/* SHOW PROFILE DATA */}
           <div className="w-[85%]">
-            <h1 className="text-[30px] font-bold mb-4">Profile</h1>
+            <h1 className="text-[30px] text-color-1 font-bold mb-4">Profile</h1>
             {edit == false && (
-              <div className="rounded bg-gray-50 w-full">
-                <div className="p-[10px] flex justify-end cursor-pointer">
+              <div className="rounded bg-gray-50 w-full shadow-lg shadow-gray-400/20">
+                <div className="p-[10px] flex justify-end cursor-pointer" onClick={() => setEdit(true)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     width="24"
                     height="24"
-                    onClick={() => setEdit(true)}
+                    className="fill-color-1"
                   >
-                    <path
-                      d="M16.7574 2.99666L9.29145 10.4626L9.29886 14.7097L13.537 14.7023L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"
-                      fill="rgba(0,0,0,1)"
-                    ></path>
+                    <path d="M6.41421 15.89L16.5563 5.74785L15.1421 4.33363L5 14.4758V15.89H6.41421ZM7.24264 17.89H3V13.6473L14.435 2.21231C14.8256 1.82179 15.4587 1.82179 15.8492 2.21231L18.6777 5.04074C19.0682 5.43126 19.0682 6.06443 18.6777 6.45495L7.24264 17.89ZM3 19.89H21V21.89H3V19.89Z"></path>
                   </svg>
                 </div>
                 <div className="w-full py-[50px] px-[30px]">
-                  <div className="flex justify-between gap-y-2 w-full">
-                    <div className="flex w-[50%]">
-                      <p className="text-[20px] font-medium w-[20%]">Name</p>
-                      <p className="text-[20px] font-medium">
-                        {profileData?.name}
-                      </p>
-                    </div>
-                    <div className="flex w-[50%]">
-                      <p className="text-[20px] font-medium w-[20%]">Email</p>
-                      <p className="text-[20px] font-medium">
-                        {profileData?.email}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between gap-y-2 w-full mt-8">
-                    <div className="flex w-[50%]">
-                      <p className="text-[20px] font-medium w-[20%]">Phone</p>
-                      <p className="text-[20px] font-medium">
-                        {profileData?.phone}
-                      </p>
-                    </div>
-                    <div className="flex w-[50%]">
-                      <p className="text-[20px] font-medium w-[20%]">Address</p>
-                      <p className="text-[20px] font-medium">
-                        {profileData?.address}
-                      </p>
-                    </div>
+                  <div className="grid grid-flow-row grid-cols-2 gap-x-2 gap-y-8">
+                    <UserProfile fieldName="Name" fieldData={profileData?.name}/>
+                    <UserProfile fieldName="Email" fieldData={profileData?.email}/>
+                    <UserProfile fieldName="Phone" fieldData={profileData?.phone}/>
+                    <UserProfile fieldName="Address" fieldData={profileData?.address}/>
                   </div>
                 </div>
               </div>
             )}
             {/* UPDATE PROFILE DATA*/}
             {edit == true && (
-              <div className="rounded bg-gray-50 py-[50px] px-[30px] w-full">
+              <div className="rounded bg-gray-50 py-[50px] px-[30px] w-full shadow-lg shadow-gray-400/20">
                 <div className="grid grid-cols-2 gap-x-4 gap-y-8">
                   <UiInput
                     label="Name"
@@ -177,12 +153,12 @@ const Profile = () => {
                 <div className="flex justify-end mt-[100px] gap-4">
                   <UiButton
                     buttonName="Upgrade Profile"
-                    externalClass="bg-green-200"
+                    externalClass="bg-color-1 !text-color-3 !font-medium"
                     onClick={upgradeProfile}
                   />
                   <UiButton
                     buttonName="Cancel"
-                    externalClass="bg-red-200"
+                    externalClass="bg-red-500 !text-white !font-medium"
                     onClick={cancelUpgrade}
                   />
                 </div>

@@ -5,17 +5,31 @@ import React, { useEffect, useState } from "react";
 const Sidebar = () => {
   const router = useRouter();
   const [pagename, setPagename] = useState("");
-  useEffect(()=>{
+  useEffect(() => {
     setPagename(router.pathname);
-  },[router])
+  }, [router]);
   return (
-    <div className="w-[15%] h-[75vh] bg-gray-800 rounded py-[20px]">
+    <div className="w-[15%] h-[75vh] bg-color-1 rounded py-[20px]">
       <ul>
         <li className="py-[5px]">
-          <Link className={`${pagename=='/profile' && 'block bg-orange-500'} px-[20px] text-white font-medium text-[18px] py-[5px]`} href="/profile">Profile</Link>
+          <Link
+            className={`${
+              pagename == "/profile" && "bg-color-3 !text-color-1"
+            } px-[20px] text-color-3 font-medium text-[18px] py-[5px] block`}
+            href="/profile"
+          >
+            Profile
+          </Link>
         </li>
         <li className="py-[5px]">
-          <Link className={`${pagename=='/order' && 'block bg-orange-500'} px-[20px] text-white font-medium text-[18px] py-[5px]`} href="/order">Order</Link>
+          <Link
+            className={`${
+              pagename == "/order" && "bg-color-3 !text-color-1"
+            } px-[20px] text-color-3 font-medium text-[18px] py-[5px] block`}
+            href="/order"
+          >
+            Order
+          </Link>
         </li>
       </ul>
     </div>

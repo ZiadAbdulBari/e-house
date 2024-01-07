@@ -1,12 +1,15 @@
 import { Html, Head, Main, NextScript } from "next/document";
-// import { Raleway } from 'next/font/google';
 export default function Document() {
-  // const raleway = Raleway()
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
       <body>
-        <Main/>
+        <Main />
         <NextScript />
       </body>
     </Html>

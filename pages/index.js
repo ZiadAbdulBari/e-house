@@ -61,7 +61,6 @@ export default function Home() {
             <CategorySection
               id={cat.id}
               iURL={cat.image_url}
-              // height="h-[390px]"
               name={cat.category_name}
               key={cat.id}
             />
