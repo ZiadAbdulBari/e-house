@@ -30,3 +30,7 @@ body{
   list-style-position: inside!important;
   margin-left: 10px;
 }
+.colored-toast{
+  background-color: '#113946';
+  color:'#EAD7BB';
+}

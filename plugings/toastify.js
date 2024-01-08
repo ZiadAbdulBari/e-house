@@ -1,28 +1,31 @@
-import {toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-const toastMessage = (mgs,status)=>{
-    const config={
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-    }
-    if(status=='i'){
-        toast.info(mgs,config);
-    }
-    else if(status=='s'){
-        toast.success(mgs,config);
-    }
-    else if(status=='w'){
-        toast.warning(mgs,config);
-    }
-    else if(status=='e'){
-        toast.error(mgs,config);
-    }
-}
-export default toastMessage
+import Swal from "sweetalert2";
+const toastMessage = (message, status) => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    background:'#113946',
+    color:'#EAD7BB',
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
+  let icon = "";
+  if (status == "i") {
+    icon = "info";
+  } else if (status == "s") {
+    icon = "success";
+  } else if (status == "w") {
+    icon = "warning";
+  } else if (status == "e") {
+    icon = "error";
+  }
+  Toast.fire({
+    icon: icon,
+    title: message
+  });
+};
+export default toastMessage;

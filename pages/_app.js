@@ -11,18 +11,6 @@ export default function App({ Component, pageProps }) {
       </Head>
       <Provider store={store}>
         <Component {...pageProps} />
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
       </Provider>
     </>
   );

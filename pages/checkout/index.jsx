@@ -335,7 +335,7 @@ const Checkout = () => {
                 </label>
               </div>
               <div
-                className="flex gap-2 items-center cursor-pointer"
+                className="flex gap-2 items-center cursor-pointer hidden"
                 onClick={() => setSelectedPayment("stripe")}
               >
                 <div

@@ -44,7 +44,7 @@ const Order = () => {
           <Sidebar />
           <div className="w-[85%] h-[75vh] overflow-y-auto">
             <h1 className="text-[30px] font-bold mb-4 text-color-1">Order list</h1>
-            <div className="grid grid-flow-row gap-y-2 w-full">
+            <div className="grid grid-flow-row gap-y-4 w-full">
               {orderlist.length > 0 &&
                 orderlist.map((order, index) => (
                   <div
@@ -57,7 +57,7 @@ const Order = () => {
                           Estimated delivery
                         </p>
                         <p className="text-gray-700 text-[16px] font-medium">
-                          {order.estimated_delivery}
+                          {new Date(order.estimated_delivery).toLocaleDateString()}
                         </p>
                       </div>
                       <div>
@@ -73,12 +73,12 @@ const Order = () => {
                           Order date
                         </p>
                         <p className="text-gray-700 text-[16px] font-medium">
-                          {order.createdAt}
+                          {new Date(order.createdAt).toLocaleDateString()}
                         </p>
                       </div>
                     </div>
                     <div className="flex justify-between items-center mt-4">
-                      <div>
+                      <div className="hidden">
                         <div className="w-[100px] h-[120px] rounded relative bg-blue-500">
                           <div className="w-[60%] h-full rounded absolute top-0 left-0 bg-red-500 z-[999]"></div>
                           <div className="w-[80%] h-full rounded absolute top-0 left-0 bg-orange-500 z-[99]"></div>
@@ -98,7 +98,7 @@ const Order = () => {
                       <div>
                         <UiButton
                           buttonName="View order"
-                          externalClass="bg-green-300"
+                          externalClass="bg-color-1 !text-color-3 !font-medium"
                           onClick={viewOrder}
                         />
                       </div>

@@ -31,7 +31,7 @@ export default function Home() {
     const img = [
       "../image/banner-1.jpg",
       "../image/banner-2.jpg",
-      "../image/banner-3.jpg",
+      // "../image/banner-3.jpg",
     ];
     setImages(img);
   };
