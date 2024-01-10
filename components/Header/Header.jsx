@@ -25,7 +25,7 @@ const Header = () => {
   };
   const getCategory = () => {
     axios.get("http://localhost:4000/get-category").then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response?.data?.status == 200) {
         setCategories(response?.data?.categories);
       }

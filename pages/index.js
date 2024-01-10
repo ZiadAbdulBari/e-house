@@ -9,6 +9,7 @@ import Promotion from "@/components/Home/Promotion";
 import { useDispatch } from "react-redux";
 import { getLoggedinStatus, getToken } from "@/store/authSlice";
 import { getCartProduct } from "@/store/cartSlice";
+import HomePageSlider from "@/components/SwiperSlider/HomePageSlider";
 export default function Home() {
   const dispatch = useDispatch();
   const [sections, setSections] = useState([]);
@@ -53,7 +54,8 @@ export default function Home() {
   }, []);
   return (
     <MainLayout>
-      <CommonSlider images={images} />
+      {/* <CommonSlider images={images} /> */}
+      <HomePageSlider images={images}/>
       {/* CATEGORY */}
       {categories.length > 0 ? (
         <div className="lg:container mx-auto grid grid-cols-3 gap-6 my-[100px] max-h-[300px] overflow-hidden">

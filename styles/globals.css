@@ -4,9 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 @import "./common.css";
+@import "./swiper-slider.css";
+@import "./product-detail-slider.css";
 @layer base {
   html {
-    font-family: Inter;
+    /* font-family: Inter; */
   }
 }
 
@@ -40,5 +42,5 @@
   text-align: center;
 }
 .body-height{
-  min-height: 86vh;
+  min-height: 76vh;
 }

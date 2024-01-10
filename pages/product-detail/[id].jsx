@@ -1,5 +1,6 @@
 import ImageSlider from "@/components/ProductDetail/ImageSlider";
 import Section from "@/components/Section/Section";
+import ProductDetailSlider from "@/components/SwiperSlider/ProductDetailSlider";
 import UiTab from "@/components/UiKit/UiTab";
 import MainLayout from "@/layout/MainLayout";
 import toastMessage from "@/plugings/toastify";
@@ -18,6 +19,7 @@ const Detail = () => {
   const [quantity, setQuantity] = useState(1);
   const [variant, setVariant] = useState([]);
   const [selectedVariant, setSelectedVariant] = useState([]);
+  const [images, setImages] = useState([]);
   const detailData = () => {
     const URL = `http://localhost:4000/product-detail/${router.query.id}`;
     axios
@@ -26,6 +28,11 @@ const Detail = () => {
         if (response?.data?.status == 200) {
           setDetails(response?.data?.products);
           setVariant(response?.data?.variant);
+          setImages([
+            response?.data?.products?.image_url,
+            "https://images.othoba.com/images/thumbs/0528541_premium-quality-navy-blue-color-full-sleeve-cotton-casual-check-shirt-for-men.webp",
+          ]);
+          console.log(response);
         }
       })
       .catch((error) => {
@@ -41,7 +48,7 @@ const Detail = () => {
     filtered.push(newVariant);
     setSelectedVariant(filtered);
   };
-  const addToCart = (type,product) => {
+  const addToCart = (type, product) => {
     if (variant.length == selectedVariant.length) {
       if (!loggedinStatus) {
         toastMessage("Please login", "w");
@@ -60,11 +67,10 @@ const Detail = () => {
           .then((response) => {
             if (response.data.status == 200) {
               dispatch(getCartProduct());
-              if(type=='cart'){
+              if (type == "cart") {
                 toastMessage(response.data.message, "s");
-              }
-              else if(type=='buy'){
-                router.push('/checkout');
+              } else if (type == "buy") {
+                router.push("/checkout");
               }
             }
           })
@@ -92,9 +98,9 @@ const Detail = () => {
       }
     }
   };
-  const buyProduct = (product)=>{
-    addToCart('buy',product);
-  }
+  const buyProduct = (product) => {
+    addToCart("buy", product);
+  };
   useEffect(() => {
     if (router.query.id) {
       detailData();
@@ -104,9 +110,10 @@ const Detail = () => {
     <MainLayout>
       <div className="lg:container mx-auto">
         <div className="flex gap-8 h-full mt-[30px]">
-          <div className="image w-[50%] h-[70vh] overflow-hidden">
+          <div className="image w-[50%] h-[76vh] overflow-hidden ">
             {/* <ImageSlider productImage={productImage} className="w-full" /> */}
-            <img className="object-cover" src={details.image_url} alt="" />
+            {images.length > 0 && <ProductDetailSlider images={images} />}
+            {/* <img className="object-cover" src={details.image_url} alt="" /> */}
           </div>
           <div className="w-[50%] h-full">
             <div className="grid grid-flow-row gap-y-4">
@@ -251,7 +258,7 @@ const Detail = () => {
                   </div>
                 </div>
               </div>
-              <div onClick={() => addToCart('cart',details)} className="group">
+              <div onClick={() => addToCart("cart", details)} className="group">
                 <button className="bg-color-1 text-color-3 px-[40px] py-[15px] flex justify-center rounded group-hover:bg-color-3 group-hover:text-color-1 transition duration-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -270,7 +277,7 @@ const Detail = () => {
                   </span>
                 </button>
               </div>
-              <div className="group" onClick={()=>buyProduct(details)}>
+              <div className="group" onClick={() => buyProduct(details)}>
                 <button className="bg-color-3 text-color-1 px-[40px] py-[15px] flex justify-center rounded group-hover:bg-color-1 group-hover:text-color-3 transition duration-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
