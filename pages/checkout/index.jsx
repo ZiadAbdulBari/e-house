@@ -7,6 +7,7 @@ import UiInput from "@/components/UiKit/UiInput";
 import UiButton from "@/components/UiKit/UiButton";
 import { getCartProduct } from "@/store/cartSlice";
 import { useRouter } from "next/router";
+import toastMessage from "@/plugings/toastify";
 const Checkout = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -112,20 +113,24 @@ const Checkout = () => {
         shippingaddressId: selectedAddress?.id,
         products: cartData,
         medium: selectedPayment,
-        paymentHistory: JSON.stringify({
-          amount: totalPrice,
-        }),
+        paymentStatus: 'pending',
       };
       axios
         .post("http://localhost:4000/place-order", data, {
           headers: { Authorization: token },
         })
         .then((response) => {
-          // console.log(response);
           if (response?.data?.status == 200) {
             dispatch(getCartProduct());
             getProducts();
-            router.push("/order");
+            console.log(response)
+            if(selectedPayment=='stripe'){
+              router.push(response.data?.payment_url);
+            }
+            else if(selectedPayment=='cod'){
+              toastMessage(response.data?.message,'s')
+              router.push('/order');
+            }
           }
         });
     }
@@ -335,7 +340,7 @@ const Checkout = () => {
                 </label>
               </div>
               <div
-                className="flex gap-2 items-center cursor-pointer hidden"
+                className="flex gap-2 items-center cursor-pointer"
                 onClick={() => setSelectedPayment("stripe")}
               >
                 <div
