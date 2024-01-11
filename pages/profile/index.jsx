@@ -92,23 +92,45 @@ const Profile = () => {
             <h1 className="text-[30px] text-color-1 font-bold mb-4">Profile</h1>
             {edit == false && (
               <div className="rounded bg-gray-50 w-full shadow-lg shadow-gray-400/20">
-                <div className="p-[10px] flex justify-end cursor-pointer" onClick={() => setEdit(true)}>
+                <div className="p-[10px] flex justify-end ">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     width="24"
                     height="24"
-                    className="fill-color-1"
+                    className="fill-color-1 cursor-pointer"
+                    onClick={() => setEdit(true)}
                   >
                     <path d="M6.41421 15.89L16.5563 5.74785L15.1421 4.33363L5 14.4758V15.89H6.41421ZM7.24264 17.89H3V13.6473L14.435 2.21231C14.8256 1.82179 15.4587 1.82179 15.8492 2.21231L18.6777 5.04074C19.0682 5.43126 19.0682 6.06443 18.6777 6.45495L7.24264 17.89ZM3 19.89H21V21.89H3V19.89Z"></path>
                   </svg>
                 </div>
-                <div className="w-full py-[50px] px-[30px]">
-                  <div className="grid grid-flow-row grid-cols-2 gap-x-2 gap-y-8">
-                    <UserProfile fieldName="Name" fieldData={profileData?.name}/>
-                    <UserProfile fieldName="Email" fieldData={profileData?.email}/>
-                    <UserProfile fieldName="Phone" fieldData={profileData?.phone}/>
-                    <UserProfile fieldName="Address" fieldData={profileData?.address}/>
+                <div className="w-full py-[30px] px-[30px]">
+                  <div className="flex gap-8 w-full items-center">
+                    <div className="h-full w-[10%] border border-gray-200 rounded">
+                      <img
+                        src="../../image/default-image.jpg"
+                        alt="User image"
+                        className="rounded"
+                      />
+                    </div>
+                    <div className="grid grid-flow-row grid-cols-2 gap-x-2 gap-y-8 w-[90%]">
+                      <UserProfile
+                        fieldName="Name"
+                        fieldData={profileData?.name}
+                      />
+                      <UserProfile
+                        fieldName="Email"
+                        fieldData={profileData?.email}
+                      />
+                      <UserProfile
+                        fieldName="Phone"
+                        fieldData={profileData?.phone}
+                      />
+                      <UserProfile
+                        fieldName="Address"
+                        fieldData={profileData?.address}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -116,51 +138,79 @@ const Profile = () => {
             {/* UPDATE PROFILE DATA*/}
             {edit == true && (
               <div className="rounded bg-gray-50 py-[50px] px-[30px] w-full shadow-lg shadow-gray-400/20">
-                <div className="grid grid-cols-2 gap-x-4 gap-y-8">
-                  <UiInput
-                    label="Name"
-                    type="text"
-                    value={inputValue.name}
-                    name="name"
-                    placeholder="Ente your name"
-                    onChange={handleChangeInput}
-                  />
-                  <UiInput
-                    label="Email"
-                    type="email"
-                    value={inputValue.email}
-                    name="email"
-                    placeholder="Ente your email"
-                    onChange={handleChangeInput}
-                  />
-                  <UiInput
-                    label="Phone"
-                    type="text"
-                    value={inputValue.phone}
-                    name="phone"
-                    placeholder="Ente your phone number"
-                    onChange={handleChangeInput}
-                  />
-                  <UiInput
-                    label="Address"
-                    type="text"
-                    value={inputValue.address}
-                    name="address"
-                    placeholder="Ente your address"
-                    onChange={handleChangeInput}
-                  />
-                </div>
-                <div className="flex justify-end mt-[100px] gap-4">
-                  <UiButton
-                    buttonName="Upgrade Profile"
-                    externalClass="bg-color-1 !text-color-3 !font-medium"
-                    onClick={upgradeProfile}
-                  />
-                  <UiButton
-                    buttonName="Cancel"
-                    externalClass="bg-red-500 !text-white !font-medium"
-                    onClick={cancelUpgrade}
-                  />
+                <div className="w-full flex gap-8">
+                  <div className="h-[180px] w-[15%] border border-gray-200 rounded">
+                    <div className="h-[100%] w-full relative">
+                      <img
+                        src="../../image/default-image.jpg"
+                        alt="User image"
+                        className="rounded h-full w-full"
+                      />
+                      <label
+                        htmlFor="profile-picture"
+                        className="absolute top-0 right-0 cursor-pointer"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          className="fill-color-1"
+                        >
+                          <path d="M6.41421 15.89L16.5563 5.74785L15.1421 4.33363L5 14.4758V15.89H6.41421ZM7.24264 17.89H3V13.6473L14.435 2.21231C14.8256 1.82179 15.4587 1.82179 15.8492 2.21231L18.6777 5.04074C19.0682 5.43126 19.0682 6.06443 18.6777 6.45495L7.24264 17.89ZM3 19.89H21V21.89H3V19.89Z"></path>
+                        </svg>
+                      </label>
+                      <input type="file" id="profile-picture" hidden />
+                    </div>
+                  </div>
+                  <div className="w-[75%]">
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-8">
+                      <UiInput
+                        label="Name"
+                        type="text"
+                        value={inputValue.name}
+                        name="name"
+                        placeholder="Ente your name"
+                        onChange={handleChangeInput}
+                      />
+                      <UiInput
+                        label="Email"
+                        type="email"
+                        value={inputValue.email}
+                        name="email"
+                        placeholder="Ente your email"
+                        onChange={handleChangeInput}
+                      />
+                      <UiInput
+                        label="Phone"
+                        type="text"
+                        value={inputValue.phone}
+                        name="phone"
+                        placeholder="Ente your phone number"
+                        onChange={handleChangeInput}
+                      />
+                      <UiInput
+                        label="Address"
+                        type="text"
+                        value={inputValue.address}
+                        name="address"
+                        placeholder="Ente your address"
+                        onChange={handleChangeInput}
+                      />
+                    </div>
+                    <div className="flex justify-end mt-[100px] gap-4">
+                      <UiButton
+                        buttonName="Upgrade Profile"
+                        externalClass="bg-color-1 !text-color-3 !font-medium"
+                        onClick={upgradeProfile}
+                      />
+                      <UiButton
+                        buttonName="Cancel"
+                        externalClass="bg-red-500 !text-white !font-medium"
+                        onClick={cancelUpgrade}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
