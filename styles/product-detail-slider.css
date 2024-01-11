@@ -55,7 +55,7 @@
     opacity: 1;
   }
   
-  .swiper-slide img {
+  .mySwiperThumb .swiper-slide img {
     display: block;
     width: 100%;
     height: 100%;

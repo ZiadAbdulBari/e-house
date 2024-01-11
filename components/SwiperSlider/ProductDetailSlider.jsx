@@ -6,7 +6,6 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-
 // import "./styles.css";
 
 // import required modules

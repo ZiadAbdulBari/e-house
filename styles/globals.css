@@ -11,36 +11,12 @@
     /* font-family: Inter; */
   }
 }
-
 .input {
   @apply w-full h-[45px] px-[20px] py-[20px] rounded-[5px] outline-none border;
 }
 .button {
   @apply px-6 py-2 text-white bg-gray-800 rounded;
 }
-.open-cart {
-  @apply block;
-}
-.slick-dots li {
-  bottom: 40px !important;
-}
-.slick-dots li.slick-active button:before {
-  color: #113946 !important;
-}
-.slick-dots li button:before {
-  color: #BCA37F !important;
-  font-size: 20px!important;
-}
-.slick-dots {
-  position: absolute;
-  bottom: 25px;
-  display: block;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  text-align: center;
-}
 .body-height{
-  min-height: 76vh;
+  min-height: 79.3vh;
 }
