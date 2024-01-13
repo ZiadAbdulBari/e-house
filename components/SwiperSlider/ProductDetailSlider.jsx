@@ -27,7 +27,7 @@ const ProductDetailSlider = ({ images }) => {
           return (
             <div className="w-full h-full" key={j}>
               <SwiperSlide>
-                <img className="w-full h-full" src={image} />
+                <img className="w-full h-full" src={image.image_url} />
               </SwiperSlide>
             </div>
           );
@@ -46,7 +46,7 @@ const ProductDetailSlider = ({ images }) => {
           return (
             <div className="w-full h-full" key={image}>
               <SwiperSlide>
-                <img className="w-full h-full" src={image} />
+                <img className="w-full h-full" src={image.image_url} />
               </SwiperSlide>
             </div>
           );

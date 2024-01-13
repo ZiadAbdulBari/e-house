@@ -1,7 +1,11 @@
 import Link from "next/link";
 import ProductCart from "../ProductCard/ProductCard";
+import { useEffect } from "react";
 
 const Section = ({ sectionName, count, products, id = "" }) => {
+  useEffect(()=>{
+    console.log(products)
+  },[])
   return (
     <div className="mt-20 w-full">
       <div

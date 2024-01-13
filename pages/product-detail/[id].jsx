@@ -26,13 +26,11 @@ const Detail = () => {
       .get(URL)
       .then((response) => {
         if (response?.data?.status == 200) {
+          console.log(response);
           setDetails(response?.data?.products);
           setVariant(response?.data?.variant);
-          setImages([
-            response?.data?.products?.image_url,
-            "https://images.othoba.com/images/thumbs/0528541_premium-quality-navy-blue-color-full-sleeve-cotton-casual-check-shirt-for-men.webp",
-          ]);
-          console.log(response);
+          setImages(response?.data?.products?.productImages);
+          // console.log(response);
         }
       })
       .catch((error) => {
