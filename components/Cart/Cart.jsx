@@ -59,7 +59,7 @@ const Cart = () => {
     dispatch(getCartProduct());
   }, []);
   return (
-    <div className={windowSize + " w-full"}>
+    <div className={`hidden lg:block ${windowSize + " w-full"} `}>
       <div
         className="fixed right-0 top-[50%] bg-color-1 p-[10px] z-[999] rounded-l cursor-pointer"
         onClick={cartControl}

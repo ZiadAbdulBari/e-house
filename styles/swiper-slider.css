@@ -1,8 +1,10 @@
 .mySwiper{
   /* w-full h-[90vh] */
-  width: 100%;
-  height: 90vh!important;
+  /* width: 100%; */
+  /* height: 90vh!important; */
+  @apply w-full !h-[25vh] md:!h-[50vh] lg:!h-[90vh]
 }
 .mySwiper img{
-  object-fit: cover!important;
+  /* object-fit: cover!important; */
+  @apply object-cover
 }

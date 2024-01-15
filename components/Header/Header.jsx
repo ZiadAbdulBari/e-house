@@ -56,11 +56,11 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="bg-gray-50 shadow-lg shadow-gray-400/20">
-      <div className="lg:container mx-auto">
+    <div className="bg-gray-50 shadow-lg shadow-gray-400/20 py-[10px] lg:py-0">
+      <div className="px-[10px] lg:px-0 lg:container mx-auto">
         <div className="flex justify-between items-center w-full">
           <div className="w-[33%]">
-            <p className=" text-[40px] font-extrabold text-color-1">
+            <p className="text-[25px] lg:text-[40px] font-extrabold text-color-1">
               <Link href="/">Essential</Link>
             </p>
           </div>
@@ -89,9 +89,9 @@ const Header = () => {
                 </Dropdown>
               ))}
           </div>
-          <div className="flex gap-4 items-center w-[33%] justify-end">
+          <div className="flex gap-4 items-center w-[67%] lg:w-[33%] justify-end">
             {/* search bar */}
-            <div className="w-[80%]">
+            <div className="w-[100%] lg:w-[80%]">
               <form className="w-full" onSubmit={searchProduct}>
                 <div className="relative w-full h-[40px] rounded-full">
                   <input
@@ -104,13 +104,13 @@ const Header = () => {
                   />
                   <div
                     onClick={searchProduct}
-                    className="cursor-pointer absolute top-0 right-0 rounded-full h-full w-[50px] bg-color-1 flex justify-center items-center"
+                    className="cursor-pointer absolute top-0 right-0 rounded-full h-full w-[40px] bg-color-1 flex justify-center items-center"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
-                      width="22"
-                      height="22"
+                      width="18"
+                      height="18"
                     >
                       <path
                         d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z"
