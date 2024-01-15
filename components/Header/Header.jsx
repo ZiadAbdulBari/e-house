@@ -90,6 +90,7 @@ const Header = () => {
               ))}
           </div>
           <div className="flex gap-4 items-center w-[33%] justify-end">
+            {/* search bar */}
             <div className="w-[80%]">
               <form className="w-full" onSubmit={searchProduct}>
                 <div className="relative w-full h-[40px] rounded-full">
@@ -120,7 +121,8 @@ const Header = () => {
                 </div>
               </form>
             </div>
-            <div className="flex gap-2">
+            {/* login and registration section */}
+            <div className="hidden lg:flex gap-2">
               {!isLoggedin && (
                 <Link href="/signup" className="login">
                   Login
