@@ -65,7 +65,7 @@ const Header = () => {
             </p>
           </div>
           {/* HEADER CATEGORY */}
-          <div className="flex gap-12 w-[34%] justify-center">
+          <div className="hidden lg:flex gap-12 w-[34%] justify-center">
             {categories.length > 0 &&
               categories.map((cat) => (
                 <Dropdown
