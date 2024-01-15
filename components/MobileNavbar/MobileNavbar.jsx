@@ -47,6 +47,7 @@ const MobileNavbar = () => {
   }, []);
   return (
     <div className="bg-gray-50 shadow-lg shadow-gray-400/20">
+      <div className="flex lg:hidden">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
           {/* home */}
@@ -131,6 +132,7 @@ const MobileNavbar = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
