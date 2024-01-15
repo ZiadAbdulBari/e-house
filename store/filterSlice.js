@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 export const getFilterData = createAsyncThunk("filter/getFilterData",async (url)=>{
     try{
-        const response = await axios.post(`http://localhost:4000/filter/${url}`)
+        const response = await axios.post(`${process.env.baseurl}/filter/${url}`)
         console.log(response);
         return response.data;
     }

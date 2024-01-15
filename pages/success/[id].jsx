@@ -6,7 +6,7 @@ const Success = () => {
   const router = useRouter();
   const chnageStatus = () => {
     // router.query.id
-    const url = `http://localhost:4000/change-payment-status`;
+    const url = `${process.env.baseurl}/change-payment-status`;
     const id = router.query.id;
     console.log(id);
     axios.post(url, { id }).then((response) => {

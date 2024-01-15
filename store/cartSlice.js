@@ -8,7 +8,7 @@ export const getCartProduct = createAsyncThunk(
   async () => {
     try{
       // {headers: { Authorization: token }}
-      const response = await axios.get("http://localhost:4000/get-cart");
+      const response = await axios.get(`${process.env.baseurl}/get-cart`);
       window.localStorage.setItem('cart',JSON.stringify(response?.data?.cart_product))
       window.localStorage.setItem('totalPrice',JSON.stringify(response?.data?.totalPrice))
       return response.data;

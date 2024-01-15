@@ -19,7 +19,7 @@ const Auth = ({ pageName, text, link }) => {
     });
   };
   const login = ()=>{
-    axios.post('http://localhost:4000/login',state)
+    axios.post(`${process.env.baseurl}/login`,state)
     .then((response)=>{
       if(response?.data?.status==200){
         const token = response?.data?.access_token;
@@ -36,7 +36,7 @@ const Auth = ({ pageName, text, link }) => {
     })
   }
   const registration = ()=>{
-    axios.post('http://localhost:4000/registration',state)
+    axios.post(`${process.env.baseurl}/registration`,state)
     .then(response=>{
       if(response?.data?.status==200){
         toastMessage(response?.data?.message,'s');

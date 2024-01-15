@@ -16,7 +16,7 @@ export default function Home() {
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
   const getSection = () => {
-    const URL = "http://localhost:4000/get-section";
+    const URL = `${process.env.baseurl}/get-section`;
     axios
       .get(URL)
       .then((response) => {
@@ -37,7 +37,7 @@ export default function Home() {
     setImages(img);
   };
   const homepageCategory = () => {
-    axios.get("http://localhost:4000/get-category").then((response) => {
+    axios.get(`${process.env.baseurl}/get-category`).then((response) => {
       if (response?.data?.status == 200) {
         setCategories(response?.data?.categories);
       }

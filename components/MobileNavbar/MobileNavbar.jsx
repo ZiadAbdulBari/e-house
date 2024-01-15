@@ -24,7 +24,7 @@ const MobileNavbar = () => {
     }
   };
   const getCategory = () => {
-    axios.get("http://localhost:4000/get-category").then((response) => {
+    axios.get(`${process.env.baseurl}/get-category`).then((response) => {
       // console.log(response);
       if (response?.data?.status == 200) {
         setCategories(response?.data?.categories);
@@ -32,7 +32,7 @@ const MobileNavbar = () => {
     });
   };
   const getSubCategory = () => {
-    axios.get("http://localhost:4000/get-subcategory").then((response) => {
+    axios.get(`${process.env.baseurl}/get-subcategory`).then((response) => {
       if (response?.data?.status == 200) {
         setSubcategories(response?.data?.subcategories);
       }

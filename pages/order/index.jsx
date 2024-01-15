@@ -17,7 +17,7 @@ const Order = () => {
     // return;
     if (loggedin) {
       axios
-        .get("http://localhost:4000/order-list", {
+        .get(`${process.env.baseurl}/order-list`, {
           headers: { Authorization: token },
         })
         .then((response) => {

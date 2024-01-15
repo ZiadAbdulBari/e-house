@@ -20,7 +20,7 @@ const Category = () => {
     const url = `false&${query}&false&false`;
     dispatch(getFilterData(url))
     // axios
-    //   .post(`http://localhost:4000/filter/false&${query}&false&false`)
+    //   .post(`${process.env.baseurl}/filter/false&${query}&false&false`)
     //   .then((response) => {
     //     if(response?.data?.status==200){
     //         setSubcategory(response.data?.result?.subcategory);
