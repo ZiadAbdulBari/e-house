@@ -70,7 +70,7 @@ export default function Home() {
         </div>
       ) : (
         <div>
-          <p className="text-center font-semibold text-[18px] text-gary-800">
+          <p className="text-center font-medium text-[18px] text-gary-600">
             Categories are not found
           </p>
         </div>
@@ -88,7 +88,7 @@ export default function Home() {
           ))
         ) : (
           <div>
-            <p className="text-center font-semibold text-[18px] text-gary-800">
+            <p className="text-center font-medium text-[18px] text-gary-600">
               Products are not found
             </p>
           </div>

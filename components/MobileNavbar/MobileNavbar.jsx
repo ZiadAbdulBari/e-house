@@ -11,6 +11,7 @@ const MobileNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [windowSize, setWindowSize] = useState("");
   const cartCount = useSelector((state) => state.cart.cartCount);
+  const loggedinStatus = useSelector((state) => state.auth.isLoggedin);
   const cartControl = () => {
     const selectCart = document.getElementById("mobileSidebar");
     if (!isOpen) {
@@ -51,7 +52,8 @@ const MobileNavbar = () => {
       <div className="px-[10px] h-full">
         <div className="grid grid-flow-row grid-cols-4 items-center w-full h-full">
           {/* home icon*/}
-          <Link href='/'
+          <Link
+            href="/"
             className="w-full h-full flex flex-col justify-center items-center"
           >
             <svg
@@ -86,10 +88,10 @@ const MobileNavbar = () => {
             className=" z-[999] rounded-l cursor-pointer w-full h-full"
             onClick={cartControl}
           >
-            <div className="h-full w-full flex flex-col justify-center items-center">
-              {/* <div className="absolute font-semibold text-color-1 text-[20px] top-[-6px] left-[32px] p-[10px] rounded-full">
+            <div className="relative h-full w-full flex flex-col justify-center items-center">
+              <div className="absolute font-semibold text-color-1 text-[20px] -top-[15px] left-[40px] p-[10px] rounded-full">
                 {cartCount}
-              </div> */}
+              </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -103,21 +105,39 @@ const MobileNavbar = () => {
             </div>
           </div>
           {/* account icon */}
-          <div
-            className="w-full h-full flex flex-col justify-center items-center"
-            onClick={cartControl}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="30"
-              height="30"
-              className="fill-gray-400/70 block"
+          {loggedinStatus ? (
+            <div
+              className="w-full h-full flex flex-col justify-center items-center"
+              onClick={cartControl}
             >
-              <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"></path>
-            </svg>
-            <p className="text-[15px] text-gray-400/70">Account</p>
-          </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="30"
+                height="30"
+                className="fill-gray-400/70 block"
+              >
+                <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"></path>
+              </svg>
+              <p className="text-[15px] text-gray-400/70">Account</p>
+            </div>
+          ) : (
+            <Link
+              href="/signup"
+              className="w-full h-full flex flex-col justify-center items-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="30"
+                height="30"
+                className="fill-gray-400/70 block"
+              >
+                <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"></path>
+              </svg>
+              <p className="text-[15px] text-gray-400/70">Account</p>
+            </Link>
+          )}
         </div>
       </div>
       <div
