@@ -7,7 +7,7 @@ const Section = ({ sectionName, count, products, id = "" }) => {
     console.log(products)
   },[])
   return (
-    <div className="mt-20 w-full">
+    <div className="mt-20 w-full xs:px-[10px] lg:px-0 ">
       <div
         className={`flex ${
           count > 0 ? "items-end gap-2" : "justify-between items-center"
@@ -35,7 +35,7 @@ const Section = ({ sectionName, count, products, id = "" }) => {
           </Link>
         )}
       </div>
-      <div className="mt-8 grid grid-flow-row grid-cols-4 gap-3">
+      <div className="mt-8 grid grid-flow-row sm:grid-cols-2 lg:grid-cols-4 gap-y-4 lg:gap-3">
         {products.length > 0 &&
           products.map((product, index) => {
             return <ProductCart product={product} key={index} />;

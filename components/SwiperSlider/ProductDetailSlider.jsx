@@ -25,7 +25,7 @@ const ProductDetailSlider = ({ images }) => {
       >
         {images.map((image, j) => {
           return (
-            <div className="w-full h-full" key={j}>
+            <div className="lg:w-full lg:h-full" key={j}>
               <SwiperSlide>
                 <img className="w-full h-full" src={image.image_url} />
               </SwiperSlide>
@@ -44,9 +44,9 @@ const ProductDetailSlider = ({ images }) => {
       >
         {images.map((image) => {
           return (
-            <div className="w-full h-full" key={image}>
+            <div className="lg:w-full lg:h-full" key={image}>
               <SwiperSlide>
-                <img className="w-full h-full" src={image.image_url} />
+                <img className=" h-[20%] w-[20%] lg:w-full lg:h-full" src={image.image_url} />
               </SwiperSlide>
             </div>
           );
