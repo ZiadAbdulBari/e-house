@@ -106,18 +106,18 @@ const Detail = () => {
   }, [router]);
   return (
     <MainLayout>
-      <div className="lg:container mx-auto">
-        <div className="flex gap-8 h-full mt-[30px]">
-          <div className="image w-[50%] h-[76vh] overflow-hidden ">
+      <div className="lg:container mx-auto ">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 h-full mt-[30px] xs:px-[10px] lg:px-0">
+          <div className="image lg:w-[50%] h-[76vh] overflow-hidden ">
             {/* <ImageSlider productImage={productImage} className="w-full" /> */}
             {images.length > 0 && <ProductDetailSlider images={images} />}
             {/* <img className="object-cover" src={details.image_url} alt="" /> */}
           </div>
-          <div className="w-[50%] h-full">
+          <div className="lg:w-[50%] h-full">
             <div className="grid grid-flow-row gap-y-4">
               <div className="flex justify-between">
                 <div>
-                  <h1 className="font-semibold text-[30px] text-color-1">
+                  <h1 className="font-semibold text-[20px] lg:text-[30px] text-color-1">
                     {details.title}
                   </h1>
                   {details.stock_quantity == 0 && (
@@ -218,7 +218,7 @@ const Detail = () => {
             <div className="border border-gray-100 mb-8"></div>
             <div className="flex gap-4">
               <div className="flex">
-                <div className="quantity px-[30px] py-[10px] border border-color-2">
+                <div className="quantity lg:px-[30px] px-4 lg:py-[10px] border border-color-2">
                   <p className="text-[20px] text-color-1">{quantity}</p>
                 </div>
                 <div className="quantity-controller">
@@ -229,8 +229,7 @@ const Detail = () => {
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
-                      width="24"
-                      height="24"
+                      className="w-[18px] h-[18px] lg:w-[24px] lg:h-[24px]"
                     >
                       <path
                         d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"
@@ -245,8 +244,7 @@ const Detail = () => {
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
-                      width="24"
-                      height="24"
+                      className="w-[18px] h-[18px] lg:w-[24px] lg:h-[24px]"
                     >
                       <path
                         d="M5 11V13H19V11H5Z"
@@ -257,7 +255,7 @@ const Detail = () => {
                 </div>
               </div>
               <div onClick={() => addToCart("cart", details)} className="group">
-                <button className="bg-color-1 text-color-3 px-[40px] py-[15px] flex justify-center rounded group-hover:bg-color-3 group-hover:text-color-1 transition duration-300">
+                <button className="bg-color-1 text-color-3 px-[12px] py-2 lg:px-[40px] lg:py-[15px] flex justify-center rounded group-hover:bg-color-3 group-hover:text-color-1 transition duration-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -269,14 +267,14 @@ const Detail = () => {
                       className="fill-color-3 group-hover:fill-color-1 transition duration-300"
                     ></path>
                   </svg>
-                  <span className="text-[15px] font-medium ml-2">
+                  <span className="text-[12px] lg:text-[15px] font-medium ml-2">
                     {" "}
                     ADD TO CART
                   </span>
                 </button>
               </div>
               <div className="group" onClick={() => buyProduct(details)}>
-                <button className="bg-color-3 text-color-1 px-[40px] py-[15px] flex justify-center rounded group-hover:bg-color-1 group-hover:text-color-3 transition duration-300">
+                <button className="bg-color-3 text-color-1 px-[12px] py-2 lg:px-[40px] lg:py-[15px] flex justify-center rounded group-hover:bg-color-1 group-hover:text-color-3 transition duration-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -288,7 +286,7 @@ const Detail = () => {
                       className="fill-color-1 group-hover:fill-color-3 transition duration-300"
                     ></path>
                   </svg>
-                  <span className="text-[15px] font-medium ml-2">
+                  <span className="text-[12px] lg:text-[15px] font-medium ml-2">
                     BUY IT NOW
                   </span>
                 </button>

@@ -58,7 +58,7 @@ export default function Home() {
       <HomePageSlider images={images}/>
       {/* CATEGORY */}
       {categories.length > 0 ? (
-        <div className="lg:container mx-auto grid grid-cols-3 gap-6 my-[100px] max-h-[300px] overflow-hidden">
+        <div className="lg:container mx-auto grid grid-flow-row grid-cols-3 gap-6 my-[100px] max-h-[300px] overflow-hidden">
           {categories.map((cat) => (
             <CategorySection
               id={cat.id}
