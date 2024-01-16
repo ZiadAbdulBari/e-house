@@ -21,7 +21,7 @@ const Detail = () => {
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [images, setImages] = useState([]);
   const detailData = () => {
-    const URL = `http://localhost:4000/product-detail/${router.query.id}`;
+    const URL = `${process.env.baseurl}/product-detail/${router.query.id}`;
     axios
       .get(URL)
       .then((response) => {
@@ -59,7 +59,7 @@ const Detail = () => {
           price: parseInt(product.price) - parseInt(product.discount_price),
         };
         axios
-          .post("http://localhost:4000/add-to-cart", cartProduct, {
+          .post(`${process.env.baseurl}/add-to-cart`, cartProduct, {
             headers: { Authorization: token },
           })
           .then((response) => {

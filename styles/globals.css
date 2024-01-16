@@ -15,7 +15,7 @@
   @apply w-full h-[45px] px-[20px] py-[20px] rounded-[5px] outline-none border;
 }
 .button {
-  @apply px-6 py-2 text-white bg-gray-800 rounded;
+  @apply px-6 py-2 text-white bg-color-1 rounded;
 }
 .body-height{
   min-height: 79.3vh;

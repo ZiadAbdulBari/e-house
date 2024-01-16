@@ -37,7 +37,7 @@ const Cart = () => {
       productId: product.id,
     };
     axios
-      .post("http://localhost:4000/delete-from-cart", data, {
+      .post(`${process.env.baseurl}/delete-from-cart`, data, {
         headers: { Authorization: token },
       })
       .then((response) => {

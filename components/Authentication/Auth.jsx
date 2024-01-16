@@ -6,9 +6,10 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoggedinStatus, getToken } from "../../store/authSlice";
 import toastMessage from "@/plugings/toastify";
+import UiInput from "../UiKit/UiInput";
 
 const Auth = ({ pageName, text, link }) => {
-  const loggedinStatus = useSelector(state=>state.auth.isLoggedin)
+  const loggedinStatus = useSelector((state) => state.auth.isLoggedin);
   const dispatch = useDispatch();
   const router = useRouter();
   const [state, setState] = useState({ email: "", password: "" });
@@ -18,66 +19,61 @@ const Auth = ({ pageName, text, link }) => {
       [e.target.name]: e.target.value,
     });
   };
-  const login = ()=>{
-    axios.post('http://localhost:4000/login',state)
-    .then((response)=>{
-      if(response?.data?.status==200){
-        const token = response?.data?.access_token;
-        window.localStorage.setItem('token',JSON.stringify(token));
-        window.localStorage.setItem('isLoggedin',JSON.stringify(true));
-        dispatch(getLoggedinStatus());
-        dispatch(getToken());
-        toastMessage(response?.data?.message,'s');
-        router.push('/');
-      }
-    })
-    .catch((error)=>{
-      toastMessage(error?.message,'e');
-    })
-  }
-  const registration = ()=>{
-    axios.post('http://localhost:4000/registration',state)
-    .then(response=>{
-      if(response?.data?.status==200){
-        toastMessage(response?.data?.message,'s');
-        router.push('/signup');
-      }
-    })
-    .catch((error)=>{
-      toastMessage(error?.message,'e');
-    })
-  }
-  const authCnotroller = (e)=>{
+  const login = () => {
+    axios
+      .post(`${process.env.baseurl}/login`, state)
+      .then((response) => {
+        if (response?.data?.status == 200) {
+          const token = response?.data?.access_token;
+          window.localStorage.setItem("token", JSON.stringify(token));
+          window.localStorage.setItem("isLoggedin", JSON.stringify(true));
+          dispatch(getLoggedinStatus());
+          dispatch(getToken());
+          toastMessage(response?.data?.message, "s");
+          router.push("/");
+        }
+      })
+      .catch((error) => {
+        toastMessage(error?.message, "e");
+      });
+  };
+  const registration = () => {
+    axios
+      .post(`${process.env.baseurl}/registration`, state)
+      .then((response) => {
+        if (response?.data?.status == 200) {
+          toastMessage(response?.data?.message, "s");
+          router.push("/signup");
+        }
+      })
+      .catch((error) => {
+        toastMessage(error?.message, "e");
+      });
+  };
+  const authCnotroller = (e) => {
     e.preventDefault();
-    if(pageName=='Registration'){
+    if (pageName == "Registration") {
       registration();
-    }
-    else{
+    } else {
       login();
     }
-  }
+  };
   return (
-    <div className="flex w-screen h-screen justify-center items-center">
-      <div className="grid grid-flow-row gap-4 w-[400px] bg-white p-[40px] rounded-[5px] shadow-1">
-        <div>
-          <div>
-            <label htmlFor="email">Email address</label>
-          </div>
-          <input
+    <div className="flex w-screen h-screen justify-center items-center px-[10px] lg:px-0">
+      <div className="shadow-1 p-[30px] lg!p-[40px]">
+        <p className="text-center text-[25px] lg:text-[40px] font-extrabold text-color-1">Essential</p>
+        <div className="grid grid-flow-row gap-4 xs:w-[300px] sm:w-[400px] lg:w-[500px] bg-white rounded-[5px] mt-8">
+          <UiInput
             type="email"
             id="email"
-            className="input"
+            label="Email address"
             name="email"
             placeholder="Enter your email address"
             value={state.email}
             onChange={handleChangeField}
           />
-        </div>
-        <div>
-          <div>
-            <label htmlFor="password">Password</label>
-          </div>
-          <input
+          <UiInput
+            label="Password"
             type="password"
             id="password"
             className="input"
@@ -86,15 +82,17 @@ const Auth = ({ pageName, text, link }) => {
             value={state.password}
             onChange={handleChangeField}
           />
-        </div>
-        <p className="text-center">
-          {text}
-          <Link href={link} className="font-bold text-gray-800">
-            {pageName == "Registration" ? "Login" : "Registration"}
-          </Link>
-        </p>
-        <div className="text-center">
-          <button className="button" onClick={authCnotroller}>{pageName}</button>
+          <p className="text-center text-gray-500">
+            {text}
+            <Link href={link} className="font-medium text-gray-600">
+              {pageName == "Registration" ? "Login" : "Registration"}
+            </Link>
+          </p>
+          <div className="text-center">
+            <button className="button" onClick={authCnotroller}>
+              {pageName}
+            </button>
+          </div>
         </div>
       </div>
     </div>

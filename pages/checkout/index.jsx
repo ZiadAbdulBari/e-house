@@ -51,7 +51,7 @@ const Checkout = () => {
   const getShippingAddress = () => {
     if (loggedin) {
       axios
-        .get("http://localhost:4000/get-shipping-address", {
+        .get(`${process.env.baseurl}/get-shipping-address`, {
           headers: { Authorization: token },
         })
         .then((response) => {
@@ -70,7 +70,7 @@ const Checkout = () => {
   const addShippingAddress = () => {
     if (loggedin) {
       axios
-        .post("http://localhost:4000/add-shipping-address", inputValue, {
+        .post(`${process.env.baseurl}/add-shipping-address`, inputValue, {
           headers: { Authorization: token },
         })
         .then((response) => {
@@ -95,7 +95,7 @@ const Checkout = () => {
         id: id,
       };
       axios
-        .post("http://localhost:4000/delete-shipping-address", data, {
+        .post(`${process.env.baseurl}/delete-shipping-address`, data, {
           headers: { Authorization: token },
         })
         .then((response) => {
@@ -116,7 +116,7 @@ const Checkout = () => {
         paymentStatus: 'pending',
       };
       axios
-        .post("http://localhost:4000/place-order", data, {
+        .post(`${process.env.baseurl}/place-order`, data, {
           headers: { Authorization: token },
         })
         .then((response) => {

@@ -26,7 +26,7 @@ const Profile = () => {
   const getProfileData = () => {
     if (loggedin) {
       axios
-        .get("http://localhost:4000/get-profile", {
+        .get(`${process.env.baseurl}/get-profile`, {
           headers: { Authorization: token },
         })
         .then((response) => {
@@ -71,7 +71,7 @@ const Profile = () => {
       formData.append("address", inputValue.address);
       formData.append("image", inputValue.image);
       axios
-        .post("http://localhost:4000/update-profile", formData, {
+        .post(`${process.env.baseurl}/update-profile`, formData, {
           "Content-Type": "multipart/form-data",
           headers: { Authorization: token },
         })
