@@ -1,7 +1,7 @@
 import Cart from '@/components/Cart/Cart';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
-import MobileNavbar from '@/components/MobileNavbar/MobileNavbar';
+import MobileNavbar from '@/components/Navbar/MobileNavbar';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
@@ -18,7 +18,6 @@ const MainLayout = ({children}) => {
                 router.pathname != '/checkout' && <Cart/>
             }
         </div>
-        <MobileNavbar/>
         <Footer/>
         </div>
     );
