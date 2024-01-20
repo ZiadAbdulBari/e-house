@@ -1,14 +1,14 @@
 import { Disclosure } from "@headlessui/react";
 import React from "react";
 
-const MobileCategory = () => {
+const AccordionWrapper = () => {
   return (
     <div className="mb-[20px]">
       <Disclosure>
         {({ open }) => (
           <div>
             <Disclosure.Button className="flex justify-between w-[350px] sm:w-[450px] md:w-[700px] lg:w-[500px] xl:w-[616px] xxl:w-[700px] h-[44px] bg-[#18181C] px-[30px] md:pl-4 md:pr-[60px] lg:px-4 py-[12px] text-left text-sm font-medium">
-              <span>{question}</span>
+              <span>question</span>
               {open ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +36,7 @@ const MobileCategory = () => {
             )}
 
             <Disclosure.Panel className="py-[2%] px-[30px] md:pl-4 md:pr-[65px] lg:px-4 text-sm bg-[#18181C] w-[350px] sm:w-[450px] md:w-[700px] lg:w-[500px] xl:w-[616px] xxl:w-[700px] text-gray-500">
-              <span className="my-4">{answer}</span>
+              {/* contain */}
             </Disclosure.Panel>
           </div>
         )}
@@ -45,4 +45,4 @@ const MobileCategory = () => {
   );
 };
 
-export default MobileCategory;
+export default AccordionWrapper;
