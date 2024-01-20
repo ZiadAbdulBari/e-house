@@ -2,11 +2,11 @@ import Link from "next/link";
 const ProductCart = ({ product }) => {
   return (
     <Link href={`/product-detail/${encodeURIComponent(product.id)}`}>
-      <div className="lg:h-[500px] border bg-gray-50 rounded hover:shadow-lg hover:shadow-gray-400/20 transition-all duration-300">
-        <div className="h-[350px] w-full bg-white overflow-hidden">
+      <div className="h-[400px] lg:h-[500px] border bg-gray-50 rounded hover:shadow-lg hover:shadow-gray-400/20 transition-all duration-300">
+        <div className="h-[250px] lg:h-[350px] w-full bg-white overflow-hidden">
           <img
             src={product?.productImages[0]?.image_url}
-            className="h-full w-full object-cover hover:scale-125 transition-all duration-700"
+            className="h-full w-full object-contain hover:scale-125 transition-all duration-300"
           />
         </div>
         <div className="p-[10px] grid grid-flow-row gap-2">

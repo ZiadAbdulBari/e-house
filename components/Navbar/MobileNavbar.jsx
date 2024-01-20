@@ -18,12 +18,12 @@ const MobileNavbar = ({
   const router = useRouter();
   const redirectToAuth = () => {
     if (!isLoggedin) {
-      router.push("/");
+      router.push("/signup");
     }
   };
   return (
     <>
-      <div className="xs:flex lg:hidden justify-between items-center w-full h-[50px]">
+      <div className="flex lg:hidden justify-between items-center w-full h-[50px]">
         <div className="w-[30%]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +121,9 @@ const MobileNavbar = ({
             </svg>
           </div>
         </div>
-        <div className="h-[80%] overflow-y-auto"></div>
+        <div className="h-[80%] w-full overflow-y-auto">
+          {/* category name--------------> */}
+        </div>
       </div>
       {/* search slider */}
       <div
@@ -133,7 +135,7 @@ const MobileNavbar = ({
           <form className="w-full h-full" onSubmit={onSubmit}>
             <div className="relative w-full h-full rounded-full">
               <input
-                className="absolute top-[50%] left-0 -translate-y-[50%] px-[20px] py-[5px] w-[90%] h-[80%] rounded-full border border-color-2 outline-gray-300 placeholder:text-color-2 placeholder:text-[14px] lg:placeholder:text-[16px] text-color-1"
+                className="absolute top-[50%] left-0 -translate-y-[50%] px-[20px] py-[5px] w-[90%] h-[70%] rounded-full border border-color-2 outline-gray-300 placeholder:text-color-2 placeholder:text-[14px] lg:placeholder:text-[16px] text-color-1"
                 type="text"
                 value={value}
                 name="search"
@@ -142,7 +144,7 @@ const MobileNavbar = ({
               />
               <div
                 onClick={onClick}
-                className="cursor-pointer absolute top-[50%] -translate-y-[50%] right-[10%] rounded-full h-[80%] w-[40px] bg-color-1 flex justify-center items-center"
+                className="cursor-pointer absolute top-[50%] -translate-y-[50%] right-[10%] rounded-full h-[71%] w-[40px] bg-color-1 flex justify-center items-center"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
