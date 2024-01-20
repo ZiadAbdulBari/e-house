@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Cart from "../Cart/Cart";
 import { useRouter } from "next/router";
+import AccordionWrapper from "../UiKit/Accordion/AccordionWrapper";
+import Children from "../UiKit/Accordion/Children";
 
 const MobileNavbar = ({
   categories,
@@ -20,6 +22,10 @@ const MobileNavbar = ({
     if (!isLoggedin) {
       router.push("/signup");
     }
+  };
+  const userLogout = () => {
+    logout();
+    setLeftSidebar(false);
   };
   return (
     <>
@@ -92,11 +98,11 @@ const MobileNavbar = ({
       </div>
       {/* category slider */}
       <div
-        className={`w-full h-full fixed top-0 ${
+        className={`w-full h-[100vh] fixed top-0 ${
           leftsidebar ? "right-[0%]" : "right-[100%]"
         } z-[99999] bg-gray-50 transition-all duration-300`}
       >
-        <div className="w-full h-[50px] flex items-center justify-between px-[10px]">
+        <div className="w-full h-[7%] flex items-center justify-between px-[10px] border-b-2 border-gray-100">
           <h1 className="text-[25px] font-extrabold text-color-1">Essential</h1>
           <div className="bg-white boxShadow-1 rounded">
             <svg
@@ -121,8 +127,53 @@ const MobileNavbar = ({
             </svg>
           </div>
         </div>
-        <div className="h-[80%] w-full overflow-y-auto">
-          {/* category name--------------> */}
+        <div className="h-[93%]">
+          <div className={`${!isLoggedin?'h-[100%]':'h-[70%] border-b-2 border-gray-100'} w-full overflow-y-auto py-[10px]`}>
+            {categories.length > 0 &&
+              categories.map((cat) => (
+                <AccordionWrapper
+                  key={cat.id}
+                  id={cat.id}
+                  title={cat.category_name}
+                >
+                  {subcategories.map(
+                    (subcat) =>
+                      subcat.categoryId == cat.id && (
+                        <Children
+                          key={subcat.id}
+                          id={subcat.id}
+                          title={subcat.subcategory_name}
+                        />
+                      )
+                  )}
+                </AccordionWrapper>
+              ))}
+          </div>
+          {isLoggedin && (
+            <div className="h-[30%] w-full overflow-y-auto py-[10px]">
+              <p className="px-[10px] text-gray-700 font-medium mb-3">
+                My Account
+              </p>
+              <Link
+                href="/profile"
+                className="block px-[10px] py-[5px] text-[16px] text-color-1"
+              >
+                Profile
+              </Link>
+              <Link
+                href="/order"
+                className="block px-[10px] py-[5px] text-[16px] text-color-1"
+              >
+                Order
+              </Link>
+              <p
+                className=" px-[10px] py-[5px] text-[16px] text-color-1 text-red-500"
+                onClick={userLogout}
+              >
+                Logout
+              </p>
+            </div>
+          )}
         </div>
       </div>
       {/* search slider */}
