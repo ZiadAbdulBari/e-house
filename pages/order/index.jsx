@@ -1,4 +1,3 @@
-import Sidebar from "@/components/Sidebar/Sidebar";
 import UiButton from "@/components/UiKit/UiButton";
 import MainLayout from "@/layout/MainLayout";
 import React, { useEffect, useState } from "react";
@@ -40,10 +39,8 @@ const Order = () => {
   return (
     <MainLayout>
       <div className="lg:container mx-auto">
-        <div className="flex gap-4 mt-12 w-full">
-          <Sidebar />
-          <div className="w-[85%] h-[75vh] overflow-y-auto">
-            <h1 className="text-[30px] font-bold mb-4 text-color-1">Order list</h1>
+          <div className="w-[100%] h-[75vh] px-[20px] lg:px-0 overflow-y-auto">
+            <h1 className="text-[22px] lg:text-[30px] font-bold mb-4 text-color-1">Order list</h1>
             <div className="grid grid-flow-row gap-y-4 w-full">
               {orderlist.length > 0 &&
                 orderlist.map((order, index) => (
@@ -107,7 +104,6 @@ const Order = () => {
                 ))}
             </div>
           </div>
-        </div>
       </div>
     </MainLayout>
   );

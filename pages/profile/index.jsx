@@ -108,10 +108,6 @@ const Profile = () => {
   return (
     <MainLayout>
       <div className="lg:container mx-auto">
-        {/* <div className="flex gap-4 mt-12">
-          <Sidebar />
-          SHOW PROFILE DATA
-        </div> */}
         <div className="w-[100%] px-[20px] lg:px-[0]">
           <h1 className="text-[22px] lg:text-[30px] text-color-1 font-bold mb-4">Profile</h1>
           {edit == false && (
@@ -130,7 +126,7 @@ const Profile = () => {
               </div>
               <div className="w-full py-[30px] px-[10px] lg:px-[30px]">
                 <div className="flex flex-col lg:flex-row gap-8 w-full items-center">
-                  <div className="h-full w-full lg:w-[10%] border border-gray-200 rounded overflow-hidden">
+                  <div className="h-[200px] w-[40%] lg:w-[10%] border border-gray-200 rounded overflow-hidden">
                     <img
                       src={`${
                         preview == ""
@@ -166,8 +162,8 @@ const Profile = () => {
           {/* UPDATE PROFILE DATA*/}
           {edit == true && (
             <div className="rounded bg-gray-50 py-[50px] px-[10px] lg:px-[30px] w-full shadow-lg shadow-gray-400/20">
-              <div className="w-full flex flex-col lg:flex-row gap-8">
-                <div className="h-[180px] w-[15%] border border-gray-200 rounded">
+              <div className="w-full flex flex-col lg:flex-row items-center lg:items-start gap-8">
+                <div className="h-[200px] w-[40%] lg:w-[15%] border border-gray-200 rounded">
                   <div className="h-[100%] w-full relative overflow-hidden">
                     <img
                       src={`${
@@ -201,7 +197,7 @@ const Profile = () => {
                     />
                   </div>
                 </div>
-                <div className="w-[75%]">
+                <div className="w-[100%] lg:w-[75%]">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-0 lg:gap-x-4 gap-y-8">
                     <UiInput
                       label="Name"
