@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Dropdown from "../Header/Dropdown";
 import Option from "../Header/Option";
+import Cart from "../Cart/Cart";
 const DesktopNavbar = ({
   categories,
   subcategories,
@@ -46,7 +47,7 @@ const DesktopNavbar = ({
       </div>
       <div className="flex gap-4 items-center w-[33%] justify-end">
         {/* search bar */}
-        <div className="w-[100%] w-[80%]">
+        <div className="w-[70%]">
           <form className="w-full" onSubmit={onSubmit}>
             <div className="relative w-full h-[40px] rounded-full">
               <input
@@ -77,6 +78,7 @@ const DesktopNavbar = ({
           </form>
         </div>
         {/* login and registration section */}
+        <Cart/>
         <div className="flex gap-2">
           {!isLoggedin && (
             <Link href="/signup" className="login">
