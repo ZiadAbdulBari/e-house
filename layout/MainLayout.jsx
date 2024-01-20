@@ -14,9 +14,9 @@ const MainLayout = ({children}) => {
             <div className='body-height'>
             {children}
             </div>
-            {
+            {/* {
                 router.pathname != '/checkout' && <Cart/>
-            }
+            } */}
         </div>
         <Footer/>
         </div>

@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    baseurl: "http://192.168.0.106:4000",
+    baseurl: "http://localhost:4000",
   }
 }
 

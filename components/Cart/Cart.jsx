@@ -15,21 +15,22 @@ const Cart = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [windowSize, setWindowSize] = useState("");
-  const cartControl = () => {
+  const cartControl = (status) => {
     if (!loggedinStatus) {
       toastMessage("Please login", "w");
       return;
     }
-    const selectCart = document.getElementById("cart");
-    if (!isOpen) {
-      selectCart.classList.remove("hidden");
-      selectCart.classList.add("open-cart");
-      setIsOpen(true);
-    } else {
-      selectCart.classList.add("hidden");
-      selectCart.classList.remove("open-cart");
-      setIsOpen(false);
-    }
+    setIsOpen(status);
+    // const selectCart = document.getElementById("cart");
+    // if (!isOpen) {
+    //   selectCart.classList.remove("hidden");
+    //   selectCart.classList.add("open-cart");
+    //   setIsOpen(status);
+    // } else {
+    //   selectCart.classList.add("hidden");
+    //   selectCart.classList.remove("open-cart");
+    //   setIsOpen(false);
+    // }
   };
   const deleteFromCart = (product) => {
     const data = {
@@ -59,44 +60,54 @@ const Cart = () => {
     dispatch(getCartProduct());
   }, []);
   return (
-    <div className={`hidden lg:block ${windowSize + " w-full"} `}>
-      <div
-        className="fixed right-0 top-[50%] bg-color-1 p-[10px] z-[999] rounded-l cursor-pointer"
-        onClick={cartControl}
-      >
-        <div className="p-2">
-          <div className="absolute font-semibold text-color-2 text-[25px] top-[-6px] left-[32px] p-[10px] rounded-full">
-            {cartCount}
+    <div className={`block`}>
+      <div className="cursor-pointer">
+        <div className="relative h-[26px] w-[26px]">
+          <div className="absolute -top-2 left-5 lg:-top-3 lg:left-5 font-medium text-color-1 text-[16px] lg:text-[20px] ">
+            <p>{cartCount}</p>
           </div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width="32"
-            height="32"
-            className="fill-color-3"
-          >
-            <path d="M4.00436 6.41686L0.761719 3.17422L2.17593 1.76001L5.41857 5.00265H20.6603C21.2126 5.00265 21.6603 5.45037 21.6603 6.00265C21.6603 6.09997 21.6461 6.19678 21.6182 6.29L19.2182 14.29C19.0913 14.713 18.7019 15.0027 18.2603 15.0027H6.00436V17.0027H17.0044V19.0027H5.00436C4.45207 19.0027 4.00436 18.5549 4.00436 18.0027V6.41686ZM6.00436 7.00265V13.0027H17.5163L19.3163 7.00265H6.00436ZM5.50436 23.0027C4.67593 23.0027 4.00436 22.3311 4.00436 21.5027C4.00436 20.6742 4.67593 20.0027 5.50436 20.0027C6.33279 20.0027 7.00436 20.6742 7.00436 21.5027C7.00436 22.3311 6.33279 23.0027 5.50436 23.0027ZM17.5044 23.0027C16.6759 23.0027 16.0044 22.3311 16.0044 21.5027C16.0044 20.6742 16.6759 20.0027 17.5044 20.0027C18.3328 20.0027 19.0044 20.6742 19.0044 21.5027C19.0044 22.3311 18.3328 23.0027 17.5044 23.0027Z"></path>
-          </svg>
+          <div className="absolute top-0 left-0" onClick={() => cartControl(!isOpen)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="26"
+              height="26"
+              className="hidden lg:block fill-color-1"
+            >
+              <path d="M7.00488 7.99966V5.99966C7.00488 3.23824 9.24346 0.999664 12.0049 0.999664C14.7663 0.999664 17.0049 3.23824 17.0049 5.99966V7.99966H20.0049C20.5572 7.99966 21.0049 8.44738 21.0049 8.99966V20.9997C21.0049 21.5519 20.5572 21.9997 20.0049 21.9997H4.00488C3.4526 21.9997 3.00488 21.5519 3.00488 20.9997V8.99966C3.00488 8.44738 3.4526 7.99966 4.00488 7.99966H7.00488ZM7.00488 9.99966H5.00488V19.9997H19.0049V9.99966H17.0049V11.9997H15.0049V9.99966H9.00488V11.9997H7.00488V9.99966ZM9.00488 7.99966H15.0049V5.99966C15.0049 4.34281 13.6617 2.99966 12.0049 2.99966C10.348 2.99966 9.00488 4.34281 9.00488 5.99966V7.99966Z"></path>
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="22"
+              height="22"
+              className="xs:block lg:hidden fill-color-1"
+            >
+              <path d="M7.00488 7.99966V5.99966C7.00488 3.23824 9.24346 0.999664 12.0049 0.999664C14.7663 0.999664 17.0049 3.23824 17.0049 5.99966V7.99966H20.0049C20.5572 7.99966 21.0049 8.44738 21.0049 8.99966V20.9997C21.0049 21.5519 20.5572 21.9997 20.0049 21.9997H4.00488C3.4526 21.9997 3.00488 21.5519 3.00488 20.9997V8.99966C3.00488 8.44738 3.4526 7.99966 4.00488 7.99966H7.00488ZM7.00488 9.99966H5.00488V19.9997H19.0049V9.99966H17.0049V11.9997H15.0049V9.99966H9.00488V11.9997H7.00488V9.99966ZM9.00488 7.99966H15.0049V5.99966C15.0049 4.34281 13.6617 2.99966 12.0049 2.99966C10.348 2.99966 9.00488 4.34281 9.00488 5.99966V7.99966Z"></path>
+            </svg>
+          </div>
         </div>
       </div>
       <div
-        className="hidden fixed right-0 top-0 w-[400px] h-full bg-gray-50 z-[99999] pb-[10px]"
+        className={`fixed ${
+          isOpen ? "right-0" : "-right-[100%]"
+        } top-0 xs:w-full lg:w-[400px] h-full bg-gray-50 z-[99999] pb-[10px] transition-all duration-300`}
         id="cart"
       >
-        <div className="flex justify-between items-center h-[10%] px-[10px]">
+        <div className="w-full h-[50px] flex items-center justify-between px-[10px]">
           <h1 className="text-[25px] font-extrabold text-color-1">Essential</h1>
-          <div className="w-[25px] h-[25px] rounded-full bg-red-500 flex justify-center items-center">
+          <div className="bg-white rounded">
             <svg
               className="cursor-pointer"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               width="24"
               height="24"
-              onClick={cartControl}
+              onClick={() => cartControl(!isOpen)}
             >
               <path
                 d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"
-                className="fill-white"
+                className="fill-color-1"
               ></path>
             </svg>
           </div>
@@ -167,17 +178,16 @@ const Cart = () => {
                 <Link
                   className="bg-color-1 text-color-3 py-[8px] px-[15px] rounded font-medium flex items-center gap-2"
                   href="/"
+                  onClick={()=>setIsOpen(false)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     width="22"
                     height="22"
+                    className="fill-color-3"
                   >
-                    <path
-                      d="M4.00436 6.41662L0.761719 3.17398L2.17593 1.75977L5.41857 5.00241H20.6603C21.2126 5.00241 21.6603 5.45012 21.6603 6.00241C21.6603 6.09973 21.6461 6.19653 21.6182 6.28975L19.2182 14.2898C19.0913 14.7127 18.7019 15.0024 18.2603 15.0024H6.00436V17.0024H17.0044V19.0024H5.00436C4.45207 19.0024 4.00436 18.5547 4.00436 18.0024V6.41662ZM6.00436 7.00241V13.0024H17.5163L19.3163 7.00241H6.00436ZM5.50436 23.0024C4.67593 23.0024 4.00436 22.3308 4.00436 21.5024C4.00436 20.674 4.67593 20.0024 5.50436 20.0024C6.33279 20.0024 7.00436 20.674 7.00436 21.5024C7.00436 22.3308 6.33279 23.0024 5.50436 23.0024ZM17.5044 23.0024C16.6759 23.0024 16.0044 22.3308 16.0044 21.5024C16.0044 20.674 16.6759 20.0024 17.5044 20.0024C18.3328 20.0024 19.0044 20.674 19.0044 21.5024C19.0044 22.3308 18.3328 23.0024 17.5044 23.0024Z"
-                      className="fill-color-3"
-                    ></path>
+                    <path d="M7.00488 7.99966V5.99966C7.00488 3.23824 9.24346 0.999664 12.0049 0.999664C14.7663 0.999664 17.0049 3.23824 17.0049 5.99966V7.99966H20.0049C20.5572 7.99966 21.0049 8.44738 21.0049 8.99966V20.9997C21.0049 21.5519 20.5572 21.9997 20.0049 21.9997H4.00488C3.4526 21.9997 3.00488 21.5519 3.00488 20.9997V8.99966C3.00488 8.44738 3.4526 7.99966 4.00488 7.99966H7.00488ZM7.00488 9.99966H5.00488V19.9997H19.0049V9.99966H17.0049V11.9997H15.0049V9.99966H9.00488V11.9997H7.00488V9.99966ZM9.00488 7.99966H15.0049V5.99966C15.0049 4.34281 13.6617 2.99966 12.0049 2.99966C10.348 2.99966 9.00488 4.34281 9.00488 5.99966V7.99966Z"></path>
                   </svg>
                   <p>Continue shopping</p>
                 </Link>

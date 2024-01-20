@@ -58,7 +58,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="bg-gray-50 shadow-lg shadow-gray-400/20 py-[10px] lg:py-0">
+    <div className="bg-gray-50 shadow-lg shadow-gray-400/20 py-0">
       <div className="px-[10px] lg:px-0 lg:container mx-auto">
         <DesktopNavbar
           categories={categories}
