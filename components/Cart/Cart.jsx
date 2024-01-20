@@ -14,23 +14,12 @@ const Cart = () => {
   const total_price = useSelector((state) => state.cart.total_price);
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
-  const [windowSize, setWindowSize] = useState("");
   const cartControl = (status) => {
     if (!loggedinStatus) {
       toastMessage("Please login", "w");
       return;
     }
     setIsOpen(status);
-    // const selectCart = document.getElementById("cart");
-    // if (!isOpen) {
-    //   selectCart.classList.remove("hidden");
-    //   selectCart.classList.add("open-cart");
-    //   setIsOpen(status);
-    // } else {
-    //   selectCart.classList.add("hidden");
-    //   selectCart.classList.remove("open-cart");
-    //   setIsOpen(false);
-    // }
   };
   const deleteFromCart = (product) => {
     const data = {
@@ -52,10 +41,10 @@ const Cart = () => {
       });
   };
 
-  useEffect(() => {
-    const size = window.screen.height;
-    setWindowSize(size);
-  }, []);
+  // useEffect(() => {
+  //   const size = window.screen.height;
+  //   setWindowSize(size);
+  // }, []);
   useEffect(() => {
     dispatch(getCartProduct());
   }, []);
@@ -70,8 +59,8 @@ const Cart = () => {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
-              width="26"
-              height="26"
+              width="30"
+              height="30"
               className="hidden lg:block fill-color-1"
             >
               <path d="M7.00488 7.99966V5.99966C7.00488 3.23824 9.24346 0.999664 12.0049 0.999664C14.7663 0.999664 17.0049 3.23824 17.0049 5.99966V7.99966H20.0049C20.5572 7.99966 21.0049 8.44738 21.0049 8.99966V20.9997C21.0049 21.5519 20.5572 21.9997 20.0049 21.9997H4.00488C3.4526 21.9997 3.00488 21.5519 3.00488 20.9997V8.99966C3.00488 8.44738 3.4526 7.99966 4.00488 7.99966H7.00488ZM7.00488 9.99966H5.00488V19.9997H19.0049V9.99966H17.0049V11.9997H15.0049V9.99966H9.00488V11.9997H7.00488V9.99966ZM9.00488 7.99966H15.0049V5.99966C15.0049 4.34281 13.6617 2.99966 12.0049 2.99966C10.348 2.99966 9.00488 4.34281 9.00488 5.99966V7.99966Z"></path>
@@ -91,7 +80,7 @@ const Cart = () => {
       <div
         className={`fixed ${
           isOpen ? "right-0" : "-right-[100%]"
-        } top-0 xs:w-full lg:w-[400px] h-full bg-gray-50 z-[99999] pb-[10px] transition-all duration-300`}
+        } top-0 w-full lg:w-[400px] h-full bg-gray-50 z-[99999] pb-[10px] transition-all duration-300`}
         id="cart"
       >
         <div className="w-full h-[50px] flex items-center justify-between px-[10px]">

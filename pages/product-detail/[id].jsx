@@ -107,7 +107,7 @@ const Detail = () => {
   return (
     <MainLayout>
       <div className="lg:container mx-auto ">
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 h-full mt-[30px] xs:px-[10px] lg:px-0">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 h-full mt-[30px] px-[10px] lg:px-0">
           <div className="image lg:w-[50%] h-[76vh] overflow-hidden ">
             {/* <ImageSlider productImage={productImage} className="w-full" /> */}
             {images.length > 0 && <ProductDetailSlider images={images} />}
@@ -216,10 +216,10 @@ const Detail = () => {
               }
             </div>
             <div className="border border-gray-100 mb-8"></div>
-            <div className="flex gap-4">
+            <div className="flex gap-2 lg:gap-4">
               <div className="flex">
-                <div className="quantity lg:px-[30px] px-4 lg:py-[10px] border border-color-2">
-                  <p className="text-[20px] text-color-1">{quantity}</p>
+                <div className="quantity flex justify-center items-center lg:px-[30px] px-4 lg:py-[10px] border border-color-2">
+                  <p className="text-[18px] lg:text-[20px] text-color-1">{quantity}</p>
                 </div>
                 <div className="quantity-controller">
                   <div
