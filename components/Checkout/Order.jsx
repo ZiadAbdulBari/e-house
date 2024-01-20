@@ -3,7 +3,7 @@ import UiButton from '../UiKit/UiButton';
 
 const Order = ({ cartData, totalPrice, placeOrder  }) => {
     return (
-        <div className="w-[100%] px-[30px] h-full">
+        <div className="w-[100%] px-[20px] lg:px-[30px] h-full">
             <p className="my-4 font-medium text-[22px] text-color-1">
               Products
             </p>

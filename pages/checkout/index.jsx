@@ -227,7 +227,7 @@ const Checkout = () => {
           {/* mobile device */}
           <div className="w-full lg:hidden mb-4 lg:mb-0">
             {renderStepContent()}
-            <div className="flex justify-between mx-[30px] mt-8 lg:hidden">
+            <div className="flex justify-between mx-[20px] mt-4 lg:hidden">
               <div className="flex justify-end">
               {step > 1 && (
                 <UiButton

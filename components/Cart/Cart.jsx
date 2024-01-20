@@ -80,10 +80,10 @@ const Cart = () => {
       <div
         className={`fixed ${
           isOpen ? "right-0" : "-right-[100%]"
-        } top-0 w-full lg:w-[400px] h-full bg-gray-50 z-[99999] pb-[10px] transition-all duration-300`}
+        } top-0 w-full lg:w-[400px] h-[100vh] bg-gray-50 z-[99999] transition-all duration-300`}
         id="cart"
       >
-        <div className="w-full h-[50px] flex items-center justify-between px-[10px]">
+        <div className="w-full h-[7%] flex items-center justify-between px-[10px] bg-white border-b-2 border-gray-100">
           <h1 className="text-[25px] font-extrabold text-color-1">Essential</h1>
           <div className="bg-white rounded">
             <svg
@@ -101,7 +101,7 @@ const Cart = () => {
             </svg>
           </div>
         </div>
-        <div className="h-[80%] overflow-y-auto">
+        <div className="h-[78%] overflow-y-auto border-b-2 border-gray-100 py-[10px]">
           {cartData?.length > 0 ? (
             cartData.map((product, index) => {
               return (
@@ -187,8 +187,8 @@ const Cart = () => {
           )}
         </div>
         {cartData?.length > 0 && (
-          <div className="h-[10%] px-[10px]">
-            <div className="flex w-full justify-between">
+          <div className="h-[15%] px-[10px] bg-white py-[10px]">
+            <div className="flex w-full  justify-between">
               <p className="text-[18px] font-semibold text-color-1">
                 Total Price:
               </p>
@@ -200,7 +200,7 @@ const Cart = () => {
               href="/checkout"
               className="text-color-3 font-medium text-[18px]"
             >
-              <div className="text-center w-full bg-color-1 rounded py-[10px] mt-6">
+              <div className="text-center w-full bg-color-1 rounded py-[10px] mt-2 lg:mt-6">
                 Checkout
               </div>
             </Link>

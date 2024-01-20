@@ -13,7 +13,7 @@ const ShippingAddress = ({
     deleteShippingAddress,
   }) => {
     return (
-        <div className="w-[100%] px-[30px] h-full">
+        <div className="w-[100%] px-[20px] lg:px-[30px] h-full">
         <div className="flex justify-between items-center">
           <p className="my-4 font-medium text-[22px] text-color-1">
             Shipping address

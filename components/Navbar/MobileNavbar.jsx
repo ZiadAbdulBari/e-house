@@ -102,7 +102,7 @@ const MobileNavbar = ({
           leftsidebar ? "right-[0%]" : "right-[100%]"
         } z-[99999] bg-gray-50 transition-all duration-300`}
       >
-        <div className="w-full h-[7%] flex items-center justify-between px-[10px] border-b-2 border-gray-100">
+        <div className="w-full h-[7%] flex items-center justify-between px-[10px] border-b-2 border-gray-100 bg-white">
           <h1 className="text-[25px] font-extrabold text-color-1">Essential</h1>
           <div className="bg-white boxShadow-1 rounded">
             <svg
