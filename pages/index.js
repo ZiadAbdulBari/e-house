@@ -25,7 +25,7 @@ export default function Home() {
         }
       })
       .catch((error) => {
-        console.lg(error);
+        console.log(error);
       });
   };
   const getSliderImage = () => {
